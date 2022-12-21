@@ -1,17 +1,46 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+// import {Link} from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap'
 
-const HeaderMenu =()=>{
-    return(
+const HeaderMenu = () => {
+    return (
         <>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+                    <Navbar.Brand>Ivan Real Estate</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#features">Features</Nav.Link>
-                        <Nav.Link href="#pricing">Pricing</Nav.Link>
+
+                        <LinkContainer to="/">
+                            <Nav.Link>
+                                Home
+                            </Nav.Link>
+                        </LinkContainer>
+
+                        <LinkContainer to="/create">
+                            <Nav.Link>
+                                Create Estate
+                            </Nav.Link>
+                        </LinkContainer>
+                    
+                        <LinkContainer to="/register">
+                            <Nav.Link>
+                                Register
+                            </Nav.Link>
+                        </LinkContainer>
+                    
+                        <LinkContainer to="/login">
+                            <Nav.Link>
+                                Login
+                            </Nav.Link>
+                        </LinkContainer>
+
+                        <LinkContainer to="/logout">
+                            <Nav.Link>
+                                Logout
+                            </Nav.Link>
+                        </LinkContainer>
                     </Nav>
                 </Container>
             </Navbar>

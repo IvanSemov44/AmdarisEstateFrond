@@ -1,21 +1,21 @@
 const baseUrl = "https://localhost:7125";
 
-export const getAll = () => {
-    return fetch(`${baseUrl}/api/currencies`, {
+export const getAll = async () => {
+    const res = await fetch(`${baseUrl}/api/currencies`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
         }
-    })
-        .then(res => res.json());
+    });
+    return await res.json();
 };
 
-export const getById = (id) => {
-    return fetch(`${baseUrl}/api/currencies/${id}`, {
+export const getById = async (id) => {
+    const res = await fetch(`${baseUrl}/api/currencies/${id}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
         }
-    })
-        .then(res => res.json());
+    });
+    return await res.json();
 };

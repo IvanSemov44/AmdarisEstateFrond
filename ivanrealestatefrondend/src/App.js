@@ -9,10 +9,11 @@ import Home from './Components/Home/Home';
 function App() {
   return (
     <div className="App">
+      <HeaderMenu />
+
       <Routes>
         <Route path='/' element={<Home/>}></Route>
       </Routes>
-      <HeaderMenu />
     </div>
   );
 }
