@@ -11,13 +11,14 @@ const Home = () => {
     useEffect(() => {
         estatesSevice.getAll()
             .then(result => {
+                console.log(result)
                 setEstate(result);
             });
     }, []);
 
     return (
         <div className="home-card-list">
-            {estates.map(x => <Estate estate={x} />)}
+            {estates.map(x => <Estate key={x.estateId} estate={x} />)}
         </div>
     )
 }
