@@ -1,9 +1,12 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import * as  cityService from "../../Services/CityService";
 import * as  estateTypeService from "../../Services/EstateTypeService";
 import * as  currencyService from "../../Services/CurrencyService";
 import * as  countryService from "../../Services/CountryService";
+
+import './EstateCard.css';
+
 
 const EstateCard = ({
     estate
@@ -17,7 +20,7 @@ const EstateCard = ({
             .then(result => {
                 setEstateType(result);
             });
-    },[estate.estateTypeId] );
+    }, [estate.estateTypeId]);
 
     useEffect(() => {
         cityService.getById(estate.cityId)
@@ -40,34 +43,51 @@ const EstateCard = ({
             });
     }, [estate.countryId]);
 
-   console.log(estate.images)
+    console.log(estate.images)
     let resultImage;
-    if (estate.images){
+    if (estate.images) {
         resultImage = estate.images[2].imageUrl;
     }
-    else{
+    else {
         resultImage = null;
     }
 
+    let elementSellOrRent;
+
+    if (estate.sell) {
+        elementSellOrRent = "Sell";
+    }
+    else {
+        elementSellOrRent = "Rent";
+    }
+
     return (
-        <div>
-            <img alt="EstateImage" src={resultImage} />
-            <div className = "card-body">
+        <div className='estate-card'>
+            <img className='card-image' alt="EstateImage" src={resultImage} />
+            <div className="card-body">
                 <div className="card-body-text">
                     {estate.Description}
                 </div>
             </div>
-            <div className="list-group">
-                <div className="list-item">{estate.address}</div>
-                <div className="list-item">{estate.floоr}</div>
-                <div className="list-item">{city.cityName}</div>
-                <div className="list-item">{estateType.typeName}</div>
-                <div className="list-item">{currency.currencyName}</div>
-                <div className="list-item">{country.countryName}</div>
-            </div>
-            <div className = "card-body">
-                <div className="card-body-link">Card Link</div>
-                <div className = "card-body-link">Another Link</div>
+                <div className="first group">
+                    <list className="list-group">
+                        <li className="list-item">{elementSellOrRent}</li>
+                        <li className="list-item">Country: {country.countryName}</li>
+                        <li className="list-item">City: {city.cityName}</li>
+                        <li className="list-item">Address: {estate.address}</li>
+                        <li className="list-item">Floor: {estate.floоr}</li>
+                    </list>
+                </div>
+                <div className="second group">
+                    <list className="list-group">
+                        <li className="list-item">Price: {estate.price}</li>
+                        <li className="list-item">Currency: {currency.currencyName}</li>
+                        <li className="list-item">Type: {estateType.typeName}</li>
+                    </list>
+                </div>
+            <div className="card-body-button">
+                <button className="card-body-link">Card Link</button>
+                <button className="card-body-link">Another Link</button>
             </div>
         </div>
     );
