@@ -8,10 +8,10 @@ import './Home.css';
 const Home = () => {
     const [estates, setEstate] = useState([]);
 
-    const estateId = "387f6683-f763-4e0d-b35c-08dad2038670";
+    // const estateId = "387f6683-f763-4e0d-b35c-08dad2038670";
 
     useEffect(() => {
-        estatesSevice.getById(estateId)
+        estatesSevice.getAll()
             .then(result => {
                 console.log(result);
                 setEstate(result);
@@ -20,8 +20,8 @@ const Home = () => {
 
     return (
         <div className="home-card-list">
-            <EstateCard estate={estates} />
-            {/* {estates.map(x => <Estate key={x.estateId} estate={x} />)} */}
+            {/* <EstateCard estate={estates} /> */}
+            {estates.map(x => <EstateCard key={x.estateId} estate={x} />)}
         </div>
     )
 }

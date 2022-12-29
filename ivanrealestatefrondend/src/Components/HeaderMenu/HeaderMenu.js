@@ -18,6 +18,12 @@ const HeaderMenu = () => {
                             </Nav.Link>
                         </LinkContainer>
 
+                        <LinkContainer to="/catalog">
+                            <Nav.Link>
+                                Catalog Estate
+                            </Nav.Link>
+                        </LinkContainer>
+
                         <LinkContainer to="/create">
                             <Nav.Link>
                                 Create Estate
