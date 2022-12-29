@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 
 import Button from '@mui/material/Button';
 
-import * as  cityService from "../../Services/CityService";
-import * as  estateTypeService from "../../Services/EstateTypeService";
-import * as  currencyService from "../../Services/CurrencyService";
-import * as  countryService from "../../Services/CountryService";
+import * as  cityService from "../../../Services/CityService";
+import * as  estateTypeService from "../../../Services/EstateTypeService";
+import * as  currencyService from "../../../Services/CurrencyService";
+import * as  countryService from "../../../Services/CountryService";
 
 import './EstateCard.css';
 import { Link } from 'react-router-dom';
@@ -46,15 +46,6 @@ const EstateCard = ({
             });
     }, [estate.countryId]);
 
-    // console.log(estate.images)
-    // let resultImage;
-    // if (estate.images) {
-    //     resultImage = estate.images[2].imageUrl;
-    // }
-    // else {
-    //     resultImage = null;
-    // }
-
     let elementSellOrRent;
 
     if (estate.sell) {
@@ -91,15 +82,10 @@ const EstateCard = ({
             </div>
             <div className="card-body-button">
                 {/* <button className="card-body-link">Card Link</button> */}
-                <Button variant="outlined">
-                    <Link to="cardlink">
-                        Card Link
-                    </Link>
-                </Button>
 
                 <Button variant="outlined">
-                    <Link to="another link">
-                        Another Link
+                    <Link to={`/catalog/${estate.estateId}`}>
+                        Details
                     </Link>
                 </Button>
                 {/* <button className="card-body-link">Another Link</button> */}
