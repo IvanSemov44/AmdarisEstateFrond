@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+
 import * as estateService from '../../../Services/EstateService';
 import * as  cityService from "../../../Services/CityService";
 import * as  estateTypeService from "../../../Services/EstateTypeService";
@@ -19,39 +22,73 @@ const EstateDetails = () => {
     const [country, setCountry] = useState({});
 
 
-    useEffect(() =>
+    useEffect(() => {
+        let ignore = false;
         estateService.getById(estateId)
             .then(result => {
-                setEstate(result);
-            }),
-        []);
+                if (!ignore) {
+                    setEstate(result);
+                }
+            })
+        return () => {
+            ignore = true;
+        }
+    }, [estateId]);
 
     useEffect(() => {
+        let ignore = false;
+
         estateTypeService.getById(estate.estateTypeId)
             .then(result => {
-                setEstateType(result);
+                if (!ignore) {
+                    setEstateType(result);
+                }
             });
+        return () => {
+            ignore = true;
+        }
     }, [estate.estateTypeId]);
 
     useEffect(() => {
+        let ignore = false;
+
         cityService.getById(estate.cityId)
             .then(result => {
-                setCity(result);
+                if (!ignore) {
+                    setCity(result);
+                }
             });
+        return () => {
+            ignore = true;
+        }
     }, [estate.cityId]);
 
     useEffect(() => {
+        let ignore = false;
+
         currencyService.getById(estate.curencyId)
             .then(result => {
-                setCurrency(result);
+                if (!ignore) {
+                    setCurrency(result);
+                }
             });
+        return () => {
+            ignore = true;
+        }
     }, [estate.curencyId]);
 
     useEffect(() => {
+        let ignore = false;
+
         countryService.getById(estate.countryId)
             .then(result => {
-                setCountry(result);
+                if (!ignore) {
+                    setCountry(result);
+                }
             });
+        return () => {
+            ignore = true;
+        }
     }, [estate.countryId]);
 
 
@@ -86,20 +123,26 @@ const EstateDetails = () => {
     // yearOfCreation: 1970
 
     return (
-        <div className = "estateDetails"> 
-            <h2>{elementSellOrRent}</h2>
-            <p>Country: {country.countryName}</p>
-            <p>City: {city.cityName}</p>
-            <p>neighborhood: {estate.neighborhood}</p>
-            <p>Address: {estate.address}</p>
-            <p>Price: {estate.price}</p>
-            <p>Currency: {currency.currencyName}</p>
-            <p>Type: {estateType.typeName}</p> 
-            <p>Rooms: {estate.rooms}</p>
-            <p>Floor: {estate.floоr}</p>
-            <p>Year Of Creation: {estate.yearOfCreation}</p>
-            <p>Extras: {estate.extras}</p>
+       <div className="estateDetails">
+            <List
+                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                aria-label="EstateDetails"
+            >
+                <ListItem>{elementSellOrRent}</ListItem>
+                <ListItem>Country: {country.countryName}</ListItem>
+                <ListItem>City: {city.cityName}</ListItem>
+                <ListItem>neighborhood: {estate.neighborhood}</ListItem>
+                <ListItem>Address: {estate.address}</ListItem>
+                <ListItem>Price: {estate.price}</ListItem>
+                <ListItem>Currency: {currency.currencyName}</ListItem>
+                <ListItem>Type: {estateType.typeName}</ListItem>
+                <ListItem>Rooms: {estate.rooms}</ListItem>
+                <ListItem>Floor: {estate.floоr}</ListItem>
+                <ListItem>Year Of Creation: {estate.yearOfCreation}</ListItem>
+                <ListItem   >Extras: {estate.extras}</ListItem>
+            </List>
         </div>
+
     );
 }
 

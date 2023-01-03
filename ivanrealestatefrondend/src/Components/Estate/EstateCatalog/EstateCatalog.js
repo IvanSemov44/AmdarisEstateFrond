@@ -11,11 +11,17 @@ const EstateCatalog = () => {
     // const estateId = "387f6683-f763-4e0d-b35c-08dad2038670";
 
     useEffect(() => {
+        let ignore = false;
         estatesSevice.getAll()
             .then(result => {
-                console.log(result);
-                setEstate(result);
+                if(!ignore){
+                    console.log(result);
+                    setEstate(result);
+                }
             });
+            return () =>{
+                ignore = true;
+            }
     }, []);
 
     return (

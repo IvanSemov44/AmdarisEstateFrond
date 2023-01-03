@@ -19,31 +19,56 @@ const EstateCard = ({
     const [currency, setCurrency] = useState({});
     const [country, setCountry] = useState({});
     useEffect(() => {
+        let ignore = false;
         estateTypeService.getById(estate.estateTypeId)
             .then(result => {
-                setEstateType(result);
+                if (!ignore) {
+                    setEstateType(result);
+                }
             });
+        return () => {
+            ignore = true;
+        }
     }, [estate.estateTypeId]);
 
     useEffect(() => {
+        let ignore = false;
+
         cityService.getById(estate.cityId)
             .then(result => {
-                setCity(result);
+                if (!ignore) {
+                    setCity(result);
+                }
             });
+        return () => {
+            ignore = true;
+        }
     }, [estate.cityId]);
 
     useEffect(() => {
+        let ignore = false;
         currencyService.getById(estate.curencyId)
             .then(result => {
-                setCurrency(result);
+                if (!ignore) {
+                    setCurrency(result);
+                }
             });
+        return () => {
+            ignore = true;
+        }
     }, [estate.curencyId]);
 
     useEffect(() => {
+        let ignore = false;
         countryService.getById(estate.countryId)
             .then(result => {
-                setCountry(result);
+                if (!ignore) {
+                    setCountry(result);
+                }
             });
+        return () => {
+            ignore = true;
+        }
     }, [estate.countryId]);
 
     let elementSellOrRent;
@@ -65,20 +90,20 @@ const EstateCard = ({
                 </div>
             </div>
             <div className="first group">
-                <list className="list-group">
+                <ol className="list-group">
                     <li className="list-item">{elementSellOrRent}</li>
                     <li className="list-item">Country: {country.countryName}</li>
                     <li className="list-item">City: {city.cityName}</li>
                     <li className="list-item">Address: {estate.address}</li>
                     <li className="list-item">Floor: {estate.floоr}</li>
-                </list>
+                </ol>
             </div>
             <div className="second group">
-                <list className="list-group">
+                <ol className="list-group">
                     <li className="list-item">Price: {estate.price}</li>
                     <li className="list-item">Currency: {currency.currencyName}</li>
                     <li className="list-item">Type: {estateType.typeName}</li>
-                </list>
+                </ol>
             </div>
             <div className="card-body-button">
                 {/* <button className="card-body-link">Card Link</button> */}
