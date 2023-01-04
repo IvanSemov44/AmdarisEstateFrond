@@ -47,6 +47,13 @@ const HeaderMenu = () => {
                                 Logout
                             </Nav.Link>
                         </LinkContainer>
+
+                        <LinkContainer to="/giphy">
+                            <Nav.Link>
+                                Giphy
+                            </Nav.Link>
+                        </LinkContainer>
+
                     </Nav>
                 </Container>
             </Navbar>

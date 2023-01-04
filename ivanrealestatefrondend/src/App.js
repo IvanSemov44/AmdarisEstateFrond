@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Routes, Route } from 'react-router-dom'
 import EstateCatalog from './Components/Estate/EstateCatalog/EstateCatalog';
 import EstateDetails from './Components/Estate/EstateDetails/EstateDetails';
+import GiphyCatalog from './Components/Giphy/GiphyCatalog/GiphyCatalog';
 
 import HeaderMenu from './Components/HeaderMenu/HeaderMenu';
 import Home from './Components/Home/Home';
@@ -19,6 +20,7 @@ function App() {
           <Route path='/' element={<Home />}></Route>
           <Route path='/catalog' element={<EstateCatalog />}></Route>
           <Route path='/catalog/:estateId' element={<EstateDetails />}></Route>
+          <Route path='/giphy' element={<GiphyCatalog />}></Route>
 
         </Routes>
       </CssBaseline>
