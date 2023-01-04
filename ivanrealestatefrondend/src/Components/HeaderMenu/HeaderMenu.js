@@ -54,6 +54,12 @@ const HeaderMenu = () => {
                             </Nav.Link>
                         </LinkContainer>
 
+                        <LinkContainer to="/createEstate">
+                            <Nav.Link>
+                                Create Estate
+                            </Nav.Link>
+                        </LinkContainer>
+
                     </Nav>
                 </Container>
             </Navbar>
