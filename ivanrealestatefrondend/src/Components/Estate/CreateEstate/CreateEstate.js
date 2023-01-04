@@ -19,7 +19,7 @@ import useGetEstateType from '../../../CustemHooks/useGetEstateType';
 import * as estateService from '../../../Services/EstateService'
 
 import "./CreateEstate.css";
-
+import { useNavigate } from "react-router-dom";
 
 const defaultValues = {
     address: "",
@@ -39,6 +39,7 @@ const defaultValues = {
 
 const CreateEstate = () => {
     const [formValues, setFormValues] = useState(defaultValues);
+    const navigate = useNavigate();
 
     const cities = useGetCities();
     const countries = useGetCountries();
@@ -70,7 +71,10 @@ const CreateEstate = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        estateService.Create({ ...formValues });
+        estateService.Create({ ...formValues })
+        .then(result=>{
+            navigate(`/catalog/${result.estateId}`);
+        });
         console.log(formValues);
     };
 

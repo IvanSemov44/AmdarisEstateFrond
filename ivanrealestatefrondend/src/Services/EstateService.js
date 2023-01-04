@@ -20,14 +20,16 @@ export const getById = async (id) => {
     return await res.json();
 };
 
-export const Create = async (data) =>
-    await fetch(`${baseUrl}/api/estates`, {
+export const Create = async (data) =>{
+   const res =  await fetch(`${baseUrl}/api/estates`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
     });
+    return await res.json();
+}
 
 
 export const Update = async (data) => {
