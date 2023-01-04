@@ -123,7 +123,7 @@ const EstateDetails = () => {
     // yearOfCreation: 1970
 
     return (
-       <div className="estateDetails">
+        <div className="estateDetails">
             <List
                 sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
                 aria-label="EstateDetails"
