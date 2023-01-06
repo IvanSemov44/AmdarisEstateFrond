@@ -24,9 +24,15 @@ const HeaderMenu = () => {
                             </Nav.Link>
                         </LinkContainer>
 
-                        <LinkContainer to="/create">
+                        <LinkContainer to="/createEstate">
                             <Nav.Link>
                                 Create Estate
+                            </Nav.Link>
+                        </LinkContainer>
+
+                        <LinkContainer to="/cities">
+                            <Nav.Link>
+                                City Catalog
                             </Nav.Link>
                         </LinkContainer>
                     
@@ -54,11 +60,7 @@ const HeaderMenu = () => {
                             </Nav.Link>
                         </LinkContainer>
 
-                        <LinkContainer to="/createEstate">
-                            <Nav.Link>
-                                Create Estate
-                            </Nav.Link>
-                        </LinkContainer>
+                        
 
                     </Nav>
                 </Container>

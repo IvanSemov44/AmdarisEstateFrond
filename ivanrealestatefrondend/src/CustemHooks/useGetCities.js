@@ -16,7 +16,7 @@ export default function useGetCities() {
         return ()=>{
             ignore = true;
         }
-    },[])
+    }, [])
 
     return cities;
 }

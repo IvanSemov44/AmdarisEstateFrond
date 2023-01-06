@@ -10,6 +10,8 @@ import CreateEstate from './Components/Estate/CreateEstate/CreateEstate';
 
 import HeaderMenu from './Components/HeaderMenu/HeaderMenu';
 import Home from './Components/Home/Home';
+import CityPage from './Components/City/CityPage';
+import CreateCity from './Components/City/CreateCity';
 
 function App() {
   return (
@@ -21,8 +23,10 @@ function App() {
           <Route path='/' element={<Home />}></Route>
           <Route path='/catalog' element={<EstateCatalog />}></Route>
           <Route path='/catalog/:estateId' element={<EstateDetails />}></Route>
-          <Route path='/giphy' element={<GiphyCatalog />}></Route>
           <Route path='/createEstate' element={<CreateEstate />}></Route>
+          <Route path='/cities' element={<CityPage />}></Route>
+          <Route path='/giphy' element={<GiphyCatalog />}></Route>
+          <Route path='/createcity' element={<CreateCity />}></Route>
 
         </Routes>
       </CssBaseline>

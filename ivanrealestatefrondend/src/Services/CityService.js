@@ -19,3 +19,36 @@ export const getById = async (id) => {
     });
     return await res.json();
 };
+
+
+export const create = async (cityName) => {
+    const res = await fetch(`${baseUrl}/api/cities`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cityName)
+    });
+    return await res.json();
+};
+
+export const Update = async (city,cityName) => {
+    const res = await fetch(`${baseUrl}/api/cities/${city.cityId}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cityName)
+    });
+    return await res.json();
+};
+
+export const deleteCity = async (cityId) => {
+    const res = await fetch(`${baseUrl}/api/cities/${cityId}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    return await res.json();
+}
