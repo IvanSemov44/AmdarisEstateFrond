@@ -11,6 +11,7 @@ import CreateEstate from './Components/Estate/CreateEstate/CreateEstate';
 import HeaderMenu from './Components/HeaderMenu/HeaderMenu';
 import Home from './Components/Home/Home';
 import CityPage from './Components/City/CityPage';
+import CountryPage from './Components/Country/CountryPage';
 import CreateCity from './Components/City/CreateCity';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path='/catalog/:estateId' element={<EstateDetails />}></Route>
           <Route path='/createEstate' element={<CreateEstate />}></Route>
           <Route path='/cities' element={<CityPage />}></Route>
+          <Route path='/countries' element={<CountryPage />}></Route>
           <Route path='/giphy' element={<GiphyCatalog />}></Route>
           <Route path='/createcity' element={<CreateCity />}></Route>
 

@@ -1,18 +1,14 @@
 import { useContext } from "react";
-import { TaskContext } from "../../contexts/TaskContext";
+import { CityContext } from "../../contexts/CityContext";
 import Box from '@mui/material/Box';
-
 import CityItem from "./CityItem";
 
-const CityList = ({
-    cityDeleteHandler
-}) => {
-    const { cities } = useContext(TaskContext)
+const CityList = () => {
+    const { cities } = useContext(CityContext)
     return (
         <Box sx={{ '& button': { m: 1 } }}>
             {cities.map(x =>
                 <CityItem
-                    cityDeleteHandler={cityDeleteHandler}
                     key={x.cityId}
                     city={x} />
             )}

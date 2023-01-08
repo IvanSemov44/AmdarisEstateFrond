@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
-const CreateCity = ({
-    cityCreateHandler
+const CreateCountry = ({
+    countryCreateHandler
 }) => {
-    const [city, setCity] = useState('');
+    const [country, setCountry] = useState('');
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const cityForCreate = { cityName: city }
-        cityCreateHandler(cityForCreate)
-        setCity('');
+        const countryForCreate = {countryName: country};
+        countryCreateHandler(countryForCreate);
+        setCountry('');
     }
 
     const onChange = (e) => {
-        setCity(e.target.value);
+        setCountry(e.target.value);
     }
 
     return (
@@ -26,10 +26,10 @@ const CreateCity = ({
                 <Grid item>
                     <TextField
                         id="cityName-input"
-                        name="cityName"
-                        label="Create City"
+                        name="country"
+                        label="Create Country"
                         type="text"
-                        value={city}
+                        value={country}
                         onChange={onChange}
                     />
                 </Grid>
@@ -39,7 +39,7 @@ const CreateCity = ({
                 </Button>
             </Grid>
         </form>
-    );
+    )
 }
 
-export default CreateCity;
+export default CreateCountry;

@@ -1,4 +1,4 @@
-import { TaskContext } from '../../contexts/TaskContext';
+import { CityContext } from '../../contexts/CityContext';
 
 import Box from '@mui/material/Box';
 
@@ -6,6 +6,7 @@ import CityList from '../City/CityList';
 import useCities from "../../CustemHooks/useCities";
 import useFetchForCity from "../../CustemHooks/useFetchForCity";
 import CreateCity from './CreateCity';
+
 import { Spinner } from '../Common/Spinner/Spinner';
 
 const CityPage = () => {
@@ -34,7 +35,7 @@ const CityPage = () => {
     }
 
     return (
-        <TaskContext.Provider value={{ cities, cityDeleteHandler, cityEditHandler }}>
+        <CityContext.Provider value={{ cities, cityDeleteHandler, cityEditHandler }}>
 
             <Box sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, }}>
                 <CreateCity cityCreateHandler={cityCreateHandler} />
@@ -42,10 +43,10 @@ const CityPage = () => {
                 {
                     isLoading
                         ? <Spinner />
-                        : <CityList cityDeleteHandler={cityDeleteHandler} />
+                        : <CityList />
                 }
             </Box>
-        </TaskContext.Provider>
+        </CityContext.Provider>
     )
 }
 

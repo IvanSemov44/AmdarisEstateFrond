@@ -1,19 +1,19 @@
 import { useContext, useState } from "react";
-import { CityContext } from "../../contexts/CityContext";
+import { CountryContext } from "../../contexts/CountryContext";
 
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Button from '@mui/material/Button';
 
-const CityItem = ({
-    city,
+const CountryItem = ({
+    country
 }) => {
     const [isEdit, setIsEdit] = useState(false);
-    const { cityDeleteHandler, cityEditHandler } = useContext(CityContext);
+    const { countryRemoveHandler, countryEditHandler } = useContext(CountryContext);
 
     const onEdit = (e) => {
         e.preventDefault();
-        const { cityName } = Object.fromEntries(new FormData(e.target));
-        cityEditHandler(city, cityName)
+        const { countryName } = Object.fromEntries(new FormData(e.target));
+        countryEditHandler(country, countryName)
         setIsEdit(false);
     }
 
@@ -27,27 +27,26 @@ const CityItem = ({
                 ? <form onSubmit={onEdit}>
                     <TextField
                         id="outlined-input"
-                        label="Edit City"
-                        name="cityName"
-                        defaultValue={city.cityName}
+                        label="Edit Country"
+                        name="countryName"
+                        defaultValue={country.countryName}
                     />
                     <Button variant="contained" color="primary" type="submit" value="edit"> Edit</Button>
                 </form>
                 : <>
                     <TextField
                         id="outlined-read-only-input"
-                        label="City"
-                        defaultValue={city.cityName}
+                        label="Country"
+                        defaultValue={country.countryName}
                         InputProps={{
                             readOnly: true,
                         }}
                     />
                     <Button variant="outlined" color="primary" onClick={taskEditClickHandler}>Edit</Button>
-                    <Button variant="outlined" color="error" onClick={() => cityDeleteHandler(city.cityId)}>Delete</Button>
+                    <Button variant="outlined" color="error" onClick={() => countryRemoveHandler(country.countryId)}>Delete</Button>
                 </>
             }
         </li>
     )
 }
-
-export default CityItem;
+export default CountryItem;

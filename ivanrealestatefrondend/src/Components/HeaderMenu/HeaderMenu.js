@@ -35,6 +35,12 @@ const HeaderMenu = () => {
                                 City Catalog
                             </Nav.Link>
                         </LinkContainer>
+
+                        <LinkContainer to="/countries">
+                            <Nav.Link>
+                                Country Catalog
+                            </Nav.Link>
+                        </LinkContainer>
                     
                         <LinkContainer to="/register">
                             <Nav.Link>
