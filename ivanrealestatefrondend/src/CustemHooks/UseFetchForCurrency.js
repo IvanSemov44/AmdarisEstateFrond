@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 
-import * as countryService from '../Services/CountryService';
+import * as currencyService from '../Services/CurrencyService';
 
-const useFetchForCountry = (defaultValue) => {
+const useFetchForCurrency = (defaultValue) => {
     const [data, setData] = useState(defaultValue);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
-        countryService.getAll()
+        currencyService.getAll()
             .then(result => {
                 setIsLoading(false);
                 setData(Object.values(result));
             });
     }, []);
-    
     return [data, setData, isLoading];
-}
+};
 
-export default useFetchForCountry;
+export default useFetchForCurrency;

@@ -41,6 +41,12 @@ const HeaderMenu = () => {
                                 Country Catalog
                             </Nav.Link>
                         </LinkContainer>
+
+                        <LinkContainer to="/currencies">
+                            <Nav.Link>
+                                Currencies Catalog
+                            </Nav.Link>
+                        </LinkContainer>
                     
                         <LinkContainer to="/register">
                             <Nav.Link>

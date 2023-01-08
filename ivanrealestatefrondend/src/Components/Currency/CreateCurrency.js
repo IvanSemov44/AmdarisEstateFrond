@@ -4,20 +4,20 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-const CreateCountry = ({
-    countryCreateHandler
+const CreateCurrency = ({
+    currencyCreateHandler
 }) => {
-    const [country, setCountry] = useState('');
+    const [currency, setCurrency] = useState('');
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const countryForCreate = {countryName: country};
-        countryCreateHandler(countryForCreate);
-        setCountry('');
-    }
+        const currencyForCreate = { currencyName: currency };
+        currencyCreateHandler(currencyForCreate);
+        setCurrency('');
+    };
 
     const onChange = (e) => {
-        setCountry(e.target.value);
+        setCurrency(e.target.value);
     }
 
     return (
@@ -26,10 +26,10 @@ const CreateCountry = ({
                 <Grid item>
                     <TextField
                         id="cityName-input"
-                        name="coutnryName"
-                        label="Create Country"
+                        name="currency"
+                        label="Create currency"
                         type="text"
-                        value={country}
+                        value={currency}
                         onChange={onChange}
                     />
                 </Grid>
@@ -38,8 +38,7 @@ const CreateCountry = ({
                     Create
                 </Button>
             </Grid>
-        </form>
-    )
+        </form>)
 }
 
-export default CreateCountry;
+export default CreateCurrency;
