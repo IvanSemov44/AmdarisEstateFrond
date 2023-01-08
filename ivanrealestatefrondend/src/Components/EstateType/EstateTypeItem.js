@@ -1,52 +1,53 @@
 import { useContext, useState } from "react";
-import { CurrencyContext } from "../../contexts/CurrencyContext";
+import { EstateTypeContext } from "../../contexts/EstateTypeContext";
 
-import TextField from '@mui/material/TextField';
+import TextField from '@mui/material/TextField'; 
 import Button from '@mui/material/Button';
 
-const CurrencyItem = ({
-    currency
-}) => {
+const EstateTypeItem = ({
+    estateType
+})=>{
     const [isEdit, setIsEdit] = useState(false);
-    const { currencyRemoveHandler, currencyEditHandler } = useContext(CurrencyContext);
+    const { estateTypeRemoveHandler, estateTypeEditHandler } = useContext(EstateTypeContext);
 
     const onEdit = (e) => {
         e.preventDefault();
-        const { currencyName } = Object.fromEntries(new FormData(e.target));
-        currencyEditHandler(currency, currencyName)
+        const { typeName } = Object.fromEntries(new FormData(e.target));
+        estateTypeEditHandler(estateType, typeName)
         setIsEdit(false);
     }
 
     const taskEditClickHandler = () => {
         setIsEdit(true);
     }
+
     return (
         <li>
             {isEdit
                 ? <form onSubmit={onEdit}>
                     <TextField
                         id="outlined-input"
-                        label="Edit currency"
-                        name="currencyName"
-                        defaultValue={currency.currencyName}
+                        label="Edit Estate Type"
+                        name="typeName"
+                        defaultValue={estateType.typeName}
                     />
                     <Button variant="contained" color="primary" type="submit" value="edit"> Edit</Button>
                 </form>
                 : <>
                     <TextField
                         id="outlined-read-only-input"
-                        label="Currency"
-                        defaultValue={currency.currencyName}
+                        label="Estate Type"
+                        defaultValue={estateType.typeName}
                         InputProps={{
                             readOnly: true,
                         }}
                     />
                     <Button variant="outlined" color="primary" onClick={taskEditClickHandler}>Edit</Button>
-                    <Button variant="outlined" color="error" onClick={() => currencyRemoveHandler(currency.currencyId)}>Delete</Button>
+                    <Button variant="outlined" color="error" onClick={() => estateTypeRemoveHandler(estateType.estateTypeId)}>Delete</Button>
                 </>
             }
         </li>
     )
 }
 
-export default CurrencyItem;
+export default EstateTypeItem;

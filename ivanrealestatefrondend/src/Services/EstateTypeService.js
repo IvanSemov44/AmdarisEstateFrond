@@ -19,3 +19,35 @@ export const getById = async (id) => {
     });
     return await res.json();
 };
+
+export const create = async (typeName) => {
+    const res = await fetch(`${baseUrl}/api/estatetypes`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(typeName)
+    });
+    return await res.json();
+};
+
+export const update = async (estateType, typeName) => {
+    const res = await fetch(`${baseUrl}/api/estatetypes/${estateType.estateTypeId}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(typeName)
+    });
+    return await res.json();
+};
+
+export const deleteEstateType = async (estateTypeId) => {
+    const res = await fetch(`${baseUrl}/api/estatetypes/${estateTypeId}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    return await res.json();
+}

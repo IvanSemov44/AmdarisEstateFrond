@@ -47,6 +47,12 @@ const HeaderMenu = () => {
                                 Currencies Catalog
                             </Nav.Link>
                         </LinkContainer>
+
+                        <LinkContainer to="/estatetypes">
+                            <Nav.Link>
+                                Estate Type Catalog
+                            </Nav.Link>
+                        </LinkContainer>
                     
                         <LinkContainer to="/register">
                             <Nav.Link>

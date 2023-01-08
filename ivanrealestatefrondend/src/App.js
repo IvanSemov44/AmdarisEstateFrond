@@ -14,6 +14,7 @@ import CityPage from './Components/City/CityPage';
 import CountryPage from './Components/Country/CountryPage';
 import CreateCity from './Components/City/CreateCity';
 import CurrencyPage from './Components/Currency/CurrencyPage';
+import EstateTypePage from './Components/EstateType/EstateTypePage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/cities' element={<CityPage />}></Route>
           <Route path='/countries' element={<CountryPage />}></Route>
           <Route path='/currencies' element={<CurrencyPage />}></Route>
+          <Route path='/estatetypes' element={<EstateTypePage />}></Route>
           <Route path='/giphy' element={<GiphyCatalog />}></Route>
           <Route path='/createcity' element={<CreateCity />}></Route>
 
