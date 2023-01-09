@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 
-import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActionArea from '@mui/material/CardActionArea';
+import Typography from '@mui/material/Typography';
 
 import * as  cityService from "../../../Services/CityService";
 import * as  estateTypeService from "../../../Services/EstateTypeService";
@@ -81,41 +85,42 @@ const EstateCard = ({
     }
 
     return (
-        <div className='estate-card'>
-            {/* <img className='card-image' alt="EstateImage" src={resultImage} /> */}
-            <img className='card-image' alt="EstateImage" src="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg" />
-            <div className="card-body">
-                <div className="card-body-text">
-                    {estate.Description}
-                </div>
-            </div>
-            <div className="first group">
-                <ol className="list-group">
-                    <li className="list-item">{elementSellOrRent}</li>
-                    <li className="list-item">Country: {country.countryName}</li>
-                    <li className="list-item">City: {city.cityName}</li>
-                    <li className="list-item">Address: {estate.address}</li>
-                    <li className="list-item">Floor: {estate.floоr}</li>
-                </ol>
-            </div>
-            <div className="second group">
-                <ol className="list-group">
-                    <li className="list-item">Price: {estate.price}</li>
-                    <li className="list-item">Currency: {currency.currencyName}</li>
-                    <li className="list-item">Type: {estateType.typeName}</li>
-                </ol>
-            </div>
-            <div className="card-body-button">
-                {/* <button className="card-body-link">Card Link</button> */}
+        <Card sx={{ maxWidth: 345, margin: 1 }}>
+            <CardActionArea >
+                <Link to={`/catalog/${estate.estateId}`}>
+                    <CardMedia
+                        component="img"
+                        height="140"
+                        image="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
+                        alt="Estate"
+                    />
 
-                <Button variant="outlined">
-                    <Link to={`/catalog/${estate.estateId}`}>
-                        Details
-                    </Link>
-                </Button>
-                {/* <button className="card-body-link">Another Link</button> */}
-            </div>
-        </div>
+                </Link>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        <li className="list-item">Price: {estate.price}</li>
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        <div className="first group">
+                            <ol className="list-group">
+                                <li className="list-item">{elementSellOrRent}</li>
+                                <li className="list-item">Country: {country.countryName}</li>
+                                <li className="list-item">City: {city.cityName}</li>
+                                <li className="list-item">Address: {estate.address}</li>
+                                <li className="list-item">Floor: {estate.floоr}</li>
+                            </ol>
+                        </div>
+                        <div className="second group">
+                            <ol className="list-group">
+                                <li className="list-item">Currency: {currency.currencyName}</li>
+                                <li className="list-item">Type: {estateType.typeName}</li>
+                            </ol>
+                        </div>
+                    </Typography>
+                </CardContent>
+
+            </CardActionArea>
+        </Card>
     );
 }
 
