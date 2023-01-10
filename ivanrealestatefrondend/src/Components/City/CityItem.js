@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { CityContext } from "../../contexts/CityContext";
+import { useForm } from "react-hook-form";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,7 +9,10 @@ const CityItem = ({
     city,
 }) => {
     const [isEdit, setIsEdit] = useState(false);
+    const [cityForEdit, setCityForEdit] = useState(city.cityName);
     const { cityDeleteHandler, cityEditHandler } = useContext(CityContext);
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
 
     const onEdit = (e) => {
         e.preventDefault();
@@ -17,8 +21,15 @@ const CityItem = ({
         setIsEdit(false);
     }
 
-    const taskEditClickHandler = () => {
-        setIsEdit(true);
+
+    const onChange = (e) => {
+        setCityForEdit(e.target.value);
+
+        if (e.target.value) {
+            errors.cityName = false;
+        } else {
+            errors.cityName = true;
+        }
     }
 
     return (
@@ -26,12 +37,18 @@ const CityItem = ({
             {isEdit
                 ? <form onSubmit={onEdit}>
                     <TextField
+                        error={errors.cityName}
+                        {...register("cityName", { required: true })}
                         id="outlined-input"
                         label="Edit City"
-                        name="cityName"
+                        onChange={onChange}
+                        value={cityForEdit}
                         defaultValue={city.cityName}
+                        helperText={errors.cityName && "City field is required"}
                     />
                     <Button variant="contained" color="primary" type="submit" value="edit"> Edit</Button>
+                    <Button variant="outlined" color="error" onClick={() => setIsEdit(false)}>cancel</Button>
+
                 </form>
                 : <>
                     <TextField
@@ -42,7 +59,7 @@ const CityItem = ({
                             readOnly: true,
                         }}
                     />
-                    <Button variant="outlined" color="primary" onClick={taskEditClickHandler}>Edit</Button>
+                    <Button variant="outlined" color="primary" onClick={() => setIsEdit(true)}>Edit</Button>
                     <Button variant="outlined" color="error" onClick={() => cityDeleteHandler(city.cityId)}>Delete</Button>
                 </>
             }
