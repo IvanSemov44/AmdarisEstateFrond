@@ -11,7 +11,7 @@ const CreateCity = ({
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [city, setCity] = useState('');
-
+    const [more, setMore] = useState(false);
 
     const onSubmit = data => {
         cityCreateHandler({ cityName: data.cityName })
@@ -26,6 +26,13 @@ const CreateCity = ({
         } else {
             errors.cityName = true;
         }
+
+        if (e.target.value.length > 15) {
+            setMore(true);
+        }
+        else {
+            setMore(false);
+        }
     }
 
     return (
@@ -34,14 +41,14 @@ const CreateCity = ({
                 <Grid sx={{ '& button': { m: 1 } }} container alignItems="center" justify="center" direction="row">
                     <Grid item>
                         <TextField
-                            error={errors.cityName}
+                            error={errors.cityName || more}
                             {...register("cityName", { required: true })}
                             id="cityName-input"
                             label="Create City"
                             type="text"
                             value={city}
                             onChange={onChange}
-                            helperText={errors.cityName && "City field is required"}
+                            helperText={(errors.cityName && "City field is required") || (more && "City can't be more from 15 symbols")}
                         />
                     </Grid>
                     <Grid item>

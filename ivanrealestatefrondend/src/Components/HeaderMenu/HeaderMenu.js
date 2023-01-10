@@ -44,7 +44,7 @@ const HeaderMenu = () => {
 
                         <LinkContainer to="/currencies">
                             <Nav.Link>
-                                Currencies Catalog
+                                Currency Catalog
                             </Nav.Link>
                         </LinkContainer>
 
