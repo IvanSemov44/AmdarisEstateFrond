@@ -2,7 +2,7 @@ import { CityContext } from '../../contexts/CityContext';
 
 import Box from '@mui/material/Box';
 
-import CityList from '../City/CityList';
+import CityList from './CityList';
 import useCities from "../../CustemHooks/useCities";
 import useFetchForCity from "../../CustemHooks/useFetchForCity";
 import CreateCity from './CreateCity';
