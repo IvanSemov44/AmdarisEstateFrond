@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { CityContext } from "../../contexts/CityContext";
 import { useForm } from "react-hook-form";
+import { CityContext } from "../../contexts/CityContext";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,34 +8,13 @@ import TextField from "@mui/material/TextField";
 const CityItem = ({
     city,
 }) => {
-
     const [isEdit, setIsEdit] = useState(false);
-    const [more, setMore] = useState(false);
-    const [cityForEdit, setCityForEdit] = useState(city.cityName);
-
-    const { cityDeleteHandler, cityEditHandler } = useContext(CityContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { cityDeleteHandler, cityEditHandler } = useContext(CityContext);
 
     const onEdit = (data) => {
         cityEditHandler(city, data.cityName)
         setIsEdit(false);
-    }
-
-    const onChange = (e) => {
-        setCityForEdit(e.target.value);
-
-        if (e.target.value) {
-            errors.cityName = false;
-        } else {
-            errors.cityName = true;
-        }
-
-        if (e.target.value.length > 15) {
-            setMore(true);
-        }
-        else {
-            setMore(false);
-        }
     }
 
     return (
@@ -43,15 +22,14 @@ const CityItem = ({
             {isEdit
                 ? <form onSubmit={handleSubmit(onEdit)}>
                     <TextField
-                        error={errors.cityName || more}
-                        {...register("cityName", { required: true })}
-                        id="outlined-input"
+                        error={errors.cityName}
+                        {...register("cityName", {
+                            required: { value: true, message: "City is required field!" },
+                            maxLength: { value: 20, message: "City can't be more from 20 symbols" }
+                        })}
                         label="Edit City"
-                        onChange={onChange}
-                        value={cityForEdit}
                         defaultValue={city.cityName}
-                        helperText={(errors.cityName && "City field is required") || (more && "City can't be more from 15 symbols")}
-
+                        helperText={errors.cityName && errors.cityName.message}
                     />
                     <Button variant="contained" color="primary" type="submit" value="edit"> edit</Button>
                     <Button variant="outlined" color="error" onClick={() => setIsEdit(false)}>cancel</Button>
