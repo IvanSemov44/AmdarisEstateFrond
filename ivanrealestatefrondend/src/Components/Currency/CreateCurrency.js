@@ -1,44 +1,55 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
+import Box from '@mui/material/Grid'
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 const CreateCurrency = ({
     currencyCreateHandler
 }) => {
-    const [currency, setCurrency] = useState('');
+    const { register, handleSubmit, formState: { errors }, resetField } = useForm();
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        const currencyForCreate = { currencyName: currency };
-        currencyCreateHandler(currencyForCreate);
-        setCurrency('');
+    const onSubmit = data => {
+        resetField('currencyName');
+        currencyCreateHandler({ currencyName: data.currencyName });
     };
 
-    const onChange = (e) => {
-        setCurrency(e.target.value);
-    }
-
     return (
-        <form onSubmit={onSubmit}>
-            <Grid sx={{ '& button': { m: 1 } }} container alignItems="center" justify="center" direction="row">
+        <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <Grid
+                sx={{ '& button': { m: 1 } }}
+                container
+                alignItems="center"
+                justify="center"
+                direction="row"
+            >
                 <Grid item>
                     <TextField
-                        id="cityName-input"
-                        name="currency"
-                        label="Create currency"
-                        type="text"
-                        value={currency}
-                        onChange={onChange}
+                        error={errors.currencyName}
+                        {...register("currencyName", {
+                            required: { value: true, message: "Currency is required field!" },
+                            maxLength: { value: 10, message: "Currency can't be more from 10 symbols" }
+                        })}
+                        label="Create Country"
+                        helperText={errors.currencyName && errors.currencyName?.message}
                     />
                 </Grid>
-
-                <Button variant="contained" color="success" type="submit">
-                    Create
-                </Button>
+                <Grid item>
+                    <Button variant="contained" color="success" type="submit">
+                        Create
+                    </Button>
+                </Grid>
             </Grid>
-        </form>)
+        </Box>)
 }
 
 export default CreateCurrency;

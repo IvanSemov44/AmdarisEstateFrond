@@ -6,7 +6,7 @@ import EstateTypeItem from "./EstateTypeItem";
 
 const EstateTypeList = () => {
     const { estateTypes } = useContext(EstateTypeContext)
-    console.log(estateTypes);
+    
     return (
         <Box sx={{ '& button': { m: 1 } }}>
             {estateTypes.map(x =>

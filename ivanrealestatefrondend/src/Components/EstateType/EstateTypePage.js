@@ -27,7 +27,6 @@ const EstateTypePage = () => {
 
     const estateTypeEditHandler = async (estateType, typeName) => {
         const updatedEstateType = { ...estateType, typeName: typeName };
-        console.log(updatedEstateType);
         updateEstateType(updatedEstateType, { typeName: typeName });
         setEstateTypes(state => state.map(x => x.estateTypeId === estateType.estateTypeId ? updatedEstateType : x));
     };

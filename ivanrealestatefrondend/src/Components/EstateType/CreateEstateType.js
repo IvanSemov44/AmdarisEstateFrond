@@ -1,43 +1,55 @@
-import Grid from '@mui/material/Grid';
-import TextField  from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { useForm } from 'react-hook-form';
 
-import { useState } from 'react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 const CreateEstateType = ({
     estateTypeCreateHandler
-})=>{
-    const [typeName, setTypeName] = useState('');
+}) => {
+    const { register, handleSubmit, formState: { errors }, resetField } = useForm();
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        const cityForCreate = { typeName: typeName }
-        estateTypeCreateHandler(cityForCreate)
-        setTypeName('');
+    const onSubmit = data => {
+        resetField("typeName");
+        estateTypeCreateHandler({ typeName: data.typeName });
     }
 
-    const onChange = (e) => {
-        setTypeName(e.target.value);
-    }
     return (
-        <form onSubmit={onSubmit}>
-            <Grid sx={{ '& button': { m: 1 } }} container alignItems="center" justify="center" direction="row">
+        <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <Grid
+                sx={{ '& button': { m: 1 } }}
+                container
+                alignItems="center"
+                justify="center"
+                direction="row"
+            >
                 <Grid item>
                     <TextField
-                        id="cityName-input"
-                        name="typeName"
+                        error={errors.typeName}
+                        {...register("typeName", {
+                            required: { value: true, message: "Estate Type is required field!" },
+                            maxLength: { value: 15, message: "Estate Type can't be more from 15 symbols" }
+                        })}
                         label="Create Estate Type"
-                        type="text"
-                        value={typeName}
-                        onChange={onChange}
+                        helperText={errors.typeName && errors.typeName?.message}
                     />
                 </Grid>
-
-                <Button variant="contained" color="success" type="submit">
-                    Create
-                </Button>
+                <Grid item>
+                    <Button variant="contained" color="success" type="submit">
+                        Create
+                    </Button>
+                </Grid>
             </Grid>
-        </form>
+        </Box>
     );
 }
 
