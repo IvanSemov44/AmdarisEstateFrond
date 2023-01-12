@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -11,6 +11,8 @@ import * as  currencyService from "../../../Services/CurrencyService";
 import * as  countryService from "../../../Services/CountryService";
 
 import '../EstateDetails/EstateDetails.css';
+import { Fab } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 
 const EstateDetails = () => {
     const { estateId } = useParams();
@@ -139,7 +141,13 @@ const EstateDetails = () => {
                 <ListItem>Rooms: {estate.rooms}</ListItem>
                 <ListItem>Floor: {estate.floоr}</ListItem>
                 <ListItem>Year Of Creation: {estate.yearOfCreation}</ListItem>
-                <ListItem   >Extras: {estate.extras}</ListItem>
+                <ListItem>Extras: {estate.extras}</ListItem>
+
+                <Link to={`/editEstate/${estate.estateId}`}>
+                    <Fab color="primary" aria-label="edit">
+                        <EditIcon />
+                    </Fab>
+                </Link>
             </List>
         </div>
 

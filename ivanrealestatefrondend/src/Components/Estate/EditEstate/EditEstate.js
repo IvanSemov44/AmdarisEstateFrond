@@ -1,4 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { InputLabel } from "@mui/material";
+
 
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -18,12 +23,11 @@ import useGetCurrency from '../../../CustemHooks/useGetCurrency';
 import useGetCountries from '../../../CustemHooks/useGetCountries';
 import useGetEstateType from '../../../CustemHooks/useGetEstateType';
 
-import * as estateService from '../../../Services/EstateService'
-
-import "./CreateEstate.css";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { InputLabel } from "@mui/material";
+import * as estateService from '../../../Services/EstateService';
+import * as  cityService from "../../../Services/CityService";
+import * as  estateTypeService from "../../../Services/EstateTypeService";
+import * as  currencyService from "../../../Services/CurrencyService";
+import * as  countryService from "../../../Services/CountryService";
 
 const defaultValues = {
     address: "",
@@ -32,7 +36,7 @@ const defaultValues = {
     neighborhood: "",
     price: 0,
     estateArea: 0,
-    floor: 0,
+    floor: 3,
     rooms: 0,
     yearOfCreation: 2023,
     sell: true,
@@ -42,10 +46,18 @@ const defaultValues = {
     currencyId: "",
 };
 
-const CreateEstate = () => {
+const EditEstate=()=>{
+    const { estateId } = useParams();
+
+    const [estate, setEstate] = useState({});
+    const [city, setCity] = useState({});
+    const [estateType, setEstateType] = useState({});
+    const [currency, setCurrency] = useState({});
+    const [country, setCountry] = useState({});
+
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState(defaultValues);
-    const { register, formState: { errors }, handleSubmit,setValue } = useForm(
+    const { register, formState: { errors }, handleSubmit, setValue } = useForm(
         {
             defaultValues: {
                 address: "",
@@ -66,11 +78,79 @@ const CreateEstate = () => {
         }
     );
 
-
     const cities = useGetCities();
     const countries = useGetCountries();
     const estateTypes = useGetEstateType();
     const currencies = useGetCurrency();
+
+    useEffect(() => {
+        let ignore = false;
+        estateService.getById(estateId)
+            .then(result => {
+                if (!ignore) {
+                    setEstate(result);
+                }
+            })
+        return () => {
+            ignore = true;
+        }
+    }, [estateId]);
+
+    useEffect(() => {
+        let ignore = false;
+
+        estateTypeService.getById(estate.estateTypeId)
+            .then(result => {
+                if (!ignore) {
+                    setEstateType(result);
+                }
+            });
+        return () => {
+            ignore = true;
+        }
+    }, [estate.estateTypeId]);
+
+    useEffect(() => {
+        let ignore = false;
+
+        cityService.getById(estate.cityId)
+            .then(result => {
+                if (!ignore) {
+                    setCity(result);
+                }
+            });
+        return () => {
+            ignore = true;
+        }
+    }, [estate.cityId]);
+
+    useEffect(() => {
+        let ignore = false;
+
+        currencyService.getById(estate.curencyId)
+            .then(result => {
+                if (!ignore) {
+                    setCurrency(result);
+                }
+            });
+        return () => {
+            ignore = true;
+        }
+    }, [estate.curencyId]);
+
+    useEffect(() => {
+        let ignore = false;
+
+        countryService.getById(estate.countryId)
+            .then(result => {
+                if (!ignore) {
+                    setCountry(result);
+                }
+            });
+        return () => {
+            ignore = true;
+        }
+    }, [estate.countryId]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -81,15 +161,16 @@ const CreateEstate = () => {
     };
 
     const handlerSubmit = data => {
-        console.log({ ...data});
-        estateService.Create({...data,sell: data.sell==="true"})
+        console.log({ ...data });
+        estateService.Create({ ...data, sell: data.sell === "true" })
             .then(result => {
                 console.log(result);
                 navigate(`/catalog/${result.estateId}`);
             });
     };
+    console.log(estate);
 
-    return (
+    return(
         <Box
             component="form"
             sx={{
@@ -102,13 +183,21 @@ const CreateEstate = () => {
             <Grid container alignItems="center" justify="center" direction="column">
                 <Grid item>
                     <TextField
+                        error
+                        id="outlined-error"
+                        label="Error"
+                        defaultValue="Hello World"
+                    />
+                    <TextField
+
                         error={errors.neighborhood}
                         {...register("neighborhood", {
                             required: { value: true, message: "Neighborhood is required field!" },
                             maxLength: { value: 20, message: "Neighborhood can't be more from 20 symbols" }
                         })}
                         label="Neighborhood"
-                        defaultValue={formValues.neighborhood}
+                        // defaultValue={estate.neighborhood}
+                        // defaultValue="center"
                         helperText={errors.neighborhood && errors.neighborhood.message}
                     />
 
@@ -156,7 +245,7 @@ const CreateEstate = () => {
                         name="floor"
                         label="Floor"
                         type="number"
-                        defaultValue={formValues.floor}
+                        defaultValu={formValues.floor}
                         helperText={errors.floor && errors.floor.message}
                     />
                     <TextField
@@ -237,17 +326,23 @@ const CreateEstate = () => {
                 <Box sx={{ minWidth: 150 }}>
                     <Grid container alignItems="center" justify="center" direction="row"></Grid>
                     <Grid item>
-                        <FormControl sx={{ m: 1 }} fullWidth>
-                            <InputLabel id="demo-simple-select-label">City</InputLabel>
-                            <Select
-                                error={errors.cityId}
+                        {/* <FormControl sx={{ m: 1 }} fullWidth> */}
+                            {/* <InputLabel id="demo-simple-select-label">{city.cityName}</InputLabel> */}
+                            {/* <Select
+                                  error={errors.cityId}
                                 {...register("cityId",
                                     { required: { value: true, message: "City is required field!" } })}
                                 name="cityId"
                                 label="City"
-                                value={formValues.cityId}
+                                value="cityId"
                                 onChange={handleInputChange}
                             >
+                                <MenuItem
+                                    key={city.cityId}
+                                    value={city.cityId}
+                                >
+                                    {city.cityName}
+                                </MenuItem>
                                 {cities.map(x =>
                                     <MenuItem
                                         key={x.cityId}
@@ -262,9 +357,9 @@ const CreateEstate = () => {
                                 ? <FormHelperText error>{errors.cityId.message}</FormHelperText>
                                 : <></>
                             }
-                        </FormControl>
+                        </FormControl> */}
 
-                        <FormControl sx={{ m: 1 }} fullWidth>
+                        {/* <FormControl sx={{ m: 1 }} fullWidth>
                             <InputLabel id="demo-simple-select-label">Country</InputLabel>
                             <Select
                                 error={errors.countryId}
@@ -272,7 +367,7 @@ const CreateEstate = () => {
                                     { required: { value: true, message: "Country is required field!" } })}
                                 name="countryId"
                                 label="Country"
-                                value={formValues.countryId}
+                                // value={formValues.countryId}
                                 onChange={handleInputChange}
                             >
                                 {countries.map(x =>
@@ -288,7 +383,7 @@ const CreateEstate = () => {
                                 ? <FormHelperText error>{errors.countryId.message}</FormHelperText>
                                 : <></>
                             }
-                        </FormControl>
+                        </FormControl> */}
                     </Grid>
 
                     <Grid item>
@@ -352,25 +447,7 @@ const CreateEstate = () => {
                 </Button>
             </Grid>
         </Box>
-    );
+    )
 }
 
-export default CreateEstate;
-
-// address: "Bl.407"
-    // changed: "2022-11-29T12:16:19.5468204"
-    // cityId: "25db1981-7501-45bd-e3bd-08dacfa02b27"
-    // countryId: "f8c5ce88-54ee-4feb-9605-08dad0620656"
-    // created: "2022-11-29T12:16:19.5468059"
-    // curencyId: "4bb67d01-13cb-47d5-d499-08dad1453af0"
-    // description: "Golqm e"
-    // estateId: "387f6683-f763-4e0d-b35c-08dad2038670"
-    // estateTypeId: "f9fec971-f109-4679-0c67-08dad1555662"
-    // extras: "asansior i parking magazin"
-    // "floоr": 7
-    // images: Array(3)[{… }, {… }, {… }]
-    // neighborhood: "Vladislavovo"
-    // price: 199000
-    // rooms: 5
-    // sell: true
-    // yearOfCreation: 1970
+export default EditEstate;
