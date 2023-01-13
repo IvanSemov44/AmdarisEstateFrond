@@ -13,89 +13,26 @@ import * as  countryService from "../../../Services/CountryService";
 import '../EstateDetails/EstateDetails.css';
 import { Fab } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
+import ImageShow from "../../Image/ImageShow";
+
+
+import useGetCityById from "../../../CustemHooks/CustemCityHooks/useGetCityById";
+import useGetEstateById from "../../../CustemHooks/CustemEstateHooks/useGetEstateById";
+import useGetCountryById from "../../../CustemHooks/CustemCountryHooks/useGetCountryById";
+import useGetCurrencyById from "../../../CustemHooks/CustemCurrencyHooks/useGetCurrencyById";
+import useGetEstateTypById from "../../../CustemHooks/CustemEstateTypeHooks/useGetEstateTypById";
 
 const EstateDetails = () => {
     const { estateId } = useParams();
 
-    const [estate, setEstate] = useState({});
-    const [city, setCity] = useState({});
-    const [estateType, setEstateType] = useState({});
-    const [currency, setCurrency] = useState({});
-    const [country, setCountry] = useState({});
+    const estate = useGetEstateById(estateId);
 
-
-    useEffect(() => {
-        let ignore = false;
-        estateService.getById(estateId)
-            .then(result => {
-                if (!ignore) {
-                    setEstate(result);
-                }
-            })
-        return () => {
-            ignore = true;
-        }
-    }, [estateId]);
-
-    useEffect(() => {
-        let ignore = false;
-
-        estateTypeService.getById(estate.estateTypeId)
-            .then(result => {
-                if (!ignore) {
-                    setEstateType(result);
-                }
-            });
-        return () => {
-            ignore = true;
-        }
-    }, [estate.estateTypeId]);
-
-    useEffect(() => {
-        let ignore = false;
-
-        cityService.getById(estate.cityId)
-            .then(result => {
-                if (!ignore) {
-                    setCity(result);
-                }
-            });
-        return () => {
-            ignore = true;
-        }
-    }, [estate.cityId]);
-
-    useEffect(() => {
-        let ignore = false;
-
-        currencyService.getById(estate.curencyId)
-            .then(result => {
-                if (!ignore) {
-                    setCurrency(result);
-                }
-            });
-        return () => {
-            ignore = true;
-        }
-    }, [estate.curencyId]);
-
-    useEffect(() => {
-        let ignore = false;
-
-        countryService.getById(estate.countryId)
-            .then(result => {
-                if (!ignore) {
-                    setCountry(result);
-                }
-            });
-        return () => {
-            ignore = true;
-        }
-    }, [estate.countryId]);
-
+    const city = useGetCityById(estate.cityId);
+    const country = useGetCountryById(estate.countryId);
+    const currency = useGetCurrencyById(estate.curencyId);
+    const estateType = useGetEstateTypById(estate.estateTypeId);
 
     console.log(estate);
-    console.log(city);
 
     let elementSellOrRent;
 
@@ -130,6 +67,9 @@ const EstateDetails = () => {
                 sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
                 aria-label="EstateDetails"
             >
+                {estate.images
+                    ? <ImageShow images={estate.images} />
+                    : <></>}
                 <ListItem>{elementSellOrRent}</ListItem>
                 <ListItem>Country: {country.countryName}</ListItem>
                 <ListItem>City: {city.cityName}</ListItem>
@@ -140,6 +80,7 @@ const EstateDetails = () => {
                 <ListItem>Type: {estateType.typeName}</ListItem>
                 <ListItem>Rooms: {estate.rooms}</ListItem>
                 <ListItem>Floor: {estate.floоr}</ListItem>
+                <ListItem>Area: {estate.estateArea}</ListItem>
                 <ListItem>Year Of Creation: {estate.yearOfCreation}</ListItem>
                 <ListItem>Extras: {estate.extras}</ListItem>
 

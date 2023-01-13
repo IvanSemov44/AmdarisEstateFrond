@@ -13,7 +13,7 @@ const useFetchForCity = (defaultValue) => {
                 setIsLoading(false);
                 setData(Object.values(result))
             });
-    }, [])
+    }, []);
 
     return [data, setData, isLoading];
 }

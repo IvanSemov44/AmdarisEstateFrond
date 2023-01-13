@@ -5,14 +5,13 @@ const useCities = () => {
         return cityService.deleteCity(cityId);
     }
 
-    const createCity = (cityName)=>{
+    const createCity = (cityName) => {
         return cityService.create(cityName);
     }
 
-    const updateCity = (city,cityName)=>{
-        return cityService.Update(city,cityName);
+    const updateCity = (city, cityName) => {
+        return cityService.Update(city, cityName);
     }
-
     return {
         removeCity,
         createCity,
