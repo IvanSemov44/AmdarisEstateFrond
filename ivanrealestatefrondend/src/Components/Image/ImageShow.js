@@ -35,7 +35,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 //     },
 // ];
 
-const ImageShow =({images})=> {
+const ImageShow = ({ images }) => {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = images.length;
@@ -53,7 +53,7 @@ const ImageShow =({images})=> {
     };
 
     return (
-        <Box sx={{ maxWidth:1000, flexGrow: 3 }}>
+        < Box sx={{ maxWidth: 1000, flexGrow: 3 }}>
             <Paper
                 square
                 elevation={0}

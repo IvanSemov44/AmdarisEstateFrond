@@ -1,20 +1,17 @@
-import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-
-import * as estateService from '../../../Services/EstateService';
-import * as  cityService from "../../../Services/CityService";
-import * as  estateTypeService from "../../../Services/EstateTypeService";
-import * as  currencyService from "../../../Services/CurrencyService";
-import * as  countryService from "../../../Services/CountryService";
-
 import '../EstateDetails/EstateDetails.css';
-import { Fab } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import ImageShow from "../../Image/ImageShow";
 
+import {
+    Box,
+    Fab,
+    List,
+    ListItem
+} from "@mui/material";
+
+import EditIcon from '@mui/icons-material/Edit';
+
+import ImageShow from "../../Image/ImageShow";
 
 import useGetCityById from "../../../CustemHooks/CustemCityHooks/useGetCityById";
 import useGetEstateById from "../../../CustemHooks/CustemEstateHooks/useGetEstateById";
@@ -43,33 +40,26 @@ const EstateDetails = () => {
         elementSellOrRent = "Rent";
     }
 
-    // address: "Bl.407"
-    // changed: "2022-11-29T12:16:19.5468204"
-    // cityId: "25db1981-7501-45bd-e3bd-08dacfa02b27"
-    // countryId: "f8c5ce88-54ee-4feb-9605-08dad0620656"
-    // created: "2022-11-29T12:16:19.5468059"
-    // curencyId: "4bb67d01-13cb-47d5-d499-08dad1453af0"
-    // description: "Golqm e"
-    // estateId: "387f6683-f763-4e0d-b35c-08dad2038670"
-    // estateTypeId: "f9fec971-f109-4679-0c67-08dad1555662"
-    // extras: "asansior i parking magazin"
-    // "floоr": 7
-    // images: Array(3)[{… }, {… }, {… }]
-    // neighborhood: "Vladislavovo"
-    // price: 199000
-    // rooms: 5
-    // sell: true
-    // yearOfCreation: 1970
-
     return (
         <div className="estateDetails">
             <List
                 sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
                 aria-label="EstateDetails"
             >
-                {estate.images
+                {estate.images !== undefined && estate.images.length !== 0
                     ? <ImageShow images={estate.images} />
-                    : <></>}
+                    : <Box
+                        component="img"
+                        sx={{
+                            height: 355,
+                            display: 'block',
+                            maxWidth: 1000,
+                            overflow: 'hidden',
+                            width: '100%',
+                        }}
+                        src="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
+                        alt="No Image"
+                    />}
                 <ListItem>{elementSellOrRent}</ListItem>
                 <ListItem>Country: {country.countryName}</ListItem>
                 <ListItem>City: {city.cityName}</ListItem>
