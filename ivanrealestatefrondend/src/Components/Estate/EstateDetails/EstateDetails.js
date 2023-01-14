@@ -6,6 +6,7 @@ import {
     Box,
     Fab,
     List,
+    Button,
     ListItem
 } from "@mui/material";
 
@@ -60,6 +61,9 @@ const EstateDetails = () => {
                         src="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
                         alt="No Image"
                     />}
+                <Link to={`/editEstate/${estate.estateId}/images`}>
+                    <Button variant="outlined" color="primary" >edit images</Button>
+                </Link>
                 <ListItem>{elementSellOrRent}</ListItem>
                 <ListItem>Country: {country.countryName}</ListItem>
                 <ListItem>City: {city.cityName}</ListItem>

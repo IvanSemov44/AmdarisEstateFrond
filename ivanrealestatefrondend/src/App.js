@@ -16,6 +16,7 @@ import CreateCity from './Components/City/CreateCity';
 import CurrencyPage from './Components/Currency/CurrencyPage';
 import EstateTypePage from './Components/EstateType/EstateTypePage';
 import EditEstate from './Components/Estate/EditEstate/EditEstate';
+import ImagePage from './Components/Image/ImagePage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/catalog/:estateId' element={<EstateDetails />}></Route>
           <Route path='/createEstate' element={<CreateEstate />}></Route>
           <Route path='/editEstate/:estateId' element={<EditEstate />}></Route>
+          <Route path='/editEstate/:estateId/images' element={<ImagePage />}></Route>
           <Route path='/cities' element={<CityPage />}></Route>
           <Route path='/countries' element={<CountryPage />}></Route>
           <Route path='/currencies' element={<CurrencyPage />}></Route>
