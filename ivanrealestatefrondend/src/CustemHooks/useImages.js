@@ -1,6 +1,6 @@
 import * as imageService from '../Services/ImageService';
 
-const useCities = (estateId) => {
+const useImages = (estateId) => {
     const removeImage = (imageId) => {
         return imageService.deleteImage(estateId, imageId);
     }
@@ -12,7 +12,7 @@ const useCities = (estateId) => {
     const updateImage = (imageId, imageData) => {
         return imageService.update(estateId, imageId, imageData);
     }
-    
+
     return {
         removeImage,
         createImage,
@@ -20,4 +20,4 @@ const useCities = (estateId) => {
     }
 }
 
-export default useCities;
+export default useImages;
