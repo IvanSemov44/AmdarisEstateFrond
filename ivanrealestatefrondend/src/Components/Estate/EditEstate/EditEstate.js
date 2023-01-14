@@ -15,7 +15,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import {Spinner} from '../../Common/Spinner/Spinner';
+import { Spinner } from '../../Common/Spinner/Spinner';
 
 import useGetCities from '../../../CustemHooks/useGetCities';
 import useGetCurrency from '../../../CustemHooks/useGetCurrency';
@@ -70,10 +70,10 @@ const EditEstate = () => {
         country !== undefined &&
         currency !== undefined &&
         estateType !== undefined &&
-        cities !== undefined &&
-        countries !== undefined &&
-        currencies !== undefined &&
-        estateTypes !== undefined &&
+        cities.length !== 0 &&
+        countries.length !== 0 &&
+        currencies.length !== 0 &&
+        estateTypes.length !== 0 &&
         estate !== undefined;
 
 
@@ -93,11 +93,8 @@ const EditEstate = () => {
                 navigate(`/catalog/${result.estateId}`);
             });
     };
-
-
     console.log(estate);
-    console.log(ready);
-    console.log(estateTypes);
+    console.log(currency);
 
     return (
         <>
@@ -115,12 +112,6 @@ const EditEstate = () => {
                     <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
                             <TextField
-                                error
-                                id="outlined-error"
-                                label="Error"
-                                defaultValue="center"
-                            />
-                            <TextField
                                 error={errors.neighborhood}
                                 {...register("neighborhood", {
                                     required: { value: true, message: "Neighborhood is required field!" },
@@ -131,7 +122,7 @@ const EditEstate = () => {
                                 // defaultValue="center"
                                 helperText={errors.neighborhood && errors.neighborhood.message}
                             />
-                            <p>{estate.neighborhood}</p>
+
                             <TextField
                                 error={errors.address}
                                 {...register("address", {
@@ -152,7 +143,7 @@ const EditEstate = () => {
                                     maxLength: { value: 100, message: "Description can't be more from 100 symbols" }
                                 })}
                                 label="Description"
-                                defaultValue={formValues.description}
+                                defaultValue={estate.description}
                                 helperText={errors.description && errors.description.message}
                             />
                             <TextField
@@ -162,7 +153,7 @@ const EditEstate = () => {
                                     maxLength: { value: 100, message: "Extras can't be more from 100 symbols" }
                                 })}
                                 label="Extras"
-                                defaultValue={formValues.extras}
+                                defaultValue={estate.extras}
                                 helperText={errors.extras && errors.extras.message}
                             />
                         </Grid>
@@ -176,7 +167,7 @@ const EditEstate = () => {
                                 name="floor"
                                 label="Floor"
                                 type="number"
-                                defaultValue={formValues.floor}
+                                defaultValue={estate.floor}
                                 helperText={errors.floor && errors.floor.message}
                             />
                             <TextField
@@ -187,7 +178,7 @@ const EditEstate = () => {
                                 name="price"
                                 label="Price"
                                 type="number"
-                                defaultValue={formValues.price}
+                                defaultValue={estate.price}
                                 helperText={errors.price && errors.price.message}
                             />
 
@@ -196,9 +187,10 @@ const EditEstate = () => {
                                 {...register("estateArea", {
                                     min: { value: 0, message: "Area can't be negative" }
                                 })}
+                                name="estateArea"
                                 type="number"
                                 label="Area"
-                                defaultValue={formValues.estateArea}
+                                defaultValue={estate.estateArea}
                                 helperText={errors.estateArea && errors.estateArea.message}
                             />
                         </Grid>
@@ -213,7 +205,7 @@ const EditEstate = () => {
                                 name="rooms"
                                 label="Rooms"
                                 type="number"
-                                defaultValue={formValues.rooms}
+                                defaultValue={estate.rooms}
                                 helperText={errors.rooms && errors.rooms.message}
                             />
                             <TextField
@@ -224,7 +216,7 @@ const EditEstate = () => {
                                 name="yearOfCreation"
                                 label="Year Of Creation"
                                 type="number"
-                                defaultValue={formValues.yearOfCreation}
+                                defaultValue={estate.yearOfCreation}
                                 helperText={errors.yearOfCreation && errors.yearOfCreation.message}
                             />
                         </Grid>
@@ -234,7 +226,7 @@ const EditEstate = () => {
                                 <FormLabel>Sell or Rent</FormLabel>
                                 <RadioGroup
                                     row
-                                    defaultValue="true"
+                                    defaultValue={estate.sell}
                                 >
                                     <FormControlLabel
                                         {...register("sell")}
@@ -257,119 +249,117 @@ const EditEstate = () => {
                         <Box sx={{ minWidth: 150 }}>
                             <Grid container alignItems="center" justify="center" direction="row"></Grid>
                             <Grid item>
-                                {/* <FormControl sx={{ m: 1 }} fullWidth> */}
-                                {/* <InputLabel id="demo-simple-select-label">{city.cityName}</InputLabel> */}
-                                {/* <Select
-                                  error={errors.cityId}
-                                {...register("cityId",
-                                    { required: { value: true, message: "City is required field!" } })}
-                                name="cityId"
-                                label="City"
-                                value="cityId"
-                                onChange={handleInputChange}
-                            >
-                                <MenuItem
-                                    key={city.cityId}
-                                    value={city.cityId}
-                                >
-                                    {city.cityName}
-                                </MenuItem>
-                                {cities.map(x =>
-                                    <MenuItem
-                                        key={x.cityId}
-                                        value={x.cityId}
+                                <FormControl sx={{ m: 1 }} fullWidth>
+                                    <InputLabel id="demo-simple-select-label">{city.cityName}</InputLabel>
+                                    <Select
+                                        error={errors.cityId}
+                                        {...register("cityId",
+                                            { required: { value: true, message: "City is required field!" } })}
+                                        name="cityId"
+                                        label="City"
+                                        value={estate.cityId}
+                                        defaultValue={estate.cityId}
+                                        onChange={handleInputChange}
                                     >
-                                        {x.cityName}
-                                    </MenuItem>
-                                )}
+                                        {cities.map(x =>
+                                            <MenuItem
+                                                key={x.cityId}
+                                                value={x.cityId}
+                                            >
+                                                {x.cityName}
+                                            </MenuItem>
+                                        )}
 
-                            </Select>
-                            {errors.cityId
-                                ? <FormHelperText error>{errors.cityId.message}</FormHelperText>
-                                : <></>
-                            }
-                        </FormControl> */}
+                                    </Select>
+                                    {errors.cityId
+                                        ? <FormHelperText error>{errors.cityId.message}</FormHelperText>
+                                        : <></>
+                                    }
+                                </FormControl>
 
-                                {/* <FormControl sx={{ m: 1 }} fullWidth>
-                            <InputLabel id="demo-simple-select-label">Country</InputLabel>
-                            <Select
-                                error={errors.countryId}
-                                {...register("countryId",
-                                    { required: { value: true, message: "Country is required field!" } })}
-                                name="countryId"
-                                label="Country"
-                                // value={formValues.countryId}
-                                onChange={handleInputChange}
-                            >
-                                {countries.map(x =>
-                                    <MenuItem
-                                        key={x.countryId}
-                                        value={x.countryId}
+                                <FormControl sx={{ m: 1 }} fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Country</InputLabel>
+                                    <Select
+                                        error={errors.countryId}
+                                        {...register("countryId",
+                                            { required: { value: true, message: "Country is required field!" } })}
+                                        name="countryId"
+                                        label="Country"
+                                        value={estate.countryId}
+                                        defaultValue={estate.countryId}
+                                        onChange={handleInputChange}
                                     >
-                                        {x.countryName}
-                                    </MenuItem>
-                                )}
-                            </Select>
-                            {errors.countryId
-                                ? <FormHelperText error>{errors.countryId.message}</FormHelperText>
-                                : <></>
-                            }
-                        </FormControl> */}
+                                        {countries.map(x =>
+                                            <MenuItem
+                                                key={x.countryId}
+                                                value={x.countryId}
+                                            >
+                                                {x.countryName}
+                                            </MenuItem>
+                                        )}
+                                    </Select>
+                                    {errors.countryId
+                                        ? <FormHelperText error>{errors.countryId.message}</FormHelperText>
+                                        : <></>
+                                    }
+                                </FormControl>
                             </Grid>
 
                             <Grid item>
-                                {/* <FormControl sx={{ m: 1 }} fullWidth>
-                            <InputLabel id="demo-simple-select-label">Estate Type</InputLabel>
+                                <FormControl sx={{ m: 1 }} fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Estate Type</InputLabel>
 
-                            <Select
-                                error={errors.estateTypeId}
-                                {...register("estateTypeId",
-                                    { required: { value: true, message: "Estate Type is required field!" } })}
-                                name="estateTypeId"
-                                label="Estate Type"
-                                value={formValues.estateTypeId}
-                                onChange={handleInputChange}
-                            >
-                                {estateTypes.map(x =>
-                                    <MenuItem
-                                        key={x.estateTypeId}
-                                        value={x.estateTypeId}
+                                    <Select
+                                        error={errors.estateTypeId}
+                                        {...register("estateTypeId",
+                                            { required: { value: true, message: "Estate Type is required field!" } })}
+                                        name="estateTypeId"
+                                        label="Estate Type"
+                                        value={estate.estateTypeId}
+                                        defaultValue={estate.estateTypeId}
+                                        onChange={handleInputChange}
                                     >
-                                        {x.typeName}
-                                    </MenuItem>
-                                )}
-                            </Select>
-                            {errors.estateTypeId
-                                ? <FormHelperText error>{errors.estateTypeId.message}</FormHelperText>
-                                : <></>
-                            }
-                        </FormControl>
+                                        {estateTypes.map(x =>
+                                            <MenuItem
+                                                key={x.estateTypeId}
+                                                value={x.estateTypeId}
+                                            >
+                                                {x.typeName}
+                                            </MenuItem>
+                                        )}
+                                    </Select>
+                                    {errors.estateTypeId
+                                        ? <FormHelperText error>{errors.estateTypeId.message}</FormHelperText>
+                                        : <></>
+                                    }
+                                </FormControl>
 
-                        <FormControl sx={{ m: 1 }} fullWidth>
-                            <InputLabel id="demo-simple-select-label">Currency</InputLabel>
-                            <Select
-                                error={errors.currencyId}
-                                {...register("currencyId",
-                                    { required: { value: true, message: "Currency Type is required field!" } })}
-                                name="currencyId"
-                                label="Currency"
-                                value={formValues.currencyId}
-                                onChange={handleInputChange}
-                            >
-                                {currencies.map(x =>
-                                    <MenuItem
-                                        key={x.currencyId}
-                                        value={x.currencyId}
+                                <FormControl sx={{ m: 1 }} fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Currency</InputLabel>
+                                    <Select
+                                        error={errors.curencyId}
+                                        {...register("curencyId",
+                                            { required: { value: true, message: "Currency Type is required field!" } })}
+                                        name="curencyId"
+                                        label="Currency"
+                                        value={estate.curencyId}
+                                        defaultValue={estate.curencyId}
+                                        onChange={handleInputChange}
                                     >
-                                        {x.currencyName}
-                                    </MenuItem>
-                                )}
-                            </Select>
-                            {errors.currencyId
-                                ? <FormHelperText error>{errors.currencyId.message}</FormHelperText>
-                                : <></>
-                            }
-                        </FormControl> */}
+                                        {currencies.map(x =>
+                                            <MenuItem
+                                                key={x.currencyId}
+                                                value={x.currencyId}
+                                            >
+                                                {x.currencyName}
+                                            </MenuItem>
+                                        )}
+                                    </Select>
+                                    {errors.curencyId
+                                        ? <FormHelperText error>{errors.curencyId.message}</FormHelperText>
+                                        : <></>
+                                    }
+                                </FormControl>
                             </Grid>
                         </Box>
 
@@ -378,7 +368,8 @@ const EditEstate = () => {
                         </Button>
                     </Grid>
                 </ Box >
-                : <Spinner/>}
+                : <Spinner />
+            }
         </>
     )
 }

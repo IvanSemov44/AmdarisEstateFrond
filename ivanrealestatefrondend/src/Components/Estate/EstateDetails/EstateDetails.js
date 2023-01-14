@@ -30,7 +30,7 @@ const EstateDetails = () => {
     const currency = useGetCurrencyById(estate.curencyId);
     const estateType = useGetEstateTypById(estate.estateTypeId);
 
-    console.log(estate);
+    // console.log(estate);
 
     let elementSellOrRent;
 

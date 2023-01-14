@@ -17,6 +17,7 @@ export const getById = async (id) => {
             'Content-Type': 'application/json',
         }
     });
+
     return await res.json();
 };
 

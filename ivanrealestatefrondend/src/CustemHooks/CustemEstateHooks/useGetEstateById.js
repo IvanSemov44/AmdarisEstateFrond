@@ -10,7 +10,7 @@ export default function useGetEstateById(estateId) {
         estateService.getById(estateId)
             .then(result => {
                 if (!ignore) {
-                    setEstate(result)
+                    setEstate(result);
                 }
             })
         return () => {
