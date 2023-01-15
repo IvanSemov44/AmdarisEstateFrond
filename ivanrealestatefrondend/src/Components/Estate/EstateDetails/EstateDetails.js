@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import '../EstateDetails/EstateDetails.css';
 
@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import ImageShow from "../../Image/ImageShow";
 
@@ -20,8 +21,11 @@ import useGetCountryById from "../../../CustemHooks/CustemCountryHooks/useGetCou
 import useGetCurrencyById from "../../../CustemHooks/CustemCurrencyHooks/useGetCurrencyById";
 import useGetEstateTypById from "../../../CustemHooks/CustemEstateTypeHooks/useGetEstateTypById";
 
+import * as estateService from '../../../Services/EstateService';
+
 const EstateDetails = () => {
     const { estateId } = useParams();
+    const navigate = useNavigate();
 
     const estate = useGetEstateById(estateId);
 
@@ -40,6 +44,10 @@ const EstateDetails = () => {
     else {
         elementSellOrRent = "Rent";
     }
+    const deleteEstate = () => {
+        estateService.deleteEstate(estate.estateId)
+            .then(navigate(`/catalog`));
+    };
 
     return (
         <div className="estateDetails">
@@ -77,12 +85,17 @@ const EstateDetails = () => {
                 <ListItem>Area: {estate.estateArea}</ListItem>
                 <ListItem>Year Of Creation: {estate.yearOfCreation}</ListItem>
                 <ListItem>Extras: {estate.extras}</ListItem>
+                <Box sx={{ '& button': { m: 1 } }}>
+                    <Link to={`/editEstate/${estate.estateId}`}>
+                        <Fab color="primary" aria-label="edit">
+                            <EditIcon />
+                        </Fab>
+                    </Link>
 
-                <Link to={`/editEstate/${estate.estateId}`}>
-                    <Fab color="primary" aria-label="edit">
-                        <EditIcon />
+                    <Fab color="primary" aria-label="delete" type="button" onClick={deleteEstate}>
+                        <DeleteIcon />
                     </Fab>
-                </Link>
+                </Box>
             </List>
         </div>
 
