@@ -1,13 +1,15 @@
 import { useParams } from "react-router-dom";
-import useImages from "../../CustemHooks/useImages";
 
 import { Box } from "@mui/system";
-import { Spinner } from "../Common/Spinner/Spinner";
+
 import { ImageContext } from "../../contexts/ImageContext";
+import useImages from "../../CustemHooks/CustemImageHook/useImages";
+import useFetchForImage from "../../CustemHooks/CustemImageHook/useFetchForImage";
 
 import ImagesList from "./ImageList";
 import CreateImage from "./CreateImage";
-import useFetchForImage from "../../CustemHooks/useFetchForImage";
+import { Spinner } from "../Common/Spinner/Spinner";
+
 
 const ImagePage = () => {
     const { estateId } = useParams();

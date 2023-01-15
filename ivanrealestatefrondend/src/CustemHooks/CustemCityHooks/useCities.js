@@ -1,4 +1,4 @@
-import * as cityService from '../Services/CityService';
+import * as cityService from '../../Services/CityService';
 
 const useCities = () => {
     const removeCity = (cityId) => {

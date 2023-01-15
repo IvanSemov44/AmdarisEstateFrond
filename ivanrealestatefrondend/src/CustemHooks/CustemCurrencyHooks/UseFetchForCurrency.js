@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import * as currencyService from '../Services/CurrencyService';
+import * as currencyService from '../../Services/CurrencyService';
 
 const useFetchForCurrency = (defaultValue) => {
     const [data, setData] = useState(defaultValue);

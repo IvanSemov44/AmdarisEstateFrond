@@ -1,4 +1,4 @@
-import * as imageService from '../Services/ImageService';
+import * as imageService from '../../Services/ImageService';
 
 const useImages = (estateId) => {
     const removeImage = (imageId) => {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import * as estateTypeSevice from '../Services/EstateTypeService';
+import * as estateTypeSevice from '../../Services/EstateTypeService';
 
 export default function useGetEstateType() {
     const [estateTypes, setEstateTypes] = useState([]);

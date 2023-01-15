@@ -1,4 +1,4 @@
-import * as estateTypeService from '../Services/EstateTypeService';
+import * as estateTypeService from '../../Services/EstateTypeService';
 
 const useEstateTypes = () => {
     const removeEstateType = (estateTypeId) => {

@@ -6,7 +6,6 @@ import ImageItem from "./ImageItem";
 const ImagesList = () =>{
     const { images } = useContext(ImageContext);
 
-    console.log(images);
     return(
         <Box sx={{ '& button': { m: 1 } }}>
             {images.map(x =>

@@ -3,9 +3,10 @@ import { CityContext } from '../../contexts/CityContext';
 import Box from '@mui/material/Box';
 
 import CityList from './CityList';
-import useCities from "../../CustemHooks/useCities";
-import useFetchForCity from "../../CustemHooks/useFetchForCity";
 import CreateCity from './CreateCity';
+
+import useCities from "../../CustemHooks/CustemCityHooks/useCities";
+import useFetchForCity from "../../CustemHooks/CustemCityHooks/useFetchForCity";
 
 import { Spinner } from '../Common/Spinner/Spinner';
 
@@ -39,7 +40,6 @@ const CityPage = () => {
 
             <Box sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, }}>
                 <CreateCity cityCreateHandler={cityCreateHandler} />
-
                 {
                     isLoading
                         ? <Spinner />

@@ -17,10 +17,10 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Spinner } from '../../Common/Spinner/Spinner';
 
-import useGetCities from '../../../CustemHooks/useGetCities';
-import useGetCurrency from '../../../CustemHooks/useGetCurrency';
-import useGetCountries from '../../../CustemHooks/useGetCountries';
-import useGetEstateType from '../../../CustemHooks/useGetEstateType';
+import useGetCities from '../../../CustemHooks/CustemCityHooks/useGetCities';
+import useGetCurrency from '../../../CustemHooks/CustemCurrencyHooks/useGetCurrency';
+import useGetCountries from '../../../CustemHooks/CustemCountryHooks/useGetCountries';
+import useGetEstateType from '../../../CustemHooks/CustemEstateTypeHooks/useGetEstateType';
 
 import useGetCityById from "../../../CustemHooks/CustemCityHooks/useGetCityById";
 import useGetEstateById from "../../../CustemHooks/CustemEstateHooks/useGetEstateById";

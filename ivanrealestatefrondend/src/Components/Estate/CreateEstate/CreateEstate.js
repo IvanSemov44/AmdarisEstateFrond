@@ -18,10 +18,10 @@ import {
     FormControlLabel
 } from "@mui/material";
 
-import useGetCities from '../../../CustemHooks/useGetCities';
-import useGetCurrency from '../../../CustemHooks/useGetCurrency';
-import useGetCountries from '../../../CustemHooks/useGetCountries';
-import useGetEstateType from '../../../CustemHooks/useGetEstateType';
+import useGetCities from '../../../CustemHooks/CustemCityHooks/useGetCities';
+import useGetCurrency from '../../../CustemHooks/CustemCurrencyHooks/useGetCurrency';
+import useGetCountries from '../../../CustemHooks/CustemCountryHooks/useGetCountries';
+import useGetEstateType from '../../../CustemHooks/CustemEstateTypeHooks/useGetEstateType';
 
 import * as estateService from '../../../Services/EstateService'
 

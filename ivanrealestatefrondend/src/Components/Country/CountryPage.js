@@ -1,11 +1,12 @@
 import Box from '@mui/material/Box';
 
 import { CountryContext } from "../../contexts/CountryContext";
-import useCountries from "../../CustemHooks/useCountries";
-import useFetchForCountry from "../../CustemHooks/useFetchForCountry";
-import { Spinner } from '../Common/Spinner/Spinner';
-import CreateCountry from './CreateCountry';
+import useCountries from "../../CustemHooks/CustemCountryHooks/useCountries";
+import useFetchForCountry from "../../CustemHooks/CustemCountryHooks/useFetchForCountry";
+
 import CountryList from './CountryList';
+import CreateCountry from './CreateCountry';
+import { Spinner } from '../Common/Spinner/Spinner';
 
 const CountryPage = () => {
     const [countries, setCountries, isLoading] = useFetchForCountry([]);

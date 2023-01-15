@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
-import * as cityService from '../Services/CityService';
+import * as countryService from '../../Services/CountryService';
 
-const useFetchForCity = (defaultValue) => {
+const useFetchForCountry = (defaultValue) => {
     const [data, setData] = useState(defaultValue);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
-        cityService.getAll()
+        countryService.getAll()
             .then(result => {
                 setIsLoading(false);
-                setData(Object.values(result))
+                setData(Object.values(result));
             });
     }, []);
-
+    
     return [data, setData, isLoading];
 }
 
-export default useFetchForCity;
+export default useFetchForCountry;

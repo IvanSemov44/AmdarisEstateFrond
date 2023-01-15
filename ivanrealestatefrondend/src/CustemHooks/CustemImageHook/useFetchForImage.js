@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import * as imageService from '../Services/ImageService';
+import * as imageService from '../../Services/ImageService';
 
 const useFetchForImage = (defaultValue, estateId) => {
     const [data, setData] = useState(defaultValue);

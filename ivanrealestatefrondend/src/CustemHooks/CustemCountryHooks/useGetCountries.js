@@ -1,6 +1,6 @@
 import {useState,useEffect} from 'react';
 
-import * as countryService from '../Services/CountryService';
+import * as countryService from '../../Services/CountryService';
 
 export default function useGetCountries(){
     const [countries, setCountries] = useState([]);

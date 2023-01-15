@@ -26,8 +26,7 @@ const EstateCatalog = () => {
         return () => {
             ignore = true;
         };
-    }, [page]);
-    console.log(pagin.CurrentPage);
+    }, [page]); 
 
     return (
         <Stack alignItems="center" spacing={2} >

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import * as estateTypeService from '../Services/EstateTypeService';
+import * as estateTypeService from '../../Services/EstateTypeService';
 
 const useFetchForEstateType = (defaultValue) => {
     const [data, setData] = useState(defaultValue);

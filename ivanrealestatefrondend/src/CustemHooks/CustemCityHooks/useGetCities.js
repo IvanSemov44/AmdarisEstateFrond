@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import * as cityService from '../Services/CityService';
+import * as cityService from '../../Services/CityService';
 
 export default function useGetCities() {
     const [cities, setCities] = useState([]);

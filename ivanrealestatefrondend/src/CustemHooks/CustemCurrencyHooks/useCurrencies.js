@@ -1,4 +1,4 @@
-import * as currencyService from '../Services/CurrencyService';
+import * as currencyService from '../../Services/CurrencyService';
 
 const useCurrencies = () => {
     const removeCurrency = (currencyId) => {

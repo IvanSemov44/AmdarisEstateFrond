@@ -1,12 +1,12 @@
-import useEstateTypes from '../../CustemHooks/useEstateTypes';
-import useFetchForEstateType from '../../CustemHooks/useFetchForEstateType';
+import Box from '@mui/material/Box';
 
 import {EstateTypeContext} from '../../contexts/EstateTypeContext';
+import useEstateTypes from '../../CustemHooks/CustemEstateTypeHooks/useEstateTypes';
+import useFetchForEstateType from '../../CustemHooks/CustemEstateTypeHooks/useFetchForEstateType';
 
-import Box from '@mui/material/Box';
+import EstateTypeList from './EstateTypeList';
 import CreateEstateType from './CreateEstateType';
 import { Spinner } from '../Common/Spinner/Spinner';
-import EstateTypeList from './EstateTypeList';
 
 const EstateTypePage = () => {
     const [estateTypes, setEstateTypes, isLoading] = useFetchForEstateType([]);

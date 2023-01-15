@@ -1,4 +1,4 @@
-import * as countryService from '../Services/CountryService';
+import * as countryService from '../../Services/CountryService';
 
 const useCountries = () => {
     const removeCountry = (countryId) => {
