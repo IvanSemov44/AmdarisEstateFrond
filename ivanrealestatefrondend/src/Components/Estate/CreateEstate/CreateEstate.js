@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { InputLabel, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -10,9 +9,10 @@ import {
     Button,
     Select,
     MenuItem,
-    FormLabel,
     TextField,
+    InputLabel,
     RadioGroup,
+    Typography,
     FormControl,
     FormHelperText,
     FormControlLabel
@@ -91,14 +91,12 @@ const CreateEstate = () => {
                     >
                         <FormControlLabel
                             {...register("sell")}
-
                             value={true}
                             control={<Radio />}
                             label="Sell"
                         />
                         <FormControlLabel
                             {...register("sell")}
-
                             value={false}
                             control={<Radio />}
                             label="Rent"

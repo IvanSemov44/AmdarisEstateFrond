@@ -1,88 +1,39 @@
-import { useState, useEffect } from 'react';
-
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActionArea from '@mui/material/CardActionArea';
 import Typography from '@mui/material/Typography';
 
-import * as  cityService from "../../../Services/CityService";
-import * as  estateTypeService from "../../../Services/EstateTypeService";
-import * as  currencyService from "../../../Services/CurrencyService";
-import * as  countryService from "../../../Services/CountryService";
-
-import './EstateCard.css';
 import { Link } from 'react-router-dom';
+
+import useGetCityById from '../../../CustemHooks/CustemCityHooks/useGetCityById';
+import useGetCountryById from '../../../CustemHooks/CustemCountryHooks/useGetCountryById';
+import useGetCurrencyById from '../../../CustemHooks/CustemCurrencyHooks/useGetCurrencyById';
+import useGetEstateTypById from '../../../CustemHooks/CustemEstateTypeHooks/useGetEstateTypById';
+import { ListItemText } from '@mui/material';
 
 
 const EstateCard = ({
     estate
 }) => {
-    const [city, setCity] = useState({});
-    const [estateType, setEstateType] = useState({});
-    const [currency, setCurrency] = useState({});
-    const [country, setCountry] = useState({});
-    useEffect(() => {
-        let ignore = false;
-        estateTypeService.getById(estate.estateTypeId)
-            .then(result => {
-                if (!ignore) {
-                    setEstateType(result);
-                }
-            });
-        return () => {
-            ignore = true;
-        }
-    }, [estate.estateTypeId]);
-
-    useEffect(() => {
-        let ignore = false;
-
-        cityService.getById(estate.cityId)
-            .then(result => {
-                if (!ignore) {
-                    setCity(result);
-                }
-            });
-        return () => {
-            ignore = true;
-        }
-    }, [estate.cityId]);
-
-    useEffect(() => {
-        let ignore = false;
-        currencyService.getById(estate.curencyId)
-            .then(result => {
-                if (!ignore) {
-                    setCurrency(result);
-                }
-            });
-        return () => {
-            ignore = true;
-        }
-    }, [estate.curencyId]);
-
-    useEffect(() => {
-        let ignore = false;
-        countryService.getById(estate.countryId)
-            .then(result => {
-                if (!ignore) {
-                    setCountry(result);
-                }
-            });
-        return () => {
-            ignore = true;
-        }
-    }, [estate.countryId]);
+    const city = useGetCityById(estate.cityId);
+    const country = useGetCountryById(estate.countryId);
+    const currency = useGetCurrencyById(estate.curencyId);
+    const estateType = useGetEstateTypById(estate.estateTypeId);
 
     let elementSellOrRent;
 
-    if (estate.sell) {
+    if (estate.sell)
         elementSellOrRent = "Sell";
-    }
-    else {
+    else
         elementSellOrRent = "Rent";
-    }
+
+    let estateImage;
+    console.log(estate.images)
+    if (estate.images.length ===0)
+        estateImage = "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
+    else
+        estateImage = estate.images[0].imageUrl;
 
     return (
         <Card sx={{ maxWidth: 345, margin: 1 }}>
@@ -91,31 +42,20 @@ const EstateCard = ({
                     <CardMedia
                         component="img"
                         height="140"
-                        image="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
+                        image={estateImage}
                         alt="Estate"
                     />
-
                 </Link>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        <li className="list-item">Price: {estate.price}</li>
+                        Price: {estate.price} {currency.currencyName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        <div className="first group">
-                            <ol className="list-group">
-                                <li className="list-item">{elementSellOrRent}</li>
-                                <li className="list-item">Country: {country.countryName}</li>
-                                <li className="list-item">City: {city.cityName}</li>
-                                <li className="list-item">Address: {estate.address}</li>
-                                <li className="list-item">Floor: {estate.floоr}</li>
-                            </ol>
-                        </div>
-                        <div className="second group">
-                            <ol className="list-group">
-                                <li className="list-item">Currency: {currency.currencyName}</li>
-                                <li className="list-item">Type: {estateType.typeName}</li>
-                            </ol>
-                        </div>
+                        <ListItemText>{elementSellOrRent}</ListItemText>
+                        <ListItemText>Country: {country.countryName}</ListItemText>
+                        <ListItemText>City: {city.cityName}</ListItemText>
+                        <ListItemText>Address: {estate.address}</ListItemText>
+                        <ListItemText>Type: {estateType.typeName}</ListItemText>
                     </Typography>
                 </CardContent>
 
