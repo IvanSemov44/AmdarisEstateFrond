@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Pagination, Stack, Box, Typography, Grid } from '@mui/material';
+import { Pagination, Stack, Box } from '@mui/material';
 
 import EstateCard from '../EstateCard/EstateCard';
-import { Spinner } from '../../Common/Spinner/Spinner';
 
 import * as estatesSevice from '../../../Services/EstateService';
 
@@ -35,7 +34,6 @@ const EstateCatalog = () => {
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                 {estates.map(x => <EstateCard key={x.estateId} estate={x} />)}
             </Box>
-            <Typography>Page: {page}</Typography>
             <Pagination
                 sx={{ margin: 3 }}
                 size="large"
