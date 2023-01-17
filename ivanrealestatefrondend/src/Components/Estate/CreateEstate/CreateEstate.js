@@ -47,11 +47,10 @@ const CreateEstate = () => {
     const [formValues, setFormValues] = useState(defaultValues);
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-
     const cities = useGetCities();
     const countries = useGetCountries();
-    const estateTypes = useGetEstateType();
     const currencies = useGetCurrency();
+    const estateTypes = useGetEstateType();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;

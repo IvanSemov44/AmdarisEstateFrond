@@ -28,13 +28,11 @@ const EstateDetails = () => {
     const navigate = useNavigate();
 
     const estate = useGetEstateById(estateId);
-
+    console.log(estate);
     const city = useGetCityById(estate.cityId);
     const country = useGetCountryById(estate.countryId);
     const currency = useGetCurrencyById(estate.curencyId);
     const estateType = useGetEstateTypById(estate.estateTypeId);
-
-    // console.log(estate);
 
     let elementSellOrRent;
 

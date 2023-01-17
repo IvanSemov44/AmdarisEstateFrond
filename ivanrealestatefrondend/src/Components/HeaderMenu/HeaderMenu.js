@@ -1,10 +1,25 @@
+import { Button } from '@mui/material';
+import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 // import {Link} from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap'
+import LoginUser from '../User/LoginUser';
+import RegisterUser from '../User/RegisterUser';
 
 const HeaderMenu = () => {
+    const [openLogin, setOpenLogin] = useState(false);
+    const [openRegister, setOpenRegister] = useState(false);
+
+    const handleClickOpenLogin = () => {
+        setOpenLogin(true);
+    };
+
+    const handleClickOpenRegister = () => {
+        setOpenRegister(true);
+    };
+
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -54,17 +69,13 @@ const HeaderMenu = () => {
                             </Nav.Link>
                         </LinkContainer>
                     
-                        <LinkContainer to="/register">
-                            <Nav.Link>
-                                Register
-                            </Nav.Link>
-                        </LinkContainer>
-                    
-                        <LinkContainer to="/login">
-                            <Nav.Link>
-                                Login
-                            </Nav.Link>
-                        </LinkContainer>
+                        <Button variant="outlined" onClick={handleClickOpenLogin}>
+                            Login
+                        </Button>
+
+                        <Button variant="outlined" onClick={handleClickOpenRegister}>
+                            Register
+                        </Button>
 
                         <LinkContainer to="/logout">
                             <Nav.Link>
@@ -78,7 +89,8 @@ const HeaderMenu = () => {
                             </Nav.Link>
                         </LinkContainer>
 
-                        
+                        <LoginUser setOpen={setOpenLogin} open={openLogin}/>
+                        <RegisterUser setOpen={setOpenRegister} open={openRegister}/>
 
                     </Nav>
                 </Container>
