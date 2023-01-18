@@ -6,7 +6,6 @@ import * as cityService from '../../Services/CityService';
 export default function useGetCities() {
     const [cities, setCities] = useState([]);
     const { user } = useContext(AuthContext);
-    console.log(user);
 
     useEffect(() => {
         let ignore = false;
@@ -19,7 +18,7 @@ export default function useGetCities() {
         return () => {
             ignore = true;
         }
-    }, [])
+    }, [user.token])
 
     return cities;
 }

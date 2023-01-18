@@ -16,7 +16,7 @@ const useFetchForCity = (defaultValue) => {
                 setIsLoading(false);
                 setData(Object.values(result))
             });
-    }, []);
+    }, [user.token]);
 
     return [data, setData, isLoading];
 }

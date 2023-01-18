@@ -72,18 +72,16 @@ const CreateEstate = () => {
     return (
         <Box
             component="form"
-            sx={{
-                '& .MuiTextField-root': { m: 1, width: '25ch' },
-            }}
+            sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, }}
             noValidate
             autoComplete="off"
             onSubmit={handleSubmit(handlerSubmit)}
         >
             <Box container textAlign='center' >
+                <Typography variant="h3" >
+                    Create Real Estate
+                </Typography>
                 <FormControl>
-                    <Typography variant="h3" >
-                        Sell or Rent
-                    </Typography>
                     <RadioGroup
                         row
                         defaultValue="true"
@@ -106,7 +104,7 @@ const CreateEstate = () => {
             <Grid container alignItems="center" justify="center" direction="row" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid item xs={2} />
                 <Grid item xs={3}>
-                    <FormControl sx={{ m: 1 }} fullWidth>
+                    <FormControl sx={{ m: 1 }} fullWidth >
                         <InputLabel>Country</InputLabel>
                         <Select
                             error={errors.countryId}
@@ -116,6 +114,7 @@ const CreateEstate = () => {
                             label="Country"
                             value={formValues.countryId}
                             onChange={handleInputChange}
+
                         >
                             {countries.map(x =>
                                 <MenuItem

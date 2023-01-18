@@ -3,36 +3,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { Routes, Route } from 'react-router-dom'
-import EstateCatalog from './Components/Estate/EstateCatalog/EstateCatalog';
-import EstateDetails from './Components/Estate/EstateDetails/EstateDetails';
-import GiphyCatalog from './Components/Giphy/GiphyCatalog/GiphyCatalog';
-import CreateEstate from './Components/Estate/CreateEstate/CreateEstate';
 
-import HeaderMenu from './Components/HeaderMenu/HeaderMenu';
+import GiphyCatalog from './Components/Giphy/GiphyCatalog/GiphyCatalog';
+import CreateEstate from './Components/Estate/CreateEstate/CreateEstate'; 
+import EstateDetails from './Components/Estate/EstateDetails/EstateDetails';
+import EstateCatalog from './Components/Estate/EstateCatalog/EstateCatalog';
+
 import Home from './Components/Home/Home';
 import CityPage from './Components/City/CityPage';
-import CountryPage from './Components/Country/CountryPage';
-import CreateCity from './Components/City/CreateCity';
-import CurrencyPage from './Components/Currency/CurrencyPage';
-import EstateTypePage from './Components/EstateType/EstateTypePage';
-import EditEstate from './Components/Estate/EditEstate/EditEstate';
 import ImagePage from './Components/Image/ImagePage';
+import CreateCity from './Components/City/CreateCity';
+import CountryPage from './Components/Country/CountryPage';
+import HeaderMenu from './Components/HeaderMenu/HeaderMenu';
+import CurrencyPage from './Components/Currency/CurrencyPage';
+import EditEstate from './Components/Estate/EditEstate/EditEstate';
+import EstateTypePage from './Components/EstateType/EstateTypePage';
 
-import { AuthContext } from './contexts/AuthContext';
-import { useState } from 'react';
+import { AuthProvider } from './contexts/AuthProvider';
 
 function App() {
-  const [auth, setAuth] = useState({});
-
-  const userLogin = (authData) => {
-    setAuth(authData)
-  };
-
-  const userLogout=()=>{
-    setAuth({});
-  }
+ 
   return (
-    <AuthContext.Provider value={{ user: auth, userLogin,userLogout }}>
+    <AuthProvider>
       <div className="App">
         <CssBaseline>
           <HeaderMenu />
@@ -54,7 +46,7 @@ function App() {
           </Routes>
         </CssBaseline>
       </div>
-    </AuthContext.Provider>
+    </AuthProvider>
   );
 }
 
