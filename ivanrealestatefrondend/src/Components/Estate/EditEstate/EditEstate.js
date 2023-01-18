@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { InputLabel, Typography } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Radio from "@mui/material/Radio";
-import Button from "@mui/material/Button";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormLabel from "@mui/material/FormLabel";
-import TextField from "@mui/material/TextField";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import {
+    Box,
+    Grid,
+    Radio,
+    Button,
+    Select,
+    MenuItem,
+    TextField,
+    Typography,
+    InputLabel,
+    RadioGroup,
+    FormControl,
+    FormHelperText,
+    FormControlLabel,
+} from "@mui/material"
+
 import { Spinner } from '../../Common/Spinner/Spinner';
 
 import useGetCities from '../../../CustemHooks/CustemCityHooks/useGetCities';

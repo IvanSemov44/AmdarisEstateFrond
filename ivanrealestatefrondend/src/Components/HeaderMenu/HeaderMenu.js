@@ -1,11 +1,17 @@
-import { Avatar, Button, Typography } from '@mui/material';
 import { useContext, useState } from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-// import {Link} from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap'
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
+
+import {
+    AppBar,
+    Avatar,
+    Box,
+    Button,
+    Divider,
+    Grid,
+    Typography
+} from '@mui/material';
+
 import LoginUser from '../User/LoginUser';
 import RegisterUser from '../User/RegisterUser';
 
@@ -20,88 +26,131 @@ const HeaderMenu = () => {
 
 
     return (
-        <>
-            <Navbar bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand>Ivan Real Estate</Navbar.Brand>
-                    <Nav className="me-auto">
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar color="transparent" position="static" >
 
-                        <LinkContainer to="/">
-                            <Nav.Link>
-                                Home
-                            </Nav.Link>
-                        </LinkContainer>
+                <Grid container
+                    alignItems="center"
+                    justify="center"
+                    direction="row"
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                >
+                    <Grid item xs={1} />
+                    <Grid
+                        item xs={8}
+                        direction="row"
+                    >
+                        <Box display="flex" >
 
-                        <LinkContainer to="/catalog">
-                            <Nav.Link>
-                                Catalog Estate
-                            </Nav.Link>
-                        </LinkContainer>
-
-                        <LinkContainer to="/createEstate">
-                            <Nav.Link>
-                                Create Estate
-                            </Nav.Link>
-                        </LinkContainer>
-
-                        <LinkContainer to="/cities">
-                            <Nav.Link>
-                                City Catalog
-                            </Nav.Link>
-                        </LinkContainer>
-
-                        <LinkContainer to="/countries">
-                            <Nav.Link>
-                                Country Catalog
-                            </Nav.Link>
-                        </LinkContainer>
-
-                        <LinkContainer to="/currencies">
-                            <Nav.Link>
-                                Currency Catalog
-                            </Nav.Link>
-                        </LinkContainer>
-
-                        <LinkContainer to="/estatetypes">
-                            <Nav.Link>
-                                Estate Type Catalog
-                            </Nav.Link>
-                        </LinkContainer>
-
-
-
-
-
-                        {user.token
-                            ? <>
-                                <Typography p color="white"> {user.username}</Typography>
-                                <Avatar alt="avarat img" src="https://www.w3schools.com/howto/img_avatar.png" />
-                                <Button onClick={userLogout}>Logout</Button>
-                            </>
-                            :
-                            <>
-                                <Button variant="outlined" onClick={handleClickOpenLogin}>
-                                    Login
+                            <NavLink to="/" style={{ textDecoration: "none" }}>
+                                <Button sx={{ my: 2, color: 'white', display: 'block' }} >
+                                    home
                                 </Button>
-                                <Button variant="outlined" onClick={handleClickOpenRegister}>
-                                    Register
+                            </NavLink>
+                            
+                            <Divider orientation="vertical" variant="middle" flexItem />
+
+                            <NavLink to="/catalog" style={{ textDecoration: "none" }}>
+                                <Button sx={{ my: 2, color: 'white', display: 'block' }} >
+                                    Catalog
                                 </Button>
-                            </>
-                        }
+                            </NavLink>
 
-                        <LinkContainer to="/giphy">
-                            <Nav.Link>
-                                Giphy
-                            </Nav.Link>
-                        </LinkContainer>
+                            <Divider orientation="vertical" variant="middle" flexItem />
 
-                        <LoginUser setOpen={setOpenLogin} open={openLogin} />
-                        <RegisterUser setOpen={setOpenRegister} open={openRegister} />
+                            <NavLink to="/createEstate" style={{ textDecoration: "none" }}>
+                                <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                                    Create
+                                </Button>
+                            </NavLink>
 
-                    </Nav>
-                </Container>
-            </Navbar>
-        </>
+                            <Divider orientation="vertical" variant="middle" flexItem />
+
+                            <NavLink to="/cities" style={{ textDecoration: "none" }}>
+                                <Button sx={{ my: 2, color: 'white', display: 'block' }} >
+                                    Cities
+                                </Button>
+                            </NavLink>
+
+                            <Divider orientation="vertical" variant="middle" flexItem />
+
+                            <NavLink to="/countries" style={{ textDecoration: "none" }}>
+                                <Button sx={{ my: 2, color: 'white', display: 'block' }} >
+                                    Countries
+                                </Button>
+                            </NavLink>
+
+                            <Divider orientation="vertical" variant="middle" flexItem />
+
+                            <NavLink to="/currencies" style={{ textDecoration: "none" }}>
+                                <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                                    currencies
+                                </Button>
+                            </NavLink>
+
+                            <Divider orientation="vertical" variant="middle" flexItem />
+
+                            <NavLink to="/estatetypes" style={{ textDecoration: "none" }}>
+                                <Button sx={{ my: 2, color: 'white', display: 'block' }} >
+                                    Estate Types
+                                </Button>
+                            </NavLink>
+
+                            <Divider orientation="vertical" variant="middle" flexItem />
+
+                            <NavLink to="/giphy" style={{ textDecoration: "none" }}>
+                                <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                                    giphy
+                                </Button>
+                            </NavLink>
+                        </Box>
+                    </Grid>
+
+                    <Grid item xs={3}>
+                        <Box
+                        sx={{mr:2}}
+                            display="flex"
+                            alignItems={"center"}
+                            justifyContent="flex-end"
+                        >
+                            {user.token
+                                ? <>
+                                    <Typography h3 color="white">Hello, {user.username}!</Typography>
+                                    <Avatar alt="avarat img" src="https://www.w3schools.com/howto/img_avatar.png" />
+                                    <Button
+                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                        onClick={userLogout}
+                                    >
+                                        Logout
+                                    </Button>
+                                </>
+                                :
+                                <>
+                                    <Button
+                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                        onClick={handleClickOpenLogin}
+                                    >
+                                        Login
+                                    </Button>
+
+                                    <Button
+                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                        onClick={handleClickOpenRegister}
+                                    >
+                                        Register
+                                    </Button>
+
+                                    <LoginUser setOpen={setOpenLogin} open={openLogin} />
+                                    <RegisterUser setOpen={setOpenRegister} open={openRegister} />
+                                </>
+                            }
+
+                        </Box>
+                    </Grid>
+                </Grid>
+
+            </AppBar>
+        </Box >
     );
 }
 
