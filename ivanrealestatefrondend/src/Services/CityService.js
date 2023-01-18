@@ -1,10 +1,11 @@
 const baseUrl = "https://localhost:7125";
 
-export const getAll = async () => {
+export const getAll = async (token) => {
     const res = await fetch(`${baseUrl}/api/cities`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
         }
     });
     return await res.json();

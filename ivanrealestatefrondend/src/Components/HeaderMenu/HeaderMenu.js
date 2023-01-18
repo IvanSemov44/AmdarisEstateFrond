@@ -1,10 +1,11 @@
-import { Button } from '@mui/material';
-import { useState } from 'react';
+import { Avatar, Button, Typography } from '@mui/material';
+import { useContext, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 // import {Link} from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap'
+import { AuthContext } from '../../contexts/AuthContext';
 import LoginUser from '../User/LoginUser';
 import RegisterUser from '../User/RegisterUser';
 
@@ -12,13 +13,11 @@ const HeaderMenu = () => {
     const [openLogin, setOpenLogin] = useState(false);
     const [openRegister, setOpenRegister] = useState(false);
 
-    const handleClickOpenLogin = () => {
-        setOpenLogin(true);
-    };
+    const { user, userLogout } = useContext(AuthContext);
 
-    const handleClickOpenRegister = () => {
-        setOpenRegister(true);
-    };
+    const handleClickOpenLogin = () => setOpenLogin(true);
+    const handleClickOpenRegister = () => setOpenRegister(true);
+
 
     return (
         <>
@@ -68,20 +67,27 @@ const HeaderMenu = () => {
                                 Estate Type Catalog
                             </Nav.Link>
                         </LinkContainer>
-                    
-                        <Button variant="outlined" onClick={handleClickOpenLogin}>
-                            Login
-                        </Button>
 
-                        <Button variant="outlined" onClick={handleClickOpenRegister}>
-                            Register
-                        </Button>
 
-                        <LinkContainer to="/logout">
-                            <Nav.Link>
-                                Logout
-                            </Nav.Link>
-                        </LinkContainer>
+
+
+
+                        {user.token
+                            ? <>
+                                <Typography p color="white"> {user.username}</Typography>
+                                <Avatar alt="avarat img" src="https://www.w3schools.com/howto/img_avatar.png" />
+                                <Button onClick={userLogout}>Logout</Button>
+                            </>
+                            :
+                            <>
+                                <Button variant="outlined" onClick={handleClickOpenLogin}>
+                                    Login
+                                </Button>
+                                <Button variant="outlined" onClick={handleClickOpenRegister}>
+                                    Register
+                                </Button>
+                            </>
+                        }
 
                         <LinkContainer to="/giphy">
                             <Nav.Link>
@@ -89,8 +95,8 @@ const HeaderMenu = () => {
                             </Nav.Link>
                         </LinkContainer>
 
-                        <LoginUser setOpen={setOpenLogin} open={openLogin}/>
-                        <RegisterUser setOpen={setOpenRegister} open={openRegister}/>
+                        <LoginUser setOpen={setOpenLogin} open={openLogin} />
+                        <RegisterUser setOpen={setOpenRegister} open={openRegister} />
 
                     </Nav>
                 </Container>

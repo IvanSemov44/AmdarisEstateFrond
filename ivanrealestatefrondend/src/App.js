@@ -18,29 +18,43 @@ import EstateTypePage from './Components/EstateType/EstateTypePage';
 import EditEstate from './Components/Estate/EditEstate/EditEstate';
 import ImagePage from './Components/Image/ImagePage';
 
+import { AuthContext } from './contexts/AuthContext';
+import { useState } from 'react';
+
 function App() {
+  const [auth, setAuth] = useState({});
+
+  const userLogin = (authData) => {
+    setAuth(authData)
+  };
+
+  const userLogout=()=>{
+    setAuth({});
+  }
   return (
-    <div className="App">
-      <CssBaseline>
-        <HeaderMenu />
+    <AuthContext.Provider value={{ user: auth, userLogin,userLogout }}>
+      <div className="App">
+        <CssBaseline>
+          <HeaderMenu />
 
-        <Routes>
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/catalog' element={<EstateCatalog />}></Route>
-          <Route path='/catalog/:estateId' element={<EstateDetails />}></Route>
-          <Route path='/createEstate' element={<CreateEstate />}></Route>
-          <Route path='/editEstate/:estateId' element={<EditEstate />}></Route>
-          <Route path='/editEstate/:estateId/images' element={<ImagePage />}></Route>
-          <Route path='/cities' element={<CityPage />}></Route>
-          <Route path='/countries' element={<CountryPage />}></Route>
-          <Route path='/currencies' element={<CurrencyPage />}></Route>
-          <Route path='/estatetypes' element={<EstateTypePage />}></Route>
-          <Route path='/giphy' element={<GiphyCatalog />}></Route>
-          <Route path='/createcity' element={<CreateCity />}></Route>
+          <Routes>
+            <Route path='/' element={<Home />}></Route>
+            <Route path='/catalog' element={<EstateCatalog />}></Route>
+            <Route path='/catalog/:estateId' element={<EstateDetails />}></Route>
+            <Route path='/createEstate' element={<CreateEstate />}></Route>
+            <Route path='/editEstate/:estateId' element={<EditEstate />}></Route>
+            <Route path='/editEstate/:estateId/images' element={<ImagePage />}></Route>
+            <Route path='/cities' element={<CityPage />}></Route>
+            <Route path='/countries' element={<CountryPage />}></Route>
+            <Route path='/currencies' element={<CurrencyPage />}></Route>
+            <Route path='/estatetypes' element={<EstateTypePage />}></Route>
+            <Route path='/giphy' element={<GiphyCatalog />}></Route>
+            <Route path='/createcity' element={<CreateCity />}></Route>
 
-        </Routes>
-      </CssBaseline>
-    </div>
+          </Routes>
+        </CssBaseline>
+      </div>
+    </AuthContext.Provider>
   );
 }
 

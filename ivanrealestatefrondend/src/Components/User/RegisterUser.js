@@ -13,17 +13,21 @@ import {
     OutlinedInput,
     InputAdornment,
     DialogActions,
+    FormHelperText,
 } from '@mui/material';
 
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
+import * as AuthService from '../../Services/AuthService';
+
 const RegisterUser = ({
     setOpen,
     open
-})=>{
+}) => {
     const [showPassword, setShowPassword] = useState(false);
-    const { register, formState: { errors }, handleSubmit, resetField } = useForm();
+    const { register, formState: { errors }, handleSubmit, resetField, watch } = useForm();
 
     const handleClose = () => setOpen(false);
     const handleMouseDownPassword = (event) => event.preventDefault();
@@ -36,12 +40,21 @@ const RegisterUser = ({
         resetField("lastName");
         resetField("email");
         resetField("passwordRepeat");
-        console.log(data);
+        const registerData = {
+            username: data.userName,
+            firstname: data.firstName,
+            lastname: data.lastName,
+            password: data.password,
+            email: data.email,
+            phonenumber: null,
+            roles: ["employee"]
+        };
+        AuthService.register(registerData);
     }
 
-    return(
+    return (
         <Dialog open={open} onClose={handleClose}  >
-            <DialogTitle >Login</DialogTitle>
+            <DialogTitle>Register</DialogTitle>
             <Box
                 component="form"
                 sx={{
@@ -59,7 +72,7 @@ const RegisterUser = ({
                     })}
                     label="First Name"
                     helperText={errors.firstName && errors.firstName.message}
-                /> 
+                />
                 <TextField
                     error={errors.lastName}
                     {...register("lastName", {
@@ -82,7 +95,10 @@ const RegisterUser = ({
                     error={errors.email}
                     {...register("email", {
                         required: { value: true, message: "Email is required field!" },
-                        maxLength: { value: 50, message: "Email can't be more from 20 symbols" }
+                        pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: "invalid email address"
+                        }
                     })}
                     label="Email"
                     helperText={errors.email && errors.email.message}
@@ -90,6 +106,7 @@ const RegisterUser = ({
                 <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                     <OutlinedInput
+                        error={errors.passwordRepeat}
                         {...register("password")}
                         id="outlined-adornment-password"
                         type={showPassword ? 'text' : 'password'}
@@ -107,11 +124,22 @@ const RegisterUser = ({
                         }
                         label="Password"
                     />
+                    {errors.passwordRepeat ?
+                        <FormHelperText error>{errors.passwordRepeat.message}</FormHelperText>
+                        : <></>}
                 </FormControl>
                 <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password Repeat</InputLabel>
                     <OutlinedInput
-                        {...register("passwordRepeat")}
+                        error={errors.passwordRepeat}
+                        {...register("passwordRepeat", {
+                            required: true,
+                            validate: (value) => {
+                                if (watch("password") !== value) {
+                                    return "Your passwords do no match";
+                                }
+                            }
+                        })}
                         id="outlined-adornment-password"
                         type={showPassword ? 'text' : 'password'}
                         endAdornment={
@@ -127,6 +155,7 @@ const RegisterUser = ({
                             </InputAdornment>
                         }
                         label="Password Repeat"
+
                     />
                 </FormControl>
                 <DialogActions>

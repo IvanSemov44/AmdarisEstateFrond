@@ -1,6 +1,7 @@
 import * as cityService from '../../Services/CityService';
 
 const useCities = () => {
+
     const removeCity = (cityId) => {
         return cityService.deleteCity(cityId);
     }

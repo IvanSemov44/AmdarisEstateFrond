@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 import * as cityService from '../../Services/CityService';
 
 export default function useGetCities() {
     const [cities, setCities] = useState([]);
+    const { user } = useContext(AuthContext);
+    console.log(user);
 
-    useEffect(()=>{
+    useEffect(() => {
         let ignore = false;
-        cityService.getAll()
-        .then(result=>{
-            if(!ignore){
-                setCities(result);
-            }
-        })
-        return ()=>{
+        cityService.getAll(user.token)
+            .then(result => {
+                if (!ignore) {
+                    setCities(result);
+                }
+            })
+        return () => {
             ignore = true;
         }
     }, [])

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -9,20 +9,27 @@ import {
     TextField,
     IconButton,
     InputLabel,
+    Typography,
     FormControl,
     OutlinedInput,
     InputAdornment,
     DialogActions,
 } from '@mui/material';
 
-
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
+import * as AuthService from '../../Services/AuthService'
+import { AuthContext } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginUser = ({
     setOpen,
     open
 }) => {
+    const navigate = useNavigate();
+    const { userLogin } = useContext(AuthContext);
+    const [serverError, setServerError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const { register, formState: { errors }, handleSubmit, resetField } = useForm();
 
@@ -31,14 +38,30 @@ const LoginUser = ({
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handlerSubmit = data => {
-        resetField("userName");
-        resetField("password");
-        console.log(data);
+        AuthService.login(data)
+            .then(result => {
+                if (result.status) throw new Error();
+                else {
+                    userLogin(result);
+                    resetField("userName");
+                    resetField("password");
+                    handleClose();
+                    navigate('/');
+                    setServerError('');
+                }
+            }).catch(()=>setServerError("Username or Password don't match!"));
     }
 
     return (
         <Dialog open={open} onClose={handleClose}  >
             <DialogTitle >Login</DialogTitle>
+
+            {serverError !== ''
+                ? <Typography variant="h5" textAlign="center" color="red" gutterBottom>
+                    {serverError}
+                </Typography>
+                : <></>}
+
             <Box
                 component="form"
                 sx={{
