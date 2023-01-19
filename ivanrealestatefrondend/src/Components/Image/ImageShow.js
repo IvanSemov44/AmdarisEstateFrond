@@ -53,7 +53,7 @@ const ImageShow = ({ images }) => {
     };
 
     return (
-        < Box sx={{ maxWidth: 1000, flexGrow: 3 }}>
+        < Box sx={{ maxWidth: 500, flexGrow: 3 }}>
             <Paper
                 square
                 elevation={0}
@@ -81,7 +81,7 @@ const ImageShow = ({ images }) => {
                                 sx={{
                                     height: 355,
                                     display: 'block',
-                                    maxWidth: 1000,
+                                    maxWidth: 500,
                                     overflow: 'hidden',
                                     width: '100%',
                                 }}

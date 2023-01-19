@@ -5,9 +5,9 @@ import '../EstateDetails/EstateDetails.css';
 import {
     Box,
     Fab,
-    List,
     Button,
-    ListItem
+    ListItem,
+    TextField
 } from "@mui/material";
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -48,55 +48,179 @@ const EstateDetails = () => {
     };
 
     return (
-        <div className="estateDetails">
-            <List
-                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-                aria-label="EstateDetails"
-            >
-                {estate.images !== undefined && estate.images.length !== 0
-                    ? <ImageShow images={estate.images} />
-                    : <Box
-                        component="img"
-                        sx={{
-                            height: 355,
-                            display: 'block',
-                            maxWidth: 1000,
-                            overflow: 'hidden',
-                            width: '100%',
-                        }}
-                        src="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
-                        alt="No Image"
-                    />}
-                <Link to={`/editEstate/${estate.estateId}/images`}>
-                    <Button variant="outlined" color="primary" >edit images</Button>
-                </Link>
-                <ListItem>{elementSellOrRent}</ListItem>
-                <ListItem>Country: {country.countryName}</ListItem>
-                <ListItem>City: {city.cityName}</ListItem>
-                <ListItem>neighborhood: {estate.neighborhood}</ListItem>
-                <ListItem>Address: {estate.address}</ListItem>
-                <ListItem>Price: {estate.price}</ListItem>
-                <ListItem>Currency: {currency.currencyName}</ListItem>
-                <ListItem>Type: {estateType.typeName}</ListItem>
-                <ListItem>Rooms: {estate.rooms}</ListItem>
-                <ListItem>Floor: {estate.floоr}</ListItem>
-                <ListItem>Area: {estate.estateArea}</ListItem>
-                <ListItem>Year Of Creation: {estate.yearOfCreation}</ListItem>
-                <ListItem>Extras: {estate.extras}</ListItem>
-                <Box sx={{ '& button': { m: 1 } }}>
-                    <Link to={`/editEstate/${estate.estateId}`}>
-                        <Fab color="primary" aria-label="edit">
-                            <EditIcon />
-                        </Fab>
-                    </Link>
+        <Box sx={{ m: 2, mx: 8 }}>
 
-                    <Fab color="primary" aria-label="delete" type="button" onClick={deleteEstate}>
-                        <DeleteIcon />
+            {estate.images !== undefined && estate.images.length !== 0
+                ? <ImageShow images={estate.images} />
+                : <Box
+                    component="img"
+                    sx={{
+                        height: 355,
+                        display: 'block',
+                        overflow: 'hidden',
+                        width: 500,
+                    }}
+                    src="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
+                    alt="No Image"
+                />}
+            <Link to={`/editEstate/${estate.estateId}/images`}>
+                <Button variant="outlined" color="primary" >edit images</Button>
+            </Link>
+
+            <TextField
+                sx={{ m: 2 }}
+                defaultValue={elementSellOrRent}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Country"
+                value={country.countryName}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="City"
+                defaultValue={city.cityName}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+            
+            <TextField
+                sx={{ m: 2 }}
+                label="Neighborhood"
+                defaultValue={estate.neighborhood}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Address"
+                defaultValue={estate.address}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Price"
+                defaultValue={estate.price}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Currency"
+                defaultValue={currency.currencyName}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Type"
+                defaultValue={estateType.typeName}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Rooms"
+                defaultValue={estate.rooms}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Floor"
+                defaultValue={estate.floor}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Area"
+                defaultValue={estate.estateArea}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Year Of Creation"
+                defaultValue={estate.yearOfCreation}
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <TextField
+                sx={{ m: 2 }}
+                label="Extras"
+                defaultValue={estate.extras}
+                multiline
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+            <TextField
+            sx={{m:2}}
+                label="Description"
+                defaultValue={estate.description}
+                multiline
+                InputProps={{
+                    readOnly: true,
+                }}
+                variant="filled"
+            />
+
+            <ListItem>{elementSellOrRent}</ListItem>
+            
+            <Box sx={{ '& button': { m: 1 } }}>
+                <Link to={`/editEstate/${estate.estateId}`}>
+                    <Fab color="primary" aria-label="edit">
+                        <EditIcon />
                     </Fab>
-                </Box>
-            </List>
-        </div>
+                </Link>
 
+                <Fab color="primary" aria-label="delete" type="button" onClick={deleteEstate}>
+                    <DeleteIcon />
+                </Fab>
+            </Box>
+        </Box>
     );
 }
 

@@ -32,6 +32,7 @@ const EstateCard = ({
         ? estateImage = "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
         : estateImage = estate.images[0].imageUrl;
 
+        
     return (
         <Card sx={{ maxWidth: 345, margin: 1 }}>
             <CardActionArea >

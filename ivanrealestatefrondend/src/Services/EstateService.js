@@ -10,13 +10,33 @@ export const getAll = async () => {
     return await res.json();
 };
 
-export const getByPage = async (pageNumber) => {
-    const res = await fetch(`${baseUrl}/api/estates/page?pageNumber=${pageNumber}&pageSize=5`, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    });
+export const getByPage = async (
+    pageNumber, city, country, currency, estateType, year, price, floor, rooms, area,isSell
+) => {
+    const res = await fetch(`${baseUrl}/api/estates/page?` +
+        `pageNumber=${pageNumber}` +
+        `&pageSize=5` +
+        `&city=${city}` +
+        `&country=${country}` +
+        `&currency=${currency}` +
+        `&estateType=${estateType}` +
+        `&minyear=${year[0]}` +
+        `&maxyear=${year[1]}` +
+        `&minprice=${price[0]}` +
+        `&maxprice=${price[1]}` +
+        `&minfloor=${floor[0]}` +
+        `&maxfloor=${floor[1]}` +
+        `&minrooms=${rooms[0]}` +
+        `&maxrooms=${rooms[1]}`+
+        `&minarea=${area[0]}`+
+        `&maxarea=${area[1]}`+
+        `&sell=${isSell}`
+        , {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
 
     const contentType = res.headers.get('X-Pagination');
     // console.log(contentType);
