@@ -1,13 +1,16 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 
-import '../EstateDetails/EstateDetails.css';
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import {
     Box,
     Fab,
     Button,
-    ListItem,
-    TextField
+    TextField,
+    Grid,
+    Dialog,
+    DialogTitle,
+    DialogActions
 } from "@mui/material";
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -22,205 +25,256 @@ import useGetCurrencyById from "../../../CustemHooks/CustemCurrencyHooks/useGetC
 import useGetEstateTypById from "../../../CustemHooks/CustemEstateTypeHooks/useGetEstateTypById";
 
 import * as estateService from '../../../Services/EstateService';
+import { Spinner } from "../../Common/Spinner/Spinner";
 
 const EstateDetails = () => {
     const { estateId } = useParams();
     const navigate = useNavigate();
 
+    const [open, setOpen] = useState(false);
+
     const estate = useGetEstateById(estateId);
-    console.log(estate);
+
     const city = useGetCityById(estate.cityId);
     const country = useGetCountryById(estate.countryId);
     const currency = useGetCurrencyById(estate.curencyId);
     const estateType = useGetEstateTypById(estate.estateTypeId);
 
-    let elementSellOrRent;
+    console.log(estate);
 
-    if (estate.sell) {
-        elementSellOrRent = "Sell";
-    }
-    else {
-        elementSellOrRent = "Rent";
-    }
-    const deleteEstate = () => {
-        estateService.deleteEstate(estate.estateId)
-            .then(navigate(`/catalog`));
-    };
+    const ready =
+        city !== undefined &&
+        country !== undefined &&
+        currency !== undefined &&
+        estateType !== undefined &&
+        estate !== undefined;
+
+    const elementSellOrRent = estate.sell ? "Sell" : "Rent";
+
+    const deleteEstate = () => estateService.deleteEstate(estate.estateId)
+        .then(navigate(`/catalog`));
 
     return (
-        <Box sx={{ m: 2, mx: 8 }}>
+        <>
+            {ready ?
 
-            {estate.images !== undefined && estate.images.length !== 0
-                ? <ImageShow images={estate.images} />
-                : <Box
-                    component="img"
-                    sx={{
-                        height: 355,
-                        display: 'block',
-                        overflow: 'hidden',
-                        width: 500,
-                    }}
-                    src="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
-                    alt="No Image"
-                />}
-            <Link to={`/editEstate/${estate.estateId}/images`}>
-                <Button variant="outlined" color="primary" >edit images</Button>
-            </Link>
+                <Grid
+                    container
+                    alignItems="center"
+                    justify="center"
+                    direction="row"
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                >
+                    <Grid item sx={{ ml: 4 }} xs={4}>
+                        {estate.images !== undefined && estate.images.length !== 0
+                            ? <ImageShow images={estate.images} />
+                            : <Box
+                                component="img"
+                                sx={{
+                                    height: 355,
+                                    display: 'block',
+                                    overflow: 'hidden',
+                                    width: 500,
+                                    borderRadius: 5
+                                }}
+                                src="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
+                                alt="No Image"
+                            />}
+                        <Link to={`/editEstate/${estate.estateId}/images`}>
+                            <Button sx={{ m: 3 }} variant="outlined" color="primary" >edit images</Button>
+                        </Link>
+                    </Grid>
 
-            <TextField
-                sx={{ m: 2 }}
-                defaultValue={elementSellOrRent}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                    <Grid item sx={{ mr: -4 }} xs={8}>
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Country"
-                value={country.countryName}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                        <Box sx={{ m: 2, mx: 8 }}>
 
-            <TextField
-                sx={{ m: 2 }}
-                label="City"
-                defaultValue={city.cityName}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
-            
-            <TextField
-                sx={{ m: 2 }}
-                label="Neighborhood"
-                defaultValue={estate.neighborhood}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                value={elementSellOrRent}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Address"
-                defaultValue={estate.address}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Country"
+                                value={country.countryName}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Price"
-                defaultValue={estate.price}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="City"
+                                value={city.cityName}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Currency"
-                defaultValue={currency.currencyName}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Neighborhood"
+                                value={estate.neighborhood}
+                                // defaultValue={estate.neighborhood}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Type"
-                defaultValue={estateType.typeName}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Address"
+                                value={estate.address}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Rooms"
-                defaultValue={estate.rooms}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Type"
+                                value={estateType.typeName}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Floor"
-                defaultValue={estate.floor}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Price"
+                                value={estate.price}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Area"
-                defaultValue={estate.estateArea}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Currency"
+                                value={currency.currencyName}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Year Of Creation"
-                defaultValue={estate.yearOfCreation}
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Rooms"
+                                value={estate.rooms}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <TextField
-                sx={{ m: 2 }}
-                label="Extras"
-                defaultValue={estate.extras}
-                multiline
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
-            <TextField
-            sx={{m:2}}
-                label="Description"
-                defaultValue={estate.description}
-                multiline
-                InputProps={{
-                    readOnly: true,
-                }}
-                variant="filled"
-            />
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Floor"
+                                value={estate.floor}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-            <ListItem>{elementSellOrRent}</ListItem>
-            
-            <Box sx={{ '& button': { m: 1 } }}>
-                <Link to={`/editEstate/${estate.estateId}`}>
-                    <Fab color="primary" aria-label="edit">
-                        <EditIcon />
-                    </Fab>
-                </Link>
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Area"
+                                value={estate.estateArea}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
 
-                <Fab color="primary" aria-label="delete" type="button" onClick={deleteEstate}>
-                    <DeleteIcon />
-                </Fab>
-            </Box>
-        </Box>
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Year Of Creation"
+                                value={estate.yearOfCreation}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
+
+                            <TextField
+                                sx={{ m: 2 }}
+                                focused
+                                label="Extras"
+                                defaultValue={estate.extras}
+                                multiline
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
+                            <TextField
+                                focused
+                                sx={{ m: 2 }}
+                                label="Description"
+                                value={estate.description}
+                                multiline
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                variant="filled"
+                            />
+
+                            <Box sx={{ '& button': { m: 1 } }}>
+                                <Link to={`/editEstate/${estate.estateId}`}>
+                                    <Fab color="primary" aria-label="edit">
+                                        <EditIcon />
+                                    </Fab>
+                                </Link>
+
+                                <Fab color="primary" aria-label="delete" type="button" onClick={()=>setOpen(true)}>
+                                    <DeleteIcon />
+                                </Fab>
+
+                                <Dialog
+                                    open={open}
+                                    onClose={() => setOpen(false)}
+                                >
+                                    <DialogTitle >
+                                        {"Are you sure?"}
+                                    </DialogTitle>
+                                    <DialogActions>
+                                        <Button onClick={() => setOpen(false)}>No</Button>
+                                        <Button onClick={deleteEstate} autoFocus>
+                                            Yes
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
+                            </Box>
+                        </Box>
+                    </Grid>
+                </Grid>
+                : <Spinner />}
+        </>
     );
 }
 

@@ -102,7 +102,7 @@ const EditEstate = () => {
             {ready ?
                 <Box
                     component="form"
-                    sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, }}
+                    sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, m:3}}
                     noValidate
                     autoComplete="off"
                     onSubmit={handleSubmit(handlerSubmit)}

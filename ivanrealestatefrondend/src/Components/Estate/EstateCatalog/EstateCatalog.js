@@ -79,7 +79,7 @@ const EstateCatalog = () => {
     useEffect(() => {
         let ignore = false;
         estatesSevice.getByPage(
-            page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy,desc
+            page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy, desc
         )
             .then(result => {
                 if (!ignore) {
@@ -95,7 +95,7 @@ const EstateCatalog = () => {
         return () => {
             ignore = true;
         };
-    }, [page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy,desc]);
+    }, [page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy, desc]);
 
 
     const handleSliderChange = (event, newValue, activeThumb) => {
@@ -123,285 +123,301 @@ const EstateCatalog = () => {
                 direction="row"
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-                <Grid item >
-                    <InputLabel id="demo-simple-select-label">City</InputLabel>
-                    <Select
-                        sx={{ width: 200 }}
-                        value={city}
-                        label="City"
-                        onChange={e => setCity(e.target.value)}
-                    >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        {cities.map(x =>
-                            <MenuItem
-                                key={x.cityId}
-                                value={x.cityId}
+                <Grid item xs={3} sx={{ m: 4 }}>
+                    <Grid item >
+                        <Grid item sx={{ width: 300 }}>
+                            <TextField
+                                label="Search"
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <SearchOutlinedIcon />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }}>
+                            <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+                            <Select
+                                sx={{ width: 200 }}
+                                value={orderBy}
+                                label="Sort"
+                                onChange={e => setOrderBy(e.target.value)}
                             >
-                                {x.cityName}
-                            </MenuItem>
-                        )}
-                    </Select>
+                                <MenuItem key="" value="">
+                                    None
+                                </MenuItem>
+                                {valueForSorf.map(x =>
+                                    <MenuItem
+                                        key={x.id}
+                                        value={x.name}
+                                    >
+                                        {x.name}
+                                    </MenuItem>
+                                )}
+                            </Select>
+                            {desc === ""
+                                ? <Button onClick={() => setDesc("desc")}>
+                                    <ArrowDownwardIcon fontSize="large" />
+                                </Button>
+                                : <Button onClick={() => setDesc("")}>
+                                    <ArrowUpwardIcon fontSize="large" />
+                                </Button>}
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }}>
+                            <InputLabel id="demo-simple-select-label">City</InputLabel>
+                            <Select
+                                sx={{ width: 200 }}
+                                value={city}
+                                label="City"
+                                onChange={e => setCity(e.target.value)}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {cities.map(x =>
+                                    <MenuItem
+                                        key={x.cityId}
+                                        value={x.cityId}
+                                    >
+                                        {x.cityName}
+                                    </MenuItem>
+                                )}
+                            </Select>
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }}>
+                            <InputLabel id="demo-simple-select-label">Country</InputLabel>
+                            <Select
+                                sx={{ width: 200 }}
+                                value={country}
+                                label="Country"
+                                onChange={e => setCountry(e.target.value)}
+                            >
+                                <MenuItem key="" value="">
+                                    None
+                                </MenuItem>
+                                {countries.map(x =>
+                                    <MenuItem
+                                        key={x.countryId}
+                                        value={x.countryId}
+                                    >
+                                        {x.countryName}
+                                    </MenuItem>
+                                )}
+                            </Select>
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }}>
+                            <InputLabel id="demo-simple-select-label">Currency</InputLabel>
+                            <Select
+                                sx={{ width: 200 }}
+                                value={currency}
+                                label="Currency"
+                                onChange={e => setCurrency(e.target.value)}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {currencies.map(x =>
+                                    <MenuItem
+                                        key={x.currencyId}
+                                        value={x.currencyId}
+                                    >
+                                        {x.currencyName}
+                                    </MenuItem>
+                                )}
+                            </Select>
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }}>
+                            <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                            <Select
+                                sx={{ width: 200 }}
+                                label="Type"
+                                value={estateType}
+                                onChange={e => setEstateType(e.target.value)}
+                            >
+                                <MenuItem key="" value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {estateTypes.map(x =>
+                                    <MenuItem
+                                        key={x.estateTypeId}
+                                        value={x.estateTypeId}
+                                    >
+                                        {x.typeName}
+                                    </MenuItem>
+                                )}
+                            </Select>
+
+                        </Grid>
+                    </Grid>
+
+                    <Grid
+                        container
+                        // alignItems="center"
+                        justify="center"
+                        direction="column"
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                        <Grid item sx={{ width: 300 }}>
+                            <Typography id="input-slider" gutterBottom>
+                                Range: Year of Create
+                            </Typography>
+                            <Typography id="input-slider" gutterBottom>
+                                {`Min year: ${year[0]} Max year: ${year[1]}`}
+                            </Typography>
+                            <Slider
+                                getAriaLabel={() => 'Minimum distance shift'}
+                                value={year}
+
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                                max={2100}
+                                min={1900}
+                                onChange={(event, newValue, activeThumb) =>
+                                    setYear(handleSliderChange(event, newValue, activeThumb))}
+                            />
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }}>
+                            <Typography id="input-slider" gutterBottom>
+                                Range: Price
+                            </Typography>
+                            <Typography id="input-slider" gutterBottom>
+                                {`Min price: ${price[0]} Max price: ${price[1]}`}
+                            </Typography>
+                            <Slider
+                                getAriaLabel={() => 'Minimum distance shift'}
+                                value={price}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                                max={500000}
+                                min={0}
+                                step={1000}
+                                onChange={(event, newValue, activeThumb) =>
+                                    setPrice(handleSliderChange(event, newValue, activeThumb))}
+                            />
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }}>
+                            <Typography id="input-slider" gutterBottom>
+                                Range: Floor
+                            </Typography>
+                            <Typography id="input-slider" gutterBottom>
+                                {`Min floor: ${floor[0]} Max floor: ${floor[1]}`}
+                            </Typography>
+                            <Slider
+                                getAriaLabel={() => 'Minimum distance shift'}
+                                value={floor}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                                max={100}
+                                min={0}
+                                step={1}
+                                onChange={(event, newValue, activeThumb) =>
+                                    setFloor(handleSliderChange(event, newValue, activeThumb))}
+                            />
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }}>
+                            <Typography id="input-slider" gutterBottom>
+                                Range: Rooms
+                            </Typography>
+                            <Typography id="input-slider" gutterBottom>
+                                {`Min rooms: ${rooms[0]} Max rooms: ${rooms[1]}`}
+                            </Typography>
+                            <Slider
+                                getAriaLabel={() => 'Minimum distance shift'}
+                                value={rooms}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                                max={30}
+                                min={0}
+                                step={1}
+                                onChange={(event, newValue, activeThumb) =>
+                                    setRooms(handleSliderChange(event, newValue, activeThumb))}
+                            />
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }}>
+                            <Typography id="input-slider" gutterBottom>
+                                Range: Area
+                            </Typography>
+                            <Typography id="input-slider" gutterBottom>
+                                {`Min area: ${area[0]} Max area: ${area[1]}`}
+                            </Typography>
+                            <Slider
+                                getAriaLabel={() => 'Minimum distance shift'}
+                                value={area}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                                max={1000}
+                                min={0}
+                                step={1}
+                                onChange={(event, newValue, activeThumb) =>
+                                    setArea(handleSliderChange(event, newValue, activeThumb))}
+                            />
+                        </Grid>
+
+                        <Grid item sx={{ width: 300 }} container justify="center">
+                            <Typography id="input-slider"  gutterBottom>
+                                Range: Area
+                            </Typography>
+                            <RadioGroup
+                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                name="controlled-radio-buttons-group"
+                                value={isSell}
+
+                                onChange={e => setIsSell(e.target.value)}
+                            >
+                                <Box
+                                    direction="row"
+                                    alignItems="center"
+                                    justify="center"
+                                >
+                                    <FormControlLabel value="true" control={<Radio />} label="Sell" />
+                                    <FormControlLabel value="false" control={<Radio />} label="Rent" />
+                                    <FormControlLabel value="" control={<Radio />} label="Both" />
+                                </Box>
+                            </RadioGroup>
+                        </Grid>
+
+                    </Grid>
                 </Grid>
+                <Grid item xs={8}>
 
-                <Grid item >
-                    <InputLabel id="demo-simple-select-label">Sort</InputLabel>
-                    <Select
-                        sx={{ width: 200 }}
-                        value={orderBy}
-                        label="Sort"
-                        onChange={e => setOrderBy(e.target.value)}
-                    >
-                        <MenuItem key="" value="">
-                            None
-                        </MenuItem>
-                        {valueForSorf.map(x =>
-                            <MenuItem
-                                key={x.id}
-                                value={x.name}
-                            >
-                                {x.name}
-                            </MenuItem>
-                        )}
-                    </Select>
-                    {desc===""
-                        ? <Button onClick={() => setDesc("desc")}>
-                            <ArrowDownwardIcon fontSize="large" />
-                        </Button>
-                        : <Button onClick={() => setDesc("")}>
-                            <ArrowUpwardIcon fontSize="large" />
-                        </Button>}
-                </Grid>
-
-                <Grid item >
-                    <InputLabel id="demo-simple-select-label">Country</InputLabel>
-                    <Select
-                        sx={{ width: 200 }}
-                        value={country}
-                        label="Country"
-                        onChange={e => setCountry(e.target.value)}
-                    >
-                        <MenuItem key="" value="">
-                            None
-                        </MenuItem>
-                        {countries.map(x =>
-                            <MenuItem
-                                key={x.countryId}
-                                value={x.countryId}
-                            >
-                                {x.countryName}
-                            </MenuItem>
-                        )}
-                    </Select>
-                </Grid>
-
-                <Grid item >
-                    <InputLabel id="demo-simple-select-label">Currency</InputLabel>
-                    <Select
-                        sx={{ width: 200 }}
-                        value={currency}
-                        label="Currency"
-                        onChange={e => setCurrency(e.target.value)}
-                    >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        {currencies.map(x =>
-                            <MenuItem
-                                key={x.currencyId}
-                                value={x.currencyId}
-                            >
-                                {x.currencyName}
-                            </MenuItem>
-                        )}
-                    </Select>
-                </Grid>
-
-                <Grid item >
-                    <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                    <Select
-                        sx={{ width: 200 }}
-                        label="Type"
-                        value={estateType}
-                        onChange={e => setEstateType(e.target.value)}
-                    >
-                        <MenuItem key="" value="">
-                            <em>None</em>
-                        </MenuItem>
-                        {estateTypes.map(x =>
-                            <MenuItem
-                                key={x.estateTypeId}
-                                value={x.estateTypeId}
-                            >
-                                {x.typeName}
-                            </MenuItem>
-                        )}
-                    </Select>
-
+                    <Stack alignItems="center" spacing={2} >
+                        {estates[0]
+                            ? <Box sx={{ display: `${show}`, flexWrap: 'wrap' }} >
+                                {estates.map(x => <EstateCard key={x.estateId} estate={x} />)}
+                            </Box>
+                            : isEmptyEstate
+                                ? <div></div>
+                                : <Spinner></Spinner>
+                        }
+                        <Pagination
+                            sx={{ margin: 3 }}
+                            size="large"
+                            count={pagin.TotalPages}
+                            page={page}
+                            variant="outlined"
+                            color="primary"
+                            onChange={(e, v) => setPage(v)}
+                        />
+                    </Stack >
                 </Grid>
             </Grid>
-
-            <Grid
-                container
-                alignItems="center"
-                justify="center"
-                direction="row"
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            >
-                <Grid item sx={{ width: 300 }}>
-                    <Typography id="input-slider" gutterBottom>
-                        Range: Year of Create
-                    </Typography>
-                    <Typography id="input-slider" gutterBottom>
-                        {`Min year: ${year[0]}, Max year: ${year[1]}`}
-                    </Typography>
-                    <Slider
-                        getAriaLabel={() => 'Minimum distance shift'}
-                        value={year}
-
-                        valueLabelDisplay="auto"
-                        getAriaValueText={valuetext}
-                        disableSwap
-                        max={2100}
-                        min={1900}
-                        onChange={(event, newValue, activeThumb) =>
-                            setYear(handleSliderChange(event, newValue, activeThumb))}
-                    />
-                </Grid>
-
-                <Grid item sx={{ width: 300 }}>
-                    <Typography id="input-slider" gutterBottom>
-                        Range: Price
-                    </Typography>
-                    <Typography id="input-slider" gutterBottom>
-                        {`Min price: ${price[0]}, Max price: ${price[1]}`}
-                    </Typography>
-                    <Slider
-                        getAriaLabel={() => 'Minimum distance shift'}
-                        value={price}
-                        valueLabelDisplay="auto"
-                        getAriaValueText={valuetext}
-                        disableSwap
-                        max={500000}
-                        min={0}
-                        step={1000}
-                        onChange={(event, newValue, activeThumb) =>
-                            setPrice(handleSliderChange(event, newValue, activeThumb))}
-                    />
-                </Grid>
-
-                <Grid item sx={{ width: 300 }}>
-                    <Typography id="input-slider" gutterBottom>
-                        Range: Floor
-                    </Typography>
-                    <Typography id="input-slider" gutterBottom>
-                        {`Min floor: ${floor[0]}, Max floor: ${floor[1]}`}
-                    </Typography>
-                    <Slider
-                        getAriaLabel={() => 'Minimum distance shift'}
-                        value={floor}
-                        valueLabelDisplay="auto"
-                        getAriaValueText={valuetext}
-                        disableSwap
-                        max={100}
-                        min={0}
-                        step={1}
-                        onChange={(event, newValue, activeThumb) =>
-                            setFloor(handleSliderChange(event, newValue, activeThumb))}
-                    />
-                </Grid>
-
-                <Grid item sx={{ width: 300 }}>
-                    <Typography id="input-slider" gutterBottom>
-                        Range: Rooms
-                    </Typography>
-                    <Typography id="input-slider" gutterBottom>
-                        {`Min rooms: ${rooms[0]}, Max rooms: ${rooms[1]}`}
-                    </Typography>
-                    <Slider
-                        getAriaLabel={() => 'Minimum distance shift'}
-                        value={rooms}
-                        valueLabelDisplay="auto"
-                        getAriaValueText={valuetext}
-                        disableSwap
-                        max={30}
-                        min={0}
-                        step={1}
-                        onChange={(event, newValue, activeThumb) =>
-                            setRooms(handleSliderChange(event, newValue, activeThumb))}
-                    />
-                </Grid>
-                <Grid item sx={{ width: 300 }}>
-                    <Typography id="input-slider" gutterBottom>
-                        Range: Area
-                    </Typography>
-                    <Typography id="input-slider" gutterBottom>
-                        {`Min area: ${area[0]}, Max area: ${area[1]}`}
-                    </Typography>
-                    <Slider
-                        getAriaLabel={() => 'Minimum distance shift'}
-                        value={area}
-                        valueLabelDisplay="auto"
-                        getAriaValueText={valuetext}
-                        disableSwap
-                        max={1000}
-                        min={0}
-                        step={1}
-                        onChange={(event, newValue, activeThumb) =>
-                            setArea(handleSliderChange(event, newValue, activeThumb))}
-                    />
-                </Grid>
-                <Grid item sx={{ width: 300 }}>
-                    <Typography id="input-slider" gutterBottom>
-                        Range: Area
-                    </Typography>
-                    <RadioGroup
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={isSell}
-                        onChange={e => setIsSell(e.target.value)}
-                    >
-                        <FormControlLabel value="true" control={<Radio />} label="Sell" />
-                        <FormControlLabel value="false" control={<Radio />} label="Rent" />
-                        <FormControlLabel value="" control={<Radio />} label="Both" />
-                    </RadioGroup>
-                </Grid>
-                <Grid item sx={{ width: 300 }}>
-                    <TextField
-                        label="Search"
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <SearchOutlinedIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Grid>
-            </Grid>
-
-            <Stack alignItems="center" spacing={2} >
-                {estates[0]
-                    ? <Box sx={{ display: `${show}`, flexWrap: 'wrap' }} >
-                        {estates.map(x => <EstateCard key={x.estateId} estate={x} />)}
-                    </Box>
-                    : isEmptyEstate
-                        ? <div></div>
-                        : <Spinner></Spinner>
-
-                }
-                <Pagination
-                    sx={{ margin: 3 }}
-                    size="large"
-                    count={pagin.TotalPages}
-                    page={page}
-                    variant="outlined"
-                    color="primary"
-                    onChange={(e, v) => setPage(v)}
-                />
-            </Stack >
         </>
     )
 }

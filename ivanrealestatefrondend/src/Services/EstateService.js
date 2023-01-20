@@ -11,11 +11,11 @@ export const getAll = async () => {
 };
 
 export const getByPage = async (
-    pageNumber, city, country, currency, estateType, year, price, floor, rooms, area,isSell,searchTerm,orderBy,desc
+    pageNumber, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy, desc
 ) => {
     const res = await fetch(`${baseUrl}/api/estates/page?` +
         `pageNumber=${pageNumber}` +
-        `&pageSize=5` +
+        `&pageSize=9` +
         `&city=${city}` +
         `&country=${country}` +
         `&currency=${currency}` +
@@ -27,12 +27,12 @@ export const getByPage = async (
         `&minfloor=${floor[0]}` +
         `&maxfloor=${floor[1]}` +
         `&minrooms=${rooms[0]}` +
-        `&maxrooms=${rooms[1]}`+
-        `&minarea=${area[0]}`+
-        `&maxarea=${area[1]}`+
-        `&sell=${isSell}`+
-        `&searchterm=${searchTerm}`+
-        `&orderby=${orderBy+" "+desc}`
+        `&maxrooms=${rooms[1]}` +
+        `&minarea=${area[0]}` +
+        `&maxarea=${area[1]}` +
+        `&sell=${isSell}` +
+        `&searchterm=${searchTerm}` +
+        `&orderby=${orderBy + " " + desc}`
         , {
             method: "GET",
             headers: {
@@ -41,14 +41,8 @@ export const getByPage = async (
         });
 
     const contentType = res.headers.get('X-Pagination');
-    // console.log(contentType);
     const returnValue = await res.json();
-    // console.log(returnValue);
-    const data = {
-        contentType: contentType,
-        returnValue: returnValue
-    }
-    return data;
+    return { contentType, returnValue }
 };
 
 export const getById = async (id) => {

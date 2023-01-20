@@ -34,7 +34,7 @@ const EstateCard = ({
 
         
     return (
-        <Card sx={{ maxWidth: 345, margin: 1 }}>
+        <Card sx={{ minWidth: 250, maxWidth: 250, m:1 ,mt:4 }}>
             <CardActionArea >
                 <Link to={`/catalog/${estate.estateId}`}>
                     <CardMedia

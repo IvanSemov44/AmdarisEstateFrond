@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +24,7 @@ import useGetCountries from '../../../CustemHooks/CustemCountryHooks/useGetCount
 import useGetEstateType from '../../../CustemHooks/CustemEstateTypeHooks/useGetEstateType';
 
 import * as estateService from '../../../Services/EstateService'
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const defaultValues = {
     address: "",
@@ -46,6 +47,7 @@ const CreateEstate = () => {
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState(defaultValues);
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const { user  } = useContext(AuthContext);
 
     const cities = useGetCities();
     const countries = useGetCountries();
@@ -62,7 +64,7 @@ const CreateEstate = () => {
 
     const handlerSubmit = data => {
         console.log({ ...data });
-        estateService.Create({ ...data, sell: data.sell === "true" })
+        estateService.Create({ ...data, sell: data.sell === "true", ownerId:user.id })
             .then(result => {
                 console.log(result);
                 navigate(`/catalog/${result.estateId}`);
