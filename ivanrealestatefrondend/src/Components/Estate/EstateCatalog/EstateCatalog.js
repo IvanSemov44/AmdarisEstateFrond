@@ -13,7 +13,11 @@ import {
     RadioGroup,
     FormControlLabel,
     Radio,
+    TextField,
+    InputAdornment,
 } from '@mui/material';
+
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 import EstateCard from '../EstateCard/EstateCard';
 
@@ -44,10 +48,12 @@ const EstateCatalog = () => {
 
     const [year, setYear] = useState([2000, 2023]);
     const [price, setPrice] = useState([0, 500000]);
-    const [floor,setFloor] = useState([0,100]);
-    const [rooms, setRooms]= useState([0,30]);
-    const [area,setArea] = useState([0,1000]);
-    const [isSell,setIsSell] = useState("");
+    const [floor, setFloor] = useState([0, 100]);
+    const [rooms, setRooms] = useState([0, 30]);
+    const [area, setArea] = useState([0, 1000]);
+    const [isSell, setIsSell] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
+
     const cities = useGetCities();
     const countries = useGetCountries();
     const currencies = useGetCurrency();
@@ -55,7 +61,9 @@ const EstateCatalog = () => {
 
     useEffect(() => {
         let ignore = false;
-        estatesSevice.getByPage(page, city, country, currency, estateType, year, price,floor,rooms,area,isSell)
+        estatesSevice.getByPage(
+            page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm
+        )
             .then(result => {
                 if (!ignore) {
                     if (result.returnValue.length === 0)
@@ -70,7 +78,7 @@ const EstateCatalog = () => {
         return () => {
             ignore = true;
         };
-    }, [page, city, country, currency, estateType, year, price,floor,rooms,area,isSell]);
+    }, [page, city, country, currency, estateType, year, price, floor, rooms, area, isSell,searchTerm]);
 
     const handleChange = (event, value) => setPage(value);
     const handleCityChange = (e) => setCity(e.target.value);
@@ -122,7 +130,7 @@ const EstateCatalog = () => {
     };
 
     const handleRoomsChange = (event, newValue, activeThumb) => {
-        if (!Array.isArray(newValue))  return;
+        if (!Array.isArray(newValue)) return;
 
         if (newValue[1] - newValue[0] < minDistance) {
             if (activeThumb === 0) {
@@ -136,7 +144,7 @@ const EstateCatalog = () => {
     };
 
     const handleAreaChange = (event, newValue, activeThumb) => {
-        if (!Array.isArray(newValue))  return;
+        if (!Array.isArray(newValue)) return;
 
         if (newValue[1] - newValue[0] < minDistance) {
             if (activeThumb === 0) {
@@ -149,7 +157,7 @@ const EstateCatalog = () => {
         } else setArea(newValue);
     };
 
-    const show=isEmptyEstate? "none": "flex"
+    const show = isEmptyEstate ? "none" : "flex"
 
     return (
         <>
@@ -364,10 +372,24 @@ const EstateCatalog = () => {
                         value={isSell}
                         onChange={handleSellChange}
                     >
-                        <FormControlLabel value="true" control={<Radio/>} label="Sell" />
+                        <FormControlLabel value="true" control={<Radio />} label="Sell" />
                         <FormControlLabel value="false" control={<Radio />} label="Rent" />
                         <FormControlLabel value="" control={<Radio />} label="Both" />
                     </RadioGroup>
+                </Grid>
+                <Grid item sx={{ width: 300 }}>
+                    <TextField
+                        label="Search"
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <SearchOutlinedIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                    // variant="standard"
+                    />
                 </Grid>
             </Grid>
 
