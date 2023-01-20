@@ -15,9 +15,12 @@ import {
     Radio,
     TextField,
     InputAdornment,
+    Button,
 } from '@mui/material';
 
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 import EstateCard from '../EstateCard/EstateCard';
 
@@ -33,7 +36,17 @@ function valuetext(value) {
 }
 
 const minDistance = 1;
-const minDistanceForPrice = 5000;
+
+const valueForSorf = [
+    { id: 0, name: "Neighborhood" },
+    { id: 1, name: "Address" },
+    { id: 2, name: "Description" },
+    { id: 3, name: "Extras" },
+    { id: 4, name: "Price" },
+    { id: 5, name: "Floor" },
+    { id: 6, name: "Rooms" },
+    { id: 7, name: "Created" }
+]
 
 const EstateCatalog = () => {
     const [page, setPage] = useState(1);
@@ -51,6 +64,10 @@ const EstateCatalog = () => {
     const [floor, setFloor] = useState([0, 100]);
     const [rooms, setRooms] = useState([0, 30]);
     const [area, setArea] = useState([0, 1000]);
+
+    const [orderBy, setOrderBy] = useState("");
+    const [desc, setDesc] = useState("");
+
     const [isSell, setIsSell] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -62,12 +79,12 @@ const EstateCatalog = () => {
     useEffect(() => {
         let ignore = false;
         estatesSevice.getByPage(
-            page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm
+            page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy,desc
         )
             .then(result => {
                 if (!ignore) {
                     if (result.returnValue.length === 0)
-                        throw new Error("Estate is empty");
+                        throw new Error();
 
                     setPagin(JSON.parse(result.contentType));
                     setEstate(result.returnValue);
@@ -78,83 +95,21 @@ const EstateCatalog = () => {
         return () => {
             ignore = true;
         };
-    }, [page, city, country, currency, estateType, year, price, floor, rooms, area, isSell,searchTerm]);
+    }, [page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy,desc]);
 
-    const handleChange = (event, value) => setPage(value);
-    const handleCityChange = (e) => setCity(e.target.value);
-    const handleCountryChange = (e) => setCountry(e.target.value);
-    const handleCurrencyChange = (e) => setCurrency(e.target.value);
-    const handleEstateTypeChange = (e) => setEstateType(e.target.value);
-    const handleSellChange = (e) => setIsSell(e.target.value);
 
-    const handleYearChange = (event, newValue, activeThumb) => {
+    const handleSliderChange = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) return;
 
         if (newValue[1] - newValue[0] < minDistance) {
             if (activeThumb === 0) {
                 const clamped = Math.min(newValue[0], 2100 - minDistance);
-                setYear([clamped, clamped + minDistance]);
+                return ([clamped, clamped + minDistance]);
             } else {
                 const clamped = Math.max(newValue[1], minDistance);
-                setYear([clamped - minDistance, clamped]);
+                return ([clamped - minDistance, clamped]);
             }
-        } else setYear(newValue);
-    };
-
-    const handlePriceChange = (event, newValue, activeThumb) => {
-        if (!Array.isArray(newValue)) return;
-
-        if (newValue[1] - newValue[0] < minDistanceForPrice) {
-            if (activeThumb === 0) {
-                const clamped = Math.min(newValue[0], 2100 - minDistanceForPrice);
-                setPrice([clamped, clamped + minDistanceForPrice]);
-            } else {
-                const clamped = Math.max(newValue[1], minDistanceForPrice);
-                setPrice([clamped - minDistanceForPrice, clamped]);
-            }
-        } else setPrice(newValue);
-    };
-
-    const handleFloorChange = (event, newValue, activeThumb) => {
-        if (!Array.isArray(newValue)) return;
-
-        if (newValue[1] - newValue[0] < minDistance) {
-            if (activeThumb === 0) {
-                const clamped = Math.min(newValue[0], 2100 - minDistance);
-                setFloor([clamped, clamped + minDistance]);
-            } else {
-                const clamped = Math.max(newValue[1], minDistance);
-                setFloor([clamped - minDistance, clamped]);
-            }
-        } else setFloor(newValue);
-    };
-
-    const handleRoomsChange = (event, newValue, activeThumb) => {
-        if (!Array.isArray(newValue)) return;
-
-        if (newValue[1] - newValue[0] < minDistance) {
-            if (activeThumb === 0) {
-                const clamped = Math.min(newValue[0], 2100 - minDistance);
-                setRooms([clamped, clamped + minDistance]);
-            } else {
-                const clamped = Math.max(newValue[1], minDistance);
-                setRooms([clamped - minDistance, clamped]);
-            }
-        } else setRooms(newValue);
-    };
-
-    const handleAreaChange = (event, newValue, activeThumb) => {
-        if (!Array.isArray(newValue)) return;
-
-        if (newValue[1] - newValue[0] < minDistance) {
-            if (activeThumb === 0) {
-                const clamped = Math.min(newValue[0], 2100 - minDistance);
-                setArea([clamped, clamped + minDistance]);
-            } else {
-                const clamped = Math.max(newValue[1], minDistance);
-                setArea([clamped - minDistance, clamped]);
-            }
-        } else setArea(newValue);
+        } else return (newValue);
     };
 
     const show = isEmptyEstate ? "none" : "flex"
@@ -172,9 +127,9 @@ const EstateCatalog = () => {
                     <InputLabel id="demo-simple-select-label">City</InputLabel>
                     <Select
                         sx={{ width: 200 }}
-                        value=""
+                        value={city}
                         label="City"
-                        onChange={handleCityChange}
+                        onChange={e => setCity(e.target.value)}
                     >
                         <MenuItem value="">
                             <em>None</em>
@@ -191,15 +146,44 @@ const EstateCatalog = () => {
                 </Grid>
 
                 <Grid item >
+                    <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+                    <Select
+                        sx={{ width: 200 }}
+                        value={orderBy}
+                        label="Sort"
+                        onChange={e => setOrderBy(e.target.value)}
+                    >
+                        <MenuItem key="" value="">
+                            None
+                        </MenuItem>
+                        {valueForSorf.map(x =>
+                            <MenuItem
+                                key={x.id}
+                                value={x.name}
+                            >
+                                {x.name}
+                            </MenuItem>
+                        )}
+                    </Select>
+                    {desc===""
+                        ? <Button onClick={() => setDesc("desc")}>
+                            <ArrowDownwardIcon fontSize="large" />
+                        </Button>
+                        : <Button onClick={() => setDesc("")}>
+                            <ArrowUpwardIcon fontSize="large" />
+                        </Button>}
+                </Grid>
+
+                <Grid item >
                     <InputLabel id="demo-simple-select-label">Country</InputLabel>
                     <Select
                         sx={{ width: 200 }}
-                        value=""
+                        value={country}
                         label="Country"
-                        onChange={handleCountryChange}
+                        onChange={e => setCountry(e.target.value)}
                     >
-                        <MenuItem value="">
-                            <p>None</p>
+                        <MenuItem key="" value="">
+                            None
                         </MenuItem>
                         {countries.map(x =>
                             <MenuItem
@@ -216,9 +200,9 @@ const EstateCatalog = () => {
                     <InputLabel id="demo-simple-select-label">Currency</InputLabel>
                     <Select
                         sx={{ width: 200 }}
-                        value=""
+                        value={currency}
                         label="Currency"
-                        onChange={handleCurrencyChange}
+                        onChange={e => setCurrency(e.target.value)}
                     >
                         <MenuItem value="">
                             <em>None</em>
@@ -239,10 +223,10 @@ const EstateCatalog = () => {
                     <Select
                         sx={{ width: 200 }}
                         label="Type"
-                        value=""
-                        onChange={handleEstateTypeChange}
+                        value={estateType}
+                        onChange={e => setEstateType(e.target.value)}
                     >
-                        <MenuItem value="">
+                        <MenuItem key="" value="">
                             <em>None</em>
                         </MenuItem>
                         {estateTypes.map(x =>
@@ -275,12 +259,14 @@ const EstateCatalog = () => {
                     <Slider
                         getAriaLabel={() => 'Minimum distance shift'}
                         value={year}
-                        onChange={handleYearChange}
+
                         valueLabelDisplay="auto"
                         getAriaValueText={valuetext}
                         disableSwap
                         max={2100}
                         min={1900}
+                        onChange={(event, newValue, activeThumb) =>
+                            setYear(handleSliderChange(event, newValue, activeThumb))}
                     />
                 </Grid>
 
@@ -294,13 +280,14 @@ const EstateCatalog = () => {
                     <Slider
                         getAriaLabel={() => 'Minimum distance shift'}
                         value={price}
-                        onChange={handlePriceChange}
                         valueLabelDisplay="auto"
                         getAriaValueText={valuetext}
                         disableSwap
                         max={500000}
                         min={0}
                         step={1000}
+                        onChange={(event, newValue, activeThumb) =>
+                            setPrice(handleSliderChange(event, newValue, activeThumb))}
                     />
                 </Grid>
 
@@ -314,13 +301,14 @@ const EstateCatalog = () => {
                     <Slider
                         getAriaLabel={() => 'Minimum distance shift'}
                         value={floor}
-                        onChange={handleFloorChange}
                         valueLabelDisplay="auto"
                         getAriaValueText={valuetext}
                         disableSwap
                         max={100}
                         min={0}
                         step={1}
+                        onChange={(event, newValue, activeThumb) =>
+                            setFloor(handleSliderChange(event, newValue, activeThumb))}
                     />
                 </Grid>
 
@@ -334,13 +322,14 @@ const EstateCatalog = () => {
                     <Slider
                         getAriaLabel={() => 'Minimum distance shift'}
                         value={rooms}
-                        onChange={handleRoomsChange}
                         valueLabelDisplay="auto"
                         getAriaValueText={valuetext}
                         disableSwap
                         max={30}
                         min={0}
                         step={1}
+                        onChange={(event, newValue, activeThumb) =>
+                            setRooms(handleSliderChange(event, newValue, activeThumb))}
                     />
                 </Grid>
                 <Grid item sx={{ width: 300 }}>
@@ -353,13 +342,14 @@ const EstateCatalog = () => {
                     <Slider
                         getAriaLabel={() => 'Minimum distance shift'}
                         value={area}
-                        onChange={handleAreaChange}
                         valueLabelDisplay="auto"
                         getAriaValueText={valuetext}
                         disableSwap
                         max={1000}
                         min={0}
                         step={1}
+                        onChange={(event, newValue, activeThumb) =>
+                            setArea(handleSliderChange(event, newValue, activeThumb))}
                     />
                 </Grid>
                 <Grid item sx={{ width: 300 }}>
@@ -370,7 +360,7 @@ const EstateCatalog = () => {
                         aria-labelledby="demo-controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
                         value={isSell}
-                        onChange={handleSellChange}
+                        onChange={e => setIsSell(e.target.value)}
                     >
                         <FormControlLabel value="true" control={<Radio />} label="Sell" />
                         <FormControlLabel value="false" control={<Radio />} label="Rent" />
@@ -388,7 +378,6 @@ const EstateCatalog = () => {
                                 </InputAdornment>
                             ),
                         }}
-                    // variant="standard"
                     />
                 </Grid>
             </Grid>
@@ -410,7 +399,7 @@ const EstateCatalog = () => {
                     page={page}
                     variant="outlined"
                     color="primary"
-                    onChange={handleChange}
+                    onChange={(e, v) => setPage(v)}
                 />
             </Stack >
         </>

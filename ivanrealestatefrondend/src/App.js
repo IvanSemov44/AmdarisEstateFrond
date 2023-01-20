@@ -20,15 +20,15 @@ import EditEstate from './Components/Estate/EditEstate/EditEstate';
 import EstateTypePage from './Components/EstateType/EstateTypePage';
 
 import { AuthProvider } from './contexts/AuthProvider';
-import { createTheme, ThemeProvider } from '@mui/material';
+import {  createTheme, ThemeProvider } from '@mui/material';
 
 function App() {
 
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
-    }
-  })
+      
+  },})
 
   return (
     <ThemeProvider theme={darkTheme}>
