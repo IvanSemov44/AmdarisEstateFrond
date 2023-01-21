@@ -40,7 +40,7 @@ const defaultValues = {
     cityId: "",
     countryId: "",
     estateTypeId: "",
-    currencyId: "",
+    curencyId: "",
 };
 
 const CreateEstate = () => {
@@ -244,12 +244,12 @@ const CreateEstate = () => {
                     <FormControl sx={{ m: 1 }} fullWidth>
                         <InputLabel id="demo-simple-select-label">Currency</InputLabel>
                         <Select
-                            error={errors.currencyId}
-                            {...register("currencyId",
+                            error={errors.curencyId}
+                            {...register("curencyId",
                                 { required: { value: true, message: "Currency Type is required field!" } })}
-                            name="currencyId"
+                            name="curencyId"
                             label="Currency"
-                            value={formValues.currencyId}
+                            value={formValues.curencyId}
                             onChange={handleInputChange}
                         >
                             {currencies.map(x =>
@@ -261,8 +261,8 @@ const CreateEstate = () => {
                                 </MenuItem>
                             )}
                         </Select>
-                        {errors.currencyId
-                            ? <FormHelperText error>{errors.currencyId.message}</FormHelperText>
+                        {errors.curencyId
+                            ? <FormHelperText error>{errors.curencyId.message}</FormHelperText>
                             : <></>
                         }
                     </FormControl>

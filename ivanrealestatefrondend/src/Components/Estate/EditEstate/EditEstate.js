@@ -90,19 +90,22 @@ const EditEstate = () => {
 
     const handlerSubmit = data => {
         console.log({ ...data });
-        estateService.Create({ ...data, sell: data.sell === "true" })
-            .then(result => {
-                console.log(result);
-                navigate(`/catalog/${result.estateId}`);
-            });
+        estateService.Update({
+            ...data,
+            sell: data.sell === "true",
+            curencyId:data.curencyId,
+            estateId: estateId,
+            images: estate.images
+        });
+        navigate(`/catalog/${estateId}`)
     };
-    console.log(estate);
+
     return (
         <>
             {ready ?
                 <Box
                     component="form"
-                    sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, m:3}}
+                    sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, m: 3 }}
                     noValidate
                     autoComplete="off"
                     onSubmit={handleSubmit(handlerSubmit)}
