@@ -26,6 +26,7 @@ import useGetEstateTypById from "../../../CustemHooks/CustemEstateTypeHooks/useG
 
 import * as estateService from '../../../Services/EstateService';
 import { Spinner } from "../../Common/Spinner/Spinner";
+import CreateMessage from "../../Message/CreateMessage/CreateMessage";
 
 const EstateDetails = () => {
     const { estateId } = useParams();
@@ -251,7 +252,7 @@ const EstateDetails = () => {
                                     </Fab>
                                 </Link>
 
-                                <Fab color="primary" aria-label="delete" type="button" onClick={()=>setOpen(true)}>
+                                <Fab color="primary" aria-label="delete" type="button" onClick={() => setOpen(true)}>
                                     <DeleteIcon />
                                 </Fab>
 
@@ -272,6 +273,7 @@ const EstateDetails = () => {
                             </Box>
                         </Box>
                     </Grid>
+                    <CreateMessage owner={estate.ownerId}/>
                 </Grid>
                 : <Spinner />}
         </>

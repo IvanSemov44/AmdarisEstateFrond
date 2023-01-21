@@ -22,3 +22,4 @@ export const register = async (loginData) => {
     });
     return await res.json();
 };
+

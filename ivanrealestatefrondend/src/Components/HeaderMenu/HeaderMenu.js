@@ -1,10 +1,13 @@
 import { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
+import MailIcon from '@mui/icons-material/Mail';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import {
     AppBar,
     Avatar,
+    Badge,
     Box,
     Button,
     Divider,
@@ -14,15 +17,30 @@ import {
 
 import LoginUser from '../User/LoginUser';
 import RegisterUser from '../User/RegisterUser';
+import * as messageService from '../../Services/MessageService';
 
 const HeaderMenu = () => {
     const [openLogin, setOpenLogin] = useState(false);
     const [openRegister, setOpenRegister] = useState(false);
+    const [count, setCount] = useState(1);
 
     const { user, userLogout } = useContext(AuthContext);
 
     const handleClickOpenLogin = () => setOpenLogin(true);
     const handleClickOpenRegister = () => setOpenRegister(true);
+
+    messageService.getAll(user.id).then(
+        result => {
+            let count = 0;
+            result.forEach(x => {
+                for (const [key, value] of Object.entries(x))
+                    if (key === "isRead")
+                        if (value === false)
+                            count++
+            })
+            setCount(count);
+        }
+    )
 
 
     return (
@@ -47,7 +65,7 @@ const HeaderMenu = () => {
                                     home
                                 </Button>
                             </NavLink>
-                            
+
                             <Divider orientation="vertical" variant="middle" flexItem />
 
                             <NavLink to="/catalog" style={{ textDecoration: "none" }}>
@@ -108,20 +126,23 @@ const HeaderMenu = () => {
 
                     <Grid item xs={3}>
                         <Box
-                        sx={{mr:2}}
+                            sx={{ mr: 2 }}
                             display="flex"
                             alignItems={"center"}
                             justifyContent="flex-end"
                         >
                             {user.token
                                 ? <>
+                                    <Badge sx={{ m: 2 }} badgeContent={count} color="primary">
+                                        <MailIcon color="action" />
+                                    </Badge>
                                     <Typography h3 color="white">Hello, {user.username}!</Typography>
-                                    <Avatar alt="avarat img" src="https://www.w3schools.com/howto/img_avatar.png" />
+                                    <Avatar sx={{ m: 2 }} alt="avarat img" src="https://www.w3schools.com/howto/img_avatar.png" />
                                     <Button
                                         sx={{ my: 2, color: 'white', display: 'block' }}
                                         onClick={userLogout}
                                     >
-                                        Logout
+                                        <LogoutIcon />
                                     </Button>
                                 </>
                                 :
