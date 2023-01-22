@@ -371,9 +371,9 @@ const EstateCatalog = () => {
                         </Grid>
 
                         <Grid item sx={{ width: 300 }} container justify="center">
-                            <Typography id="input-slider"  gutterBottom>
+                            {/* <Typography id="input-slider"  gutterBottom>
                                 Range: Area
-                            </Typography>
+                            </Typography> */}
                             <RadioGroup
                                 aria-labelledby="demo-controlled-radio-buttons-group"
                                 name="controlled-radio-buttons-group"

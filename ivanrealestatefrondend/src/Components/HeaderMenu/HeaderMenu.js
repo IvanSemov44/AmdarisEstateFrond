@@ -17,6 +17,7 @@ import {
 
 import LoginUser from '../User/LoginUser';
 import RegisterUser from '../User/RegisterUser';
+
 import * as messageService from '../../Services/MessageService';
 
 const HeaderMenu = () => {
@@ -41,7 +42,6 @@ const HeaderMenu = () => {
             setCount(count);
         }
     )
-
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -133,9 +133,11 @@ const HeaderMenu = () => {
                         >
                             {user.token
                                 ? <>
-                                    <Badge sx={{ m: 2 }} badgeContent={count} color="primary">
-                                        <MailIcon color="action" />
-                                    </Badge>
+                                    <NavLink to="/messages" style={{ textDecoration: "none" }}>
+                                        <Badge sx={{ m: 2 }} badgeContent={count} color="primary">
+                                            <MailIcon color="action" />
+                                        </Badge>
+                                    </NavLink>
                                     <Typography h3 color="white">Hello, {user.username}!</Typography>
                                     <Avatar sx={{ m: 2 }} alt="avarat img" src="https://www.w3schools.com/howto/img_avatar.png" />
                                     <Button

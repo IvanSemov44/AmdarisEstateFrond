@@ -46,7 +46,7 @@ export const update = async (owner, id, data) => {
     return await res.json();
 };
 
-export const deleteCity = async (owner, id) => {
+export const deleteMessage = async (owner, id) => {
     const res = await fetch(`${baseUrl}/api/owner/${owner}/messages/${id}`, {
         method: "DELETE",
         headers: {

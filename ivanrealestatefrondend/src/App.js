@@ -21,6 +21,7 @@ import EstateTypePage from './Components/EstateType/EstateTypePage';
 
 import { AuthProvider } from './contexts/AuthProvider';
 import {  createTheme, ThemeProvider } from '@mui/material';
+import ListMessages from './Components/Message/ListMessages/ListMessages';
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
               <Route path='/estatetypes' element={<EstateTypePage />}></Route>
               <Route path='/giphy' element={<GiphyCatalog />}></Route>
               <Route path='/createcity' element={<CreateCity />}></Route>
+              <Route path='/messages' element={<ListMessages />}></Route>
 
             </Routes>
           </CssBaseline>
