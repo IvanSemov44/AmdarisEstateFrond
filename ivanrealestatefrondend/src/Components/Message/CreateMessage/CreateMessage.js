@@ -38,14 +38,12 @@ const CreateMessage = ({
         <>
             <Box
                 component="form"
-                // sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, }}
-
                 noValidate
                 autoComplete="off"
                 onSubmit={handleSubmit(handlerSubmit)}
             >
                 <Typography textAlign="center" variant="h3" >
-                    You have a Question?
+                    Do you have a Question?
                 </Typography>
                 <Grid
                     container

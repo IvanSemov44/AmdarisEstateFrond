@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import MessageItem from "../MessageItem/MessageItem";
 import { AuthContext } from "../../../contexts/AuthContext";
 import * as messageService from '../../../Services/MessageService';
+import { Typography } from "@mui/material";
 
 const ListMessages = () => {
     const { user } = useContext(AuthContext);
@@ -16,13 +17,17 @@ const ListMessages = () => {
                 if (!ignore) setMessages(result);
             })
         return () => ignore = true;
-    }, [user.id,isDelete]);
+    }, [user.id, isDelete]);
 
     return (
-        <>
-            {messages.map(x =>
+        <>{messages[0]
+            ? messages.map(x =>
                 <MessageItem key={x.id} message={x} userId={user.id} setIsDelete={setIsDelete} />
-            )}
+            )
+            : <Typography sx={{ color: 'text.secondary',textAlign:"center",fontSize:50,m:20 }}>
+                No Message For You
+            </Typography>
+        }
         </>
     );
 };

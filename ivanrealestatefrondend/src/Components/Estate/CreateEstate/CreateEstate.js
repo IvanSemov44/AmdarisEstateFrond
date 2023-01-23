@@ -47,7 +47,8 @@ const CreateEstate = () => {
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState(defaultValues);
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { user  } = useContext(AuthContext);
+    
+    const { user } = useContext(AuthContext);
 
     const cities = useGetCities();
     const countries = useGetCountries();
@@ -64,7 +65,7 @@ const CreateEstate = () => {
 
     const handlerSubmit = data => {
         console.log({ ...data });
-        estateService.Create({ ...data, sell: data.sell === "true", ownerId:user.id })
+        estateService.Create({ ...data, sell: data.sell === "true", ownerId: user.id })
             .then(result => {
                 console.log(result);
                 navigate(`/catalog/${result.estateId}`);
@@ -103,7 +104,13 @@ const CreateEstate = () => {
                     </RadioGroup>
                 </FormControl>
             </Box>
-            <Grid container alignItems="center" justify="center" direction="row" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid
+                container
+                alignItems="center"
+                justify="center"
+                direction="row"
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
                 <Grid item xs={2} />
                 <Grid item xs={3}>
                     <FormControl sx={{ m: 1 }} fullWidth >

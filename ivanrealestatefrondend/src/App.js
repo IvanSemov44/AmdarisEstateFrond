@@ -1,8 +1,8 @@
-//import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthProvider';
+import { createTheme, ThemeProvider } from '@mui/material';
 
 import GiphyCatalog from './Components/Giphy/GiphyCatalog/GiphyCatalog';
 import CreateEstate from './Components/Estate/CreateEstate/CreateEstate';
@@ -18,10 +18,10 @@ import HeaderMenu from './Components/HeaderMenu/HeaderMenu';
 import CurrencyPage from './Components/Currency/CurrencyPage';
 import EditEstate from './Components/Estate/EditEstate/EditEstate';
 import EstateTypePage from './Components/EstateType/EstateTypePage';
-
-import { AuthProvider } from './contexts/AuthProvider';
-import {  createTheme, ThemeProvider } from '@mui/material';
 import ListMessages from './Components/Message/ListMessages/ListMessages';
+import CreateComapny from './Components/Company/CreateCompany/CreateCompany';
+
+
 
 function App() {
 
@@ -52,6 +52,7 @@ function App() {
               <Route path='/giphy' element={<GiphyCatalog />}></Route>
               <Route path='/createcity' element={<CreateCity />}></Route>
               <Route path='/messages' element={<ListMessages />}></Route>
+              <Route path='/createCompany' element={<CreateComapny/>}></Route>
 
             </Routes>
           </CssBaseline>
