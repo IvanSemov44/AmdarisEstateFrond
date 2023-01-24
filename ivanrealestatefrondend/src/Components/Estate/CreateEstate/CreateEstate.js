@@ -47,7 +47,7 @@ const CreateEstate = () => {
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState(defaultValues);
     const { register, formState: { errors }, handleSubmit } = useForm();
-    
+
     const { user } = useContext(AuthContext);
 
     const cities = useGetCities();
@@ -65,11 +65,10 @@ const CreateEstate = () => {
 
     const handlerSubmit = data => {
         console.log({ ...data });
-        estateService.Create({ ...data, sell: data.sell === "true", ownerId: user.id })
-            .then(result => {
-                console.log(result);
-                navigate(`/catalog/${result.estateId}`);
-            });
+        estateService.Create({ ...data, sell: data.sell === "true", userId: user.id })
+            .then(result =>
+                navigate(`/catalog/${result.estateId}`)
+            );
     };
 
     return (

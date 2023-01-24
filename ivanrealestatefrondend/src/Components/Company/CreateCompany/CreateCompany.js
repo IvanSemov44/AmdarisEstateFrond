@@ -1,6 +1,7 @@
 import { Box, Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import useGetCities from "../../../CustemHooks/CustemCityHooks/useGetCities";
 import useGetCountries from "../../../CustemHooks/CustemCountryHooks/useGetCountries";
@@ -16,7 +17,7 @@ const defaultValues = {
 };
 
 const CreateComapny = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [formValues, setFormValues] = useState(defaultValues);
 
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -35,7 +36,7 @@ const CreateComapny = () => {
 
     const handlerSubmit = data => {
         companyService.create(data)
-            .then(result => { console.log(result) });
+            .then(result => navigate(`/companyCatalog/${result.id}`));
     };
 
     return (

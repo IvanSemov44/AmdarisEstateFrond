@@ -41,8 +41,6 @@ const EstateDetails = () => {
     const currency = useGetCurrencyById(estate.curencyId);
     const estateType = useGetEstateTypById(estate.estateTypeId);
 
-    console.log(estate);
-
     const ready =
         city !== undefined &&
         country !== undefined &&
@@ -127,7 +125,6 @@ const EstateDetails = () => {
                                 focused
                                 label="Neighborhood"
                                 value={estate.neighborhood}
-                                // defaultValue={estate.neighborhood}
                                 InputProps={{
                                     readOnly: true,
                                 }}

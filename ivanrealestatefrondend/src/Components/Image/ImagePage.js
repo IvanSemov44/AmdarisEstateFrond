@@ -17,10 +17,10 @@ const ImagePage = () => {
     const { removeImage, createImage, updateImage } = useImages(estateId);
 
     const imageCreateHandler = async (dataImage) => {
-        const createdCity = await createImage(dataImage);
+        const createdImage = await createImage(dataImage);
         setImages(state => [
             ...state,
-            createdCity,
+            createdImage,
         ]);
     };
 

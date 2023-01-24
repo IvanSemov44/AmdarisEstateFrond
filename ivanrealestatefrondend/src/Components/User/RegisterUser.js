@@ -50,6 +50,7 @@ const RegisterUser = ({
             roles: ["employee"]
         };
         AuthService.register(registerData);
+        setOpen(false);
     }
 
     return (
@@ -160,7 +161,7 @@ const RegisterUser = ({
                 </FormControl>
                 <DialogActions>
                     <Button sx={{ width: 100 }} variant="contained" color="primary" type="submit">
-                        login
+                        Register
                     </Button>
                 </DialogActions>
             </Box>

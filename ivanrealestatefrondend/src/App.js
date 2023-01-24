@@ -20,7 +20,8 @@ import EditEstate from './Components/Estate/EditEstate/EditEstate';
 import EstateTypePage from './Components/EstateType/EstateTypePage';
 import ListMessages from './Components/Message/ListMessages/ListMessages';
 import CreateComapny from './Components/Company/CreateCompany/CreateCompany';
-
+import CompanyCatalog from './Components/Company/CompanyCatalog/CompanyCatalog';
+import CompanyDetails from './Components/Company/CompanyDetails/CompanyDetails';
 
 
 function App() {
@@ -52,7 +53,9 @@ function App() {
               <Route path='/giphy' element={<GiphyCatalog />}></Route>
               <Route path='/createcity' element={<CreateCity />}></Route>
               <Route path='/messages' element={<ListMessages />}></Route>
-              <Route path='/createCompany' element={<CreateComapny/>}></Route>
+              <Route path='/createCompany' element={<CreateComapny />}></Route>
+              <Route path='/companyCatalog' element={<CompanyCatalog />}></Route>
+              <Route path='/companyCatalog/:companyId' element={<CompanyDetails />}></Route>
 
             </Routes>
           </CssBaseline>

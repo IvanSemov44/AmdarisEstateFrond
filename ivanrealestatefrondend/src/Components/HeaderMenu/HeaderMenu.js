@@ -124,6 +124,14 @@ const HeaderMenu = () => {
 
                             <Divider orientation="vertical" variant="middle" flexItem />
 
+                            <NavLink to="/companyCatalog" style={{ textDecoration: "none" }}>
+                                <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                                    Company Catalog
+                                </Button>
+                            </NavLink>
+
+                            <Divider orientation="vertical" variant="middle" flexItem />
+
                             <NavLink to="/giphy" style={{ textDecoration: "none" }}>
                                 <Button sx={{ my: 2, color: 'white', display: 'block' }}>
                                     giphy
