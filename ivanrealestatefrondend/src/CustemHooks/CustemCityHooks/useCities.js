@@ -8,7 +8,7 @@ const useCities = () => {
     const createCity = (cityName) => {
         return cityService.create(cityName);
     }
-
+    
     const updateCity = (city, cityName) => {
         return cityService.Update(city, cityName);
     }
