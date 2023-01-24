@@ -5,6 +5,7 @@ import { EstateTypeContext } from "../../contexts/EstateTypeContext";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { ListItem } from "@mui/material";
 
 const EstateTypeItem = ({
     estateType
@@ -22,7 +23,7 @@ const EstateTypeItem = ({
     }
 
     return (
-        <li>
+        <ListItem>
             {isEdit
                 ? <Box
                     component="form"
@@ -59,7 +60,7 @@ const EstateTypeItem = ({
                     <Button variant="outlined" color="error" onClick={() => estateTypeRemoveHandler(estateType.estateTypeId)}>Delete</Button>
                 </>
             }
-        </li>
+        </ListItem>
     )
 }
 

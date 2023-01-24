@@ -7,10 +7,13 @@ import useFetchForCountry from "../../CustemHooks/CustemCountryHooks/useFetchFor
 import CountryList from './CountryList';
 import CreateCountry from './CreateCountry';
 import { Spinner } from '../Common/Spinner/Spinner';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const CountryPage = () => {
+    const { user } = useContext(AuthContext);
     const [countries, setCountries, isLoading] = useFetchForCountry([]);
-    const { removeCountry, createCountry, updateCountry } = useCountries();
+    const { removeCountry, createCountry, updateCountry } = useCountries(user.token);
 
     const countryCreateHandler = async (newCountry) => {
         const createdCountry = await createCountry(newCountry);

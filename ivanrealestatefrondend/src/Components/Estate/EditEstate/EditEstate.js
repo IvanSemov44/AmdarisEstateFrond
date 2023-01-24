@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -32,6 +32,7 @@ import useGetCurrencyById from "../../../CustemHooks/CustemCurrencyHooks/useGetC
 import useGetEstateTypById from "../../../CustemHooks/CustemEstateTypeHooks/useGetEstateTypById";
 
 import * as estateService from '../../../Services/EstateService';
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const defaultValues = {
     address: "",
@@ -52,6 +53,7 @@ const defaultValues = {
 
 const EditEstate = () => {
     const { estateId } = useParams();
+    const { user } = useContext(AuthContext);
 
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState(defaultValues);
@@ -96,7 +98,7 @@ const EditEstate = () => {
             curencyId:data.curencyId,
             estateId: estateId,
             images: estate.images
-        });
+        },user.token);
         navigate(`/catalog/${estateId}`)
     };
 

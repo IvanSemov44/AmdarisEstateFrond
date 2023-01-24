@@ -20,6 +20,7 @@ const CreateEstateType = ({
             component="form"
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '25ch' },
+                m:2
             }}
             noValidate
             autoComplete="off"

@@ -16,9 +16,10 @@ const CreateCity = ({
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid sx={{ '& button': { m: 1 } }} container alignItems="center" justify="center" direction="row">
+            <Grid sx={{ '& button': { m: 1 },m:2 }} container alignItems="center" justify="center" direction="row">
                 <Grid item>
                     <TextField
+                    
                         error={errors.cityName}
                         {...register("cityName", {
                             required: { value: true, message: "City is required field!" },

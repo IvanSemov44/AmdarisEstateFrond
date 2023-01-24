@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -27,8 +27,11 @@ import useGetEstateTypById from "../../../CustemHooks/CustemEstateTypeHooks/useG
 import * as estateService from '../../../Services/EstateService';
 import { Spinner } from "../../Common/Spinner/Spinner";
 import CreateMessage from "../../Message/CreateMessage/CreateMessage";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const EstateDetails = () => {
+    const { user } = useContext(AuthContext);
+
     const { estateId } = useParams();
     const navigate = useNavigate();
 
@@ -50,8 +53,11 @@ const EstateDetails = () => {
 
     const elementSellOrRent = estate.sell ? "Sell" : "Rent";
 
-    const deleteEstate = () => estateService.deleteEstate(estate.estateId)
+    const deleteEstate = () => estateService.deleteEstate(estate.estateId, user.token)
         .then(navigate(`/catalog`));
+
+
+    const owner = user.id === estate.ownerId ? true : false;
 
     return (
         <>
@@ -79,9 +85,12 @@ const EstateDetails = () => {
                                 src="https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
                                 alt="No Image"
                             />}
-                        <Link to={`/editEstate/${estate.estateId}/images`}>
-                            <Button sx={{ m: 3 }} variant="outlined" color="primary" >edit images</Button>
-                        </Link>
+                        {owner
+                            ? <Link to={`/editEstate/${estate.estateId}/images`}>
+                                <Button sx={{ m: 3 }} variant="outlined" color="primary" >edit images</Button>
+                            </Link>
+                            : <></>}
+
                     </Grid>
 
                     <Grid item sx={{ mr: -4 }} xs={8}>
@@ -242,35 +251,37 @@ const EstateDetails = () => {
                                 variant="filled"
                             />
 
-                            <Box sx={{ '& button': { m: 1 } }}>
-                                <Link to={`/editEstate/${estate.estateId}`}>
-                                    <Fab color="primary" aria-label="edit">
-                                        <EditIcon />
+                            {owner
+                                ? <Box sx={{ '& button': { m: 1 } }}>
+                                    <Link to={`/editEstate/${estate.estateId}`}>
+                                        <Fab color="primary" aria-label="edit">
+                                            <EditIcon />
+                                        </Fab>
+                                    </Link>
+
+                                    <Fab color="primary" aria-label="delete" type="button" onClick={() => setOpen(true)}>
+                                        <DeleteIcon />
                                     </Fab>
-                                </Link>
 
-                                <Fab color="primary" aria-label="delete" type="button" onClick={() => setOpen(true)}>
-                                    <DeleteIcon />
-                                </Fab>
-
-                                <Dialog
-                                    open={open}
-                                    onClose={() => setOpen(false)}
-                                >
-                                    <DialogTitle >
-                                        {"Are you sure?"}
-                                    </DialogTitle>
-                                    <DialogActions>
-                                        <Button onClick={() => setOpen(false)}>No</Button>
-                                        <Button onClick={deleteEstate} autoFocus>
-                                            Yes
-                                        </Button>
-                                    </DialogActions>
-                                </Dialog>
-                            </Box>
+                                    <Dialog
+                                        open={open}
+                                        onClose={() => setOpen(false)}
+                                    >
+                                        <DialogTitle >
+                                            {"Are you sure?"}
+                                        </DialogTitle>
+                                        <DialogActions>
+                                            <Button onClick={() => setOpen(false)}>No</Button>
+                                            <Button onClick={deleteEstate} autoFocus>
+                                                Yes
+                                            </Button>
+                                        </DialogActions>
+                                    </Dialog>
+                                </Box>
+                                : <></>}
                         </Box>
                     </Grid>
-                    <CreateMessage owner={estate.ownerId}/>
+                    <CreateMessage owner={estate.ownerId} />
                 </Grid>
                 : <Spinner />}
         </>

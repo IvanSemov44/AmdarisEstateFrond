@@ -56,11 +56,13 @@ export const getById = async (id) => {
     return await res.json();
 };
 
-export const Create = async (data) => {
+export const Create = async (data,token) => {
     const res = await fetch(`${baseUrl}/api/estates`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+
         },
         body: JSON.stringify(data)
     });
@@ -68,11 +70,12 @@ export const Create = async (data) => {
 }
 
 
-export const Update = async (data) => {
+export const Update = async (data,token) => {
     const res = await fetch(`${baseUrl}/api/estates/${data.estateId}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify(data)
     });
@@ -80,11 +83,12 @@ export const Update = async (data) => {
 };
 
 
-export const deleteEstate = async (estateId) => {
+export const deleteEstate = async (estateId,token) => {
     const res = await fetch(`${baseUrl}/api/estates/${estateId}`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
         }
     });
     return await res.json();

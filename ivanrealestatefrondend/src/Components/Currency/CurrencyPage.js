@@ -7,10 +7,14 @@ import useFetchForCurrency from "../../CustemHooks/CustemCurrencyHooks/UseFetchF
 import CurrencyList from "./CurrencyList";
 import CreateCurrency from "./CreateCurrency";
 import { Spinner } from '../Common/Spinner/Spinner';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const CurrencyPage = () => {
+    const { user } = useContext(AuthContext);
+
     const [currencies, setCurrencies, isLoading] = useFetchForCurrency([]);
-    const { removeCurrency, createCurrency, updateCurrency } = useCurrencies();
+    const { removeCurrency, createCurrency, updateCurrency } = useCurrencies(user.token);
 
     const currencyCreateHandler = async (newCurrency) => {
         const createdCurrency = await createCurrency(newCurrency);

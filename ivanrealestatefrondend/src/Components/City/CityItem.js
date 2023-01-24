@@ -4,6 +4,7 @@ import { CityContext } from "../../contexts/CityContext";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { ListItem } from "@mui/material";
 
 const CityItem = ({
     city,
@@ -18,7 +19,7 @@ const CityItem = ({
     }
 
     return (
-        <li>
+        <ListItem>
             {isEdit
                 ? <form onSubmit={handleSubmit(onEdit)}>
                     <TextField
@@ -48,7 +49,7 @@ const CityItem = ({
                     <Button variant="outlined" color="error" onClick={() => cityDeleteHandler(city.cityId)}>delete</Button>
                 </>
             }
-        </li>
+        </ListItem>
     )
 }
 

@@ -6,7 +6,7 @@ import CityItem from "./CityItem";
 const CityList = () => {
     const { cities } = useContext(CityContext)
     return (
-        <Box sx={{ '& button': { m: 1 } }}>
+        <Box sx={{ '& button': { m: 1 } }} textAlign='center'>
             {cities.map(x =>
                 <CityItem
                     key={x.cityId}

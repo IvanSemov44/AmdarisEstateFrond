@@ -5,6 +5,7 @@ import { CountryContext } from "../../contexts/CountryContext";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
+import { ListItem } from "@mui/material";
 
 const CountryItem = ({
     country
@@ -24,7 +25,7 @@ const CountryItem = ({
     }
 
     return (
-        <li>
+        <ListItem>
             {isEdit
                 ? <Box
                     component="form"
@@ -86,7 +87,7 @@ const CountryItem = ({
                     </Button>
                 </>
             }
-        </li>
+        </ListItem>
     )
 }
 export default CountryItem;

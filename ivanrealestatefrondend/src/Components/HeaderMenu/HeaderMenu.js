@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import MailIcon from '@mui/icons-material/Mail';
@@ -23,7 +23,8 @@ import * as messageService from '../../Services/MessageService';
 const HeaderMenu = () => {
     const [openLogin, setOpenLogin] = useState(false);
     const [openRegister, setOpenRegister] = useState(false);
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(0);
+    const [admin, setAdmin] = useState(false);
 
     const { user, userLogout } = useContext(AuthContext);
 
@@ -42,6 +43,22 @@ const HeaderMenu = () => {
             setCount(count);
         }
     )
+
+    useEffect(() => {
+        setAdmin(user.userRole === undefined
+            ? false
+            : user.userRole[0] === "Admin"
+                ? true
+                : false
+
+        )
+    }, [user.userRole])
+
+    // const admin = user.userRole[0] === undefined
+    //     ? false
+    //     : user.userRole[0] === "Admin"
+    //         ? true
+    //         : false
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -74,53 +91,43 @@ const HeaderMenu = () => {
                                 </Button>
                             </NavLink>
 
-                            <Divider orientation="vertical" variant="middle" flexItem />
 
-                            <NavLink to="/createEstate" style={{ textDecoration: "none" }}>
-                                <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-                                    Create
-                                </Button>
-                            </NavLink>
+                            {admin
+                                ? <>
+                                    <Divider orientation="vertical" variant="middle" flexItem />
 
-                            <Divider orientation="vertical" variant="middle" flexItem />
+                                    <NavLink to="/cities" style={{ textDecoration: "none" }}>
+                                        <Button sx={{ my: 2, color: 'white', display: 'block' }} >
+                                            Cities
+                                        </Button>
+                                    </NavLink>
 
-                            <NavLink to="/cities" style={{ textDecoration: "none" }}>
-                                <Button sx={{ my: 2, color: 'white', display: 'block' }} >
-                                    Cities
-                                </Button>
-                            </NavLink>
+                                    <Divider orientation="vertical" variant="middle" flexItem />
 
-                            <Divider orientation="vertical" variant="middle" flexItem />
+                                    <NavLink to="/countries" style={{ textDecoration: "none" }}>
+                                        <Button sx={{ my: 2, color: 'white', display: 'block' }} >
+                                            Countries
+                                        </Button>
+                                    </NavLink>
 
-                            <NavLink to="/countries" style={{ textDecoration: "none" }}>
-                                <Button sx={{ my: 2, color: 'white', display: 'block' }} >
-                                    Countries
-                                </Button>
-                            </NavLink>
+                                    <Divider orientation="vertical" variant="middle" flexItem />
 
-                            <Divider orientation="vertical" variant="middle" flexItem />
+                                    <NavLink to="/currencies" style={{ textDecoration: "none" }}>
+                                        <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                                            currencies
+                                        </Button>
+                                    </NavLink>
 
-                            <NavLink to="/currencies" style={{ textDecoration: "none" }}>
-                                <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-                                    currencies
-                                </Button>
-                            </NavLink>
+                                    <Divider orientation="vertical" variant="middle" flexItem />
 
-                            <Divider orientation="vertical" variant="middle" flexItem />
+                                    <NavLink to="/estatetypes" style={{ textDecoration: "none" }}>
+                                        <Button sx={{ my: 2, color: 'white', display: 'block' }} >
+                                            Estate Types
+                                        </Button>
+                                    </NavLink>
 
-                            <NavLink to="/estatetypes" style={{ textDecoration: "none" }}>
-                                <Button sx={{ my: 2, color: 'white', display: 'block' }} >
-                                    Estate Types
-                                </Button>
-                            </NavLink>
-
-                            <Divider orientation="vertical" variant="middle" flexItem />
-
-                            <NavLink to="/createCompany" style={{ textDecoration: "none" }}>
-                                <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-                                    Create Company
-                                </Button>
-                            </NavLink>
+                                </>
+                                : <></>}
 
                             <Divider orientation="vertical" variant="middle" flexItem />
 
@@ -149,6 +156,22 @@ const HeaderMenu = () => {
                         >
                             {user.token
                                 ? <>
+
+                                    <NavLink to="/createEstate" style={{ textDecoration: "none" }}>
+                                        <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                                            Create Estate
+                                        </Button>
+                                    </NavLink>
+                                    <Divider orientation="vertical" variant="middle" flexItem />
+
+                                    <NavLink to="/createCompany" style={{ textDecoration: "none" }}>
+                                        <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                                            Create Company
+                                        </Button>
+                                    </NavLink>
+
+                                    <Divider orientation="vertical" variant="middle" flexItem />
+
                                     <NavLink to="/messages" style={{ textDecoration: "none" }}>
                                         <Badge sx={{ m: 2 }} badgeContent={count} color="primary">
                                             <MailIcon color="action" />

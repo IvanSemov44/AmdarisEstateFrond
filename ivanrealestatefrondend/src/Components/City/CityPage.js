@@ -9,10 +9,13 @@ import useCities from "../../CustemHooks/CustemCityHooks/useCities";
 import useFetchForCity from "../../CustemHooks/CustemCityHooks/useFetchForCity";
 
 import { Spinner } from '../Common/Spinner/Spinner';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const CityPage = () => {
+    const { user } = useContext(AuthContext);
     const [cities, setCities, isLoading] = useFetchForCity([]);
-    const { removeCity, createCity, updateCity } = useCities();
+    const { removeCity, createCity, updateCity } = useCities(user.token);
 
     const cityCreateHandler = async (newCity) => {
         const createdCity = await createCity(newCity);

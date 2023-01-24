@@ -5,6 +5,7 @@ import { CurrencyContext } from "../../contexts/CurrencyContext";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { ListItem } from "@mui/material";
 
 const CurrencyItem = ({
     currency
@@ -25,7 +26,7 @@ const CurrencyItem = ({
     }
 
     return (
-        <li>
+        <ListItem>
             {isEdit
                 ? <Box
                     component="form"
@@ -62,7 +63,7 @@ const CurrencyItem = ({
                     <Button variant="outlined" color="error" onClick={() => currencyRemoveHandler(currency.currencyId)}>Delete</Button>
                 </>
             }
-        </li>
+        </ListItem>
     )
 }
 

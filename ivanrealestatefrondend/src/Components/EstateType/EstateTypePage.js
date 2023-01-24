@@ -7,10 +7,13 @@ import useFetchForEstateType from '../../CustemHooks/CustemEstateTypeHooks/useFe
 import EstateTypeList from './EstateTypeList';
 import CreateEstateType from './CreateEstateType';
 import { Spinner } from '../Common/Spinner/Spinner';
+import { AuthContext } from '../../contexts/AuthContext';
+import { useContext } from 'react';
 
 const EstateTypePage = () => {
+    const { user } = useContext(AuthContext);
     const [estateTypes, setEstateTypes, isLoading] = useFetchForEstateType([]);
-    const { removeEstateType, createEstateType, updateEstateType } = useEstateTypes();
+    const { removeEstateType, createEstateType, updateEstateType } = useEstateTypes(user.token);
 
     const estateTypeCreateHandler = async (newEstateType) => {
         const createdEstateType = await createEstateType(newEstateType);

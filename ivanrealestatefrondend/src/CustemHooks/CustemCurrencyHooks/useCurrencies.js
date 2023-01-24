@@ -1,16 +1,16 @@
 import * as currencyService from '../../Services/CurrencyService';
 
-const useCurrencies = () => {
+const useCurrencies = (token) => {
     const removeCurrency = (currencyId) => {
-        return currencyService.deleteCurrency(currencyId);
+        return currencyService.deleteCurrency(currencyId, token);
     }
 
     const createCurrency = (currencyName) => {
-        return currencyService.create(currencyName);
+        return currencyService.create(currencyName, token);
     }
 
     const updateCurrency = (currency, currencyName) => {
-        return currencyService.update(currency, currencyName);
+        return currencyService.update(currency, currencyName, token);
     }
 
     return {

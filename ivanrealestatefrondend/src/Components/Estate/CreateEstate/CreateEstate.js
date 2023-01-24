@@ -44,6 +44,7 @@ const defaultValues = {
 };
 
 const CreateEstate = () => {
+
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState(defaultValues);
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -65,7 +66,7 @@ const CreateEstate = () => {
 
     const handlerSubmit = data => {
         console.log({ ...data });
-        estateService.Create({ ...data, sell: data.sell === "true", userId: user.id })
+        estateService.Create({ ...data, sell: data.sell === "true", ownerId: user.id },user.token)
             .then(result =>
                 navigate(`/catalog/${result.estateId}`)
             );

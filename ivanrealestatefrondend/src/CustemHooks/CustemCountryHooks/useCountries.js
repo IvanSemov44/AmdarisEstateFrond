@@ -1,16 +1,16 @@
 import * as countryService from '../../Services/CountryService';
 
-const useCountries = () => {
+const useCountries = (token) => {
     const removeCountry = (countryId) => {
-        return countryService.deleteCountry(countryId);
+        return countryService.deleteCountry(countryId, token);
     }
 
     const createCountry = (countryName) => {
-        return countryService.create(countryName);
+        return countryService.create(countryName, token);
     }
 
     const updateCountry = (country,countryName)=>{
-        return countryService.update(country,countryName);
+        return countryService.update(country, countryName, token);
     }
 
     return {
