@@ -11,11 +11,11 @@ export const getAll = async () => {
 };
 
 export const getByPage = async (
-    pageNumber, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy, desc
+    pageNumber, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy, desc,pageSize
 ) => {
     const res = await fetch(`${baseUrl}/api/estates/page?` +
         `pageNumber=${pageNumber}` +
-        `&pageSize=9` +
+        `&pageSize=${pageSize}` +
         `&city=${city}` +
         `&country=${country}` +
         `&currency=${currency}` +

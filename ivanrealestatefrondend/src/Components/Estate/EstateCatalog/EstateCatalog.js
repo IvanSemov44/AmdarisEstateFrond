@@ -76,10 +76,12 @@ const EstateCatalog = () => {
     const currencies = useGetCurrency();
     const estateTypes = useGetEstateType();
 
+    const pageSize = 9;
+
     useEffect(() => {
         let ignore = false;
         estatesSevice.getByPage(
-            page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy, desc
+            page, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy, desc,pageSize
         )
             .then(result => {
                 if (!ignore) {

@@ -22,6 +22,7 @@ import ListMessages from './Components/Message/ListMessages/ListMessages';
 import CreateComapny from './Components/Company/CreateCompany/CreateCompany';
 import CompanyCatalog from './Components/Company/CompanyCatalog/CompanyCatalog';
 import CompanyDetails from './Components/Company/CompanyDetails/CompanyDetails';
+import Footer from './Components/Footer/Footer';
 
 
 function App() {
@@ -29,8 +30,9 @@ function App() {
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
-      
-  },})
+
+    },
+  })
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -56,8 +58,8 @@ function App() {
               <Route path='/createCompany' element={<CreateComapny />}></Route>
               <Route path='/companyCatalog' element={<CompanyCatalog />}></Route>
               <Route path='/companyCatalog/:companyId' element={<CompanyDetails />}></Route>
-
             </Routes>
+            <Footer />
           </CssBaseline>
         </div>
       </AuthProvider>

@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import MailIcon from '@mui/icons-material/Mail';
+import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import {
@@ -79,7 +80,7 @@ const HeaderMenu = () => {
 
                             <NavLink to="/" style={{ textDecoration: "none" }}>
                                 <Button sx={{ my: 2, color: 'white', display: 'block' }} >
-                                    home
+                                    <HomeIcon color="primary" />
                                 </Button>
                             </NavLink>
 
