@@ -26,7 +26,6 @@ const CompanyCatalog = () => {
         return () => ignore = true;
     },[])
 
-    console.log(companies);
 
     const show = isEmptyCompanies ? "none" : "flex"
 

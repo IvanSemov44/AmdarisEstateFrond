@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import MailIcon from '@mui/icons-material/Mail';
 import HomeIcon from '@mui/icons-material/Home';
@@ -165,6 +165,13 @@ const HeaderMenu = () => {
                                     </NavLink>
                                     <Divider orientation="vertical" variant="middle" flexItem />
 
+                                    <Link to={`/userEstates/${user.id}`} style={{ textDecoration: "none" }}>
+                                        <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                                            My Estates
+                                        </Button>
+                                    </Link>
+                                    <Divider orientation="vertical" variant="middle" flexItem />
+
                                     <NavLink to="/createCompany" style={{ textDecoration: "none" }}>
                                         <Button sx={{ my: 2, color: 'white', display: 'block' }}>
                                             Create Company
@@ -179,7 +186,9 @@ const HeaderMenu = () => {
                                         </Badge>
                                     </NavLink>
                                     <Typography h3 color="white">Hello, {user.username}!</Typography>
-                                    <Avatar sx={{ m: 2 }} alt="avarat img" src="https://www.w3schools.com/howto/img_avatar.png" />
+                                    <Link to={`/user/${user.id}`}>
+                                        <Avatar sx={{ m: 2 }} alt="avarat img" src="https://www.w3schools.com/howto/img_avatar.png" />
+                                    </Link>
                                     <Button
                                         sx={{ my: 2, color: 'white', display: 'block' }}
                                         onClick={userLogout}

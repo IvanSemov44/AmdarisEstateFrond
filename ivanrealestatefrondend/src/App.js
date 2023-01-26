@@ -23,6 +23,9 @@ import CreateComapny from './Components/Company/CreateCompany/CreateCompany';
 import CompanyCatalog from './Components/Company/CompanyCatalog/CompanyCatalog';
 import CompanyDetails from './Components/Company/CompanyDetails/CompanyDetails';
 import Footer from './Components/Footer/Footer';
+import UserDetails from './Components/UserProfile/UserDetails';
+import UserEstates from './Components/UserProfile/UserEstates';
+import CompanyImagePage from './Components/Image/CompanyImagePage';
 
 
 function App() {
@@ -48,6 +51,7 @@ function App() {
               <Route path='/createEstate' element={<CreateEstate />}></Route>
               <Route path='/editEstate/:estateId' element={<EditEstate />}></Route>
               <Route path='/editEstate/:estateId/images' element={<ImagePage />}></Route>
+              <Route path='/editcompany/:companyId/images' element={<CompanyImagePage />}></Route>
               <Route path='/cities' element={<CityPage />}></Route>
               <Route path='/countries' element={<CountryPage />}></Route>
               <Route path='/currencies' element={<CurrencyPage />}></Route>
@@ -58,6 +62,8 @@ function App() {
               <Route path='/createCompany' element={<CreateComapny />}></Route>
               <Route path='/companyCatalog' element={<CompanyCatalog />}></Route>
               <Route path='/companyCatalog/:companyId' element={<CompanyDetails />}></Route>
+              <Route path='/user/:userId' element={<UserDetails />}></Route>
+              <Route path='/userEstates/:userId' element={<UserEstates />}></Route>
             </Routes>
             <Footer />
           </CssBaseline>

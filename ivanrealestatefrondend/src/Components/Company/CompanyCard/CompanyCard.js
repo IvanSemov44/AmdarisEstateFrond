@@ -1,19 +1,35 @@
 import { Card, CardActionArea, CardContent, CardMedia, ListItemText, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import useGetCityById from '../../../CustemHooks/CustemCityHooks/useGetCityById';
 import useGetCountryById from '../../../CustemHooks/CustemCountryHooks/useGetCountryById';
+import useFetchForCompanyImage from "../../../CustemHooks/CustemImageHook/useFetchForCompanyImage";
+import * as companyImageService from '../../../Services/CompanyImagesService';
 
 const CompanyCard = ({
     company
 }) => {
+    const [companyImages, setCompanyImages] = useState([]);
+
+    useEffect(() => {
+        companyImageService.getAll(company.Id)
+            .then(result => setCompanyImages(result));
+    }, [company.Id])
+
     const city = useGetCityById(company.companyCityId);
     const country = useGetCountryById(company.companyCountryId);
 
     let companyImage;
-    company.images.length === 0
+
+    companyImages.length === 0
         ? companyImage = "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
-        : companyImage = company.images[0].imageUrl;
+        : companyImage = companyImages[0].imageUrl;
+
+    const ready =
+        city === undefined &&
+        country === undefined &&
+        companyImages === undefined
 
     return (
         <Stack alignItems="center" spacing={2}>

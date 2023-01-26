@@ -57,7 +57,7 @@ const EstateDetails = () => {
         .then(navigate(`/catalog`));
 
 
-    const owner = user.id === estate.ownerId ? true : false;
+    const owner = user.id === estate.ownerId || user.userRole[0] === "Admin" ? true : false;
 
     return (
         <>
@@ -281,7 +281,10 @@ const EstateDetails = () => {
                                 : <></>}
                         </Box>
                     </Grid>
-                    <CreateMessage owner={estate.ownerId} />
+                    {!owner
+                        ? < CreateMessage owner={estate.ownerId} />
+                        : <></>
+                    }
                 </Grid>
                 : <Spinner />}
         </>

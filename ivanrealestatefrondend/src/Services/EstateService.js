@@ -10,6 +10,24 @@ export const getAll = async () => {
     return await res.json();
 };
 
+export const getEstateForUser = async (userId,page)=>{
+    const res = await fetch(`${baseUrl}/api/estates/page?` +
+        `pageNumber=${page}` +
+        `&pageSize=9` +
+        `&ownerId=${userId}` 
+        , {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+    const contentType = res.headers.get('X-Pagination');
+    const returnValue = await res.json();
+    return { contentType, returnValue }
+}
+
+
 export const getByPage = async (
     pageNumber, city, country, currency, estateType, year, price, floor, rooms, area, isSell, searchTerm, orderBy, desc,pageSize
 ) => {
@@ -44,6 +62,7 @@ export const getByPage = async (
     const returnValue = await res.json();
     return { contentType, returnValue }
 };
+
 
 export const getById = async (id) => {
     const res = await fetch(`${baseUrl}/api/estates/${id}`, {

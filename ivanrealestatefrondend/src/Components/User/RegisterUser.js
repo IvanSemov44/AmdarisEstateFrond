@@ -14,6 +14,8 @@ import {
     InputAdornment,
     DialogActions,
     FormHelperText,
+    MenuItem,
+    Select,
 } from '@mui/material';
 
 
@@ -21,19 +23,33 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import * as AuthService from '../../Services/AuthService';
+import useGetCities from '../../CustemHooks/CustemCityHooks/useGetCities';
+import useGetCountries from '../../CustemHooks/CustemCountryHooks/useGetCountries';
+
+const defaultValues = {
+   
+    userCityId: "",
+    userCountryId: "",
+};
 
 const RegisterUser = ({
     setOpen,
     open
 }) => {
     const [showPassword, setShowPassword] = useState(false);
+    const [formValues, setFormValues] = useState(defaultValues);
+
     const { register, formState: { errors }, handleSubmit, resetField, watch } = useForm();
 
     const handleClose = () => setOpen(false);
     const handleMouseDownPassword = (event) => event.preventDefault();
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
+    const cities = useGetCities();
+    const countries = useGetCountries();
+
     const handlerSubmit = data => {
+        console.log(data);
         resetField("userName");
         resetField("password");
         resetField("firstName");
@@ -52,6 +68,14 @@ const RegisterUser = ({
         AuthService.register(registerData);
         setOpen(false);
     }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues({
+            ...formValues,
+            [name]: value,
+        });
+    };
 
     return (
         <Dialog open={open} onClose={handleClose}  >
@@ -104,6 +128,62 @@ const RegisterUser = ({
                     label="Email"
                     helperText={errors.email && errors.email.message}
                 />
+
+                <FormControl sx={{ m: 1, width: '25ch' }} fullWidth >
+                    <InputLabel>Country</InputLabel>
+                    <Select
+                        error={errors.userCountryId}
+                        {...register("userCountryId",
+                            { required: { value: true, message: "Country is required field!" } })}
+                        name="userCountryId"
+                        label="Country"
+                        value={formValues.userCountryId}
+                        onChange={handleInputChange}
+
+                    >
+                        {countries.map(x =>
+                            <MenuItem
+                                key={x.countryId}
+                                value={x.countryId}
+                            >
+                                {x.countryName}
+                            </MenuItem>
+                        )}
+                    </Select>
+                    {errors.userCountryId
+                        ? <FormHelperText error>{errors.userCountryId.message}</FormHelperText>
+                        : <></>
+                    }
+                </FormControl>
+            {/* </Grid> */}
+
+                <FormControl sx={{ m: 1, width: '25ch' }} fullWidth>
+                    <InputLabel>City</InputLabel>
+                    <Select
+                        error={errors.userCityId}
+                        {...register("userCityId",
+                            { required: { value: true, message: "City is required field!" } })}
+                        name="userCityId"
+                        label="City"
+                    value={formValues.userCityId}
+                        onChange={handleInputChange}
+                    >
+                        {cities.map(x =>
+                            <MenuItem
+                                key={x.cityId}
+                                value={x.cityId}
+                            >
+                                {x.cityName}
+                            </MenuItem>
+                        )}
+
+                    </Select>
+                    {errors.userCityId
+                        ? <FormHelperText error>{errors.userCityId.message}</FormHelperText>
+                        : <></>
+                    }
+                </FormControl>
+
                 <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                     <OutlinedInput

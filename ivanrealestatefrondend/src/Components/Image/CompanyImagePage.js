@@ -3,18 +3,18 @@ import { useParams } from "react-router-dom";
 import { Box } from "@mui/system";
 
 import { ImageContext } from "../../contexts/ImageContext";
-import useImages from "../../CustemHooks/CustemImageHook/useImages";
-import useFetchForImage from "../../CustemHooks/CustemImageHook/useFetchForImage";
+import useCompanyImages from "../../CustemHooks/CustemImageHook/useCompanyImages";
+import useFetchForCompanyImage from "../../CustemHooks/CustemImageHook/useFetchForCompanyImage";
 
 import ImagesList from "./ImageList";
 import CreateImage from "./CreateImage";
 import { Spinner } from "../Common/Spinner/Spinner";
 
 
-const ImagePage = () => {
-    const { estateId } = useParams();
-    const [images, setImages,isLoading] = useFetchForImage([],estateId);
-    const { removeImage, createImage, updateImage } = useImages(estateId);
+const CompanyImagePage = () => {
+    const { companyId } = useParams();
+    const [images, setImages, isLoading] = useFetchForCompanyImage([], companyId);
+    const { removeImage, createImage, updateImage } = useCompanyImages(companyId);
 
     const imageCreateHandler = async (dataImage) => {
         const createdImage = await createImage(dataImage);
@@ -29,10 +29,10 @@ const ImagePage = () => {
         setImages(state => state.filter(x => x.imageId !== imageId));
     };
 
-    const imageEditHandler = (imageId,image, newImageUrl) => {
+    const imageEditHandler = (imageId, image, newImageUrl) => {
         const updatedImage = { ...image, imageUrl: newImageUrl };
 
-        updateImage(imageId,updatedImage);
+        updateImage(imageId, updatedImage);
 
         setImages(state => state.map(x => x.imageId === image.imageId ? updatedImage : x))
     }
@@ -52,4 +52,4 @@ const ImagePage = () => {
     )
 }
 
-export default ImagePage;
+export default CompanyImagePage;
