@@ -52,7 +52,7 @@ const EstateCatalog = () => {
     const [page, setPage] = useState(1);
     const [pagin, setPagin] = useState([]);
     const [estates, setEstate] = useState([]);
-    const [isEmptyEstate, setIsEmptyEstate] = useState(false);
+    const [isEmptyEstate, setIsEmptyEstate] = useState(true);
 
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");

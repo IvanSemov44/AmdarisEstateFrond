@@ -13,7 +13,7 @@ export const getAll = async () => {
 export const getEstateForUser = async (userId,page)=>{
     const res = await fetch(`${baseUrl}/api/estates/page?` +
         `pageNumber=${page}` +
-        `&pageSize=9` +
+        `&pageSize=8` +
         `&ownerId=${userId}` 
         , {
             method: "GET",

@@ -38,7 +38,7 @@ const UserEstates = () => {
     return (
         <>
 
-            <Stack alignItems="center" spacing={2} sx={{mx:40}} >
+            <Stack alignItems="center" spacing={2} sx={{ml:20,width:1200}} >
             {estates[0]
                 ? <Box sx={{ display: `${show}`, flexWrap: 'wrap' }} >
                     {estates.map(x => <EstateCard key={x.estateId} estate={x} />)}

@@ -91,13 +91,13 @@ const EditEstate = () => {
     };
 
     const handlerSubmit = data => {
-        console.log({ ...data });
         estateService.Update({
             ...data,
             sell: data.sell === "true",
             curencyId:data.curencyId,
             estateId: estateId,
-            images: estate.images
+            images: estate.images,
+            ownerId:estate.ownerId
         },user.token);
         navigate(`/catalog/${estateId}`)
     };
@@ -156,7 +156,7 @@ const EditEstate = () => {
                                         { required: { value: true, message: "Country is required field!" } })}
                                     name="countryId"
                                     label="Country"
-                                    value={country.countryId}
+                                    // value={country.countryId}
                                     defaultValue={estate.countryId}
                                     onChange={handleInputChange}
                                 >

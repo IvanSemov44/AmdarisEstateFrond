@@ -57,7 +57,8 @@ const EstateDetails = () => {
         .then(navigate(`/catalog`));
 
 
-    const owner = user.id === estate.ownerId || user.userRole[0] === "Admin" ? true : false;
+
+    const owner = user.id === estate.ownerId || (user.userRole&& user.userRole[0] === "Admin") ? true : false;
 
     return (
         <>

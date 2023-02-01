@@ -1,35 +1,37 @@
-import { Card, CardActionArea, CardContent, CardMedia, ListItemText, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+    Card,
+    CardMedia,
+    CardContent,
+    CardActionArea,
+    Stack,
+    Typography,
+    ListItemText
+} from "@mui/material";
 
+import * as companyImageService from '../../../Services/CompanyImagesService';
 import useGetCityById from '../../../CustemHooks/CustemCityHooks/useGetCityById';
 import useGetCountryById from '../../../CustemHooks/CustemCountryHooks/useGetCountryById';
-import useFetchForCompanyImage from "../../../CustemHooks/CustemImageHook/useFetchForCompanyImage";
-import * as companyImageService from '../../../Services/CompanyImagesService';
 
 const CompanyCard = ({
     company
 }) => {
-    const [companyImages, setCompanyImages] = useState([]);
-
+    const [companyImages, setCompanyImages] = useState("");
+    console.log(company);
     useEffect(() => {
-        companyImageService.getAll(company.Id)
-            .then(result => setCompanyImages(result));
-    }, [company.Id])
+        companyImageService.getAll(company.id)
+            .then(result => {
+                console.log(result)
+                console.log("from result")
+                result.length === 0
+                    ? setCompanyImages("https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg")
+                    : setCompanyImages(result[0].imageUrl)
+            });
+    }, [company.id])
 
     const city = useGetCityById(company.companyCityId);
     const country = useGetCountryById(company.companyCountryId);
-
-    let companyImage;
-
-    companyImages.length === 0
-        ? companyImage = "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg"
-        : companyImage = companyImages[0].imageUrl;
-
-    const ready =
-        city === undefined &&
-        country === undefined &&
-        companyImages === undefined
 
     return (
         <Stack alignItems="center" spacing={2}>
@@ -39,7 +41,7 @@ const CompanyCard = ({
                         <CardMedia
                             component="img"
                             height="140"
-                            image={companyImage}
+                            image={companyImages}
                             alt="Estate"
                         />
                     </Link>

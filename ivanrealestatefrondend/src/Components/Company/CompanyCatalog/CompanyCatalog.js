@@ -9,7 +9,6 @@ const CompanyCatalog = () => {
     const [companies, setCompanies] = useState([]);
     const [isEmptyCompanies, setIsEmptyCompanies] = useState(false);
 
-
     useEffect(() => {
         let ignore = false;
         companyService.getAll()
@@ -24,7 +23,7 @@ const CompanyCatalog = () => {
             })
             .catch(() => setIsEmptyCompanies(true))
         return () => ignore = true;
-    },[])
+    }, [])
 
 
     const show = isEmptyCompanies ? "none" : "flex"
@@ -32,8 +31,8 @@ const CompanyCatalog = () => {
     return (
         <>
             {companies[0]
-                ? <Box sx={{ display: `${show}`, flexWrap: 'wrap',m:10 }} >
-                    {companies.map(x => <CompanyCard key={x.id} company={x} />)}
+                ? <Box sx={{ display: `${show}`, flexWrap: 'wrap', m: 10 }} >
+                    {companies.map(x => < CompanyCard key={x.id} company={x} />)}
                 </Box>
                 : isEmptyCompanies
                     ? <div></div>

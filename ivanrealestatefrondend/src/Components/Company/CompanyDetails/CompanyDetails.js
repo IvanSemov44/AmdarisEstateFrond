@@ -1,20 +1,38 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import SwipeableViews from "react-swipeable-views";
+
+import {
+    Box,
+    Tab,
+    Tabs,
+    Grid,
+    AppBar,
+    Button,
+    useTheme,
+    TextField
+} from "@mui/material";
+
+import ImageShow from "../../Image/ImageShow";
 
 import useGetCityById from "../../../CustemHooks/CustemCityHooks/useGetCityById";
 import useGetCountryById from "../../../CustemHooks/CustemCountryHooks/useGetCountryById";
 import useGetCompanyById from "../../../CustemHooks/CustemCompanyHooks/useGetCompanyById";
-import { AppBar, Button, Grid, Tab, Tabs, TextField, useTheme } from "@mui/material";
-import { Box } from "@mui/system";
-import SwipeableViews from "react-swipeable-views";
-import { useEffect, useState } from "react";
-import ImageShow from "../../Image/ImageShow";
+
 import * as companyImageService from '../../../Services/CompanyImagesService';
+import * as estateServivce from '../../../Services/EstateService'
+import { Spinner } from "../../Common/Spinner/Spinner";
+import EstateCard from "../../Estate/EstateCard/EstateCard";
+import UserCard from "../../UserProfile/UserCard";
+
 
 const CompanyDetails = () => {
     const theme = useTheme();
     const { companyId } = useParams();
     const [value, setValue] = useState(0);
     const [companyImages, setCompanyImages] = useState([]);
+    const [estates, setEstates] = useState([]);
+    const [isEmptyEstate, setIsEmptyEstate] = useState(false);
 
     const company = useGetCompanyById(companyId);
 
@@ -22,9 +40,23 @@ const CompanyDetails = () => {
         companyImageService.getAll(companyId)
             .then(result => setCompanyImages(result));
     }, [companyId])
+    console.log(company);
 
+    useEffect(() => {
+        if (company.employees !== undefined) {
+            let ids;
+            company.employees.forEach(element => {
+                ids = ids + `,${element.id}`
+            })
+            estateServivce.getEstateForUser(ids)
+                .then(result => {
+                    setEstates(result.returnValue)
+                    setIsEmptyEstate(true);
+                })
 
-    console.log(companyImages);
+        };
+    }, [company.employees, company, companyImages]);
+    console.log("estate", estates);
 
     const city = useGetCityById(company.companyCityId);
     const country = useGetCountryById(company.companyCountryId);
@@ -33,7 +65,6 @@ const CompanyDetails = () => {
         city !== undefined &&
         country !== undefined &&
         company !== undefined;
-    console.log(company);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -41,6 +72,7 @@ const CompanyDetails = () => {
     const handleChangeIndex = (index) => {
         setValue(index);
     };
+
     return (
         <>
             {ready
@@ -131,13 +163,17 @@ const CompanyDetails = () => {
                             />
                         </Box>
                     </Grid>
-                    <Grid conteinter>
+                    <Grid
+                        conteinter
+                        alignItems="center"
+                        justify="center">
                         <Grid item>
 
                             <AppBar
-                                sx={{ m: 10, width: 800 }}
+                                sx={{ m: 10, width: 800, ml: 45, borderRadius: 2 }}
                                 alignItems="center"
                                 justify="center"
+                                justifyContent="center"
                                 direction="row"
                                 position="static"
                                 color="default">
@@ -150,7 +186,7 @@ const CompanyDetails = () => {
                                     variant="fullWidth"
                                     aria-label="action tabs example"
                                 >
-                                    <Tab label="Employyes" />
+                                    <Tab label="Employees" />
                                     <Tab label="Real Estates" />
                                 </Tabs>
                             </AppBar>
@@ -172,25 +208,33 @@ const CompanyDetails = () => {
                                     value={value}
                                     index={0}
                                     dir={theme.direction}
-                                >
-                                    Employyes
+                                >{company.employees !== undefined
+                                    ? company.employees.map(x =>
+                                        <UserCard
+                                            key={x.id}
+                                            user={x} />)
+                                    : <></>}
                                 </Box>
                                 <Box
-                                    sx={{ m: 10 }}
+                                    sx={{ m: 10,ml:25 }}
                                     value={value}
                                     index={1}
                                     dir={theme.direction}
                                 >
-                                    Real Estates
+                                    {estates[0]
+                                        ? <Box sx={{ display: `flex`, flexWrap: 'wrap' }} >
+                                            {estates.map(x => <EstateCard key={x.estateId} estate={x} />)}
+                                        </Box>
+                                        : isEmptyEstate
+                                            ? <div></div>
+                                            : <Spinner></Spinner>
+                                    }
                                 </Box>
                             </SwipeableViews>
                         </Grid>
                     </Grid>
                 </Grid>
-
-
-
-                : <></>}
+                : <Spinner></Spinner>}
         </>
     )
 }
