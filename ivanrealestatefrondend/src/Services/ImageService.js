@@ -1,8 +1,10 @@
-const baseUrl = "https://localhost:7125/api/estates/";
+// const baseUrl = "https://localhost:7125/api/estates/";
+import { baseUrl } from "./BaseUrl";
+
 
 
 export const getAll = async (estateId) => {
-    const res = await fetch(`${baseUrl}${estateId}/images`, {
+    const res = await fetch(`${baseUrl}/api/estates/${estateId}/images`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',

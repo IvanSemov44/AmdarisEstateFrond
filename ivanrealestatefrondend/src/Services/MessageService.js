@@ -1,7 +1,7 @@
 
 
-const baseUrl = "https://localhost:7125";
-
+// const baseUrl = "https://localhost:7125";
+import { baseUrl } from "./BaseUrl";
 
 export const getAll = async (owner) => {
     const res = await fetch(`${baseUrl}/api/owner/${owner}/messages`, {

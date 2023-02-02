@@ -1,5 +1,6 @@
-const baseUrl = "https://localhost:7125";
-
+// const baseUrl = "https://localhost:7125";
+// const baseUrl = "http://ivanrealestate.azurewebsites.net";
+import { baseUrl } from "./BaseUrl";
 
 export const login = async (loginData) => {
     const res = await fetch(`${baseUrl}/api/authentication/login`, {

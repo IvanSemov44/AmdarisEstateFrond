@@ -1,4 +1,6 @@
-const baseUrl = "https://localhost:7125";
+// const baseUrl = "https://localhost:7125";
+import { baseUrl } from "./BaseUrl";
+
 
 export const getAll = async () => {
     const res = await fetch(`${baseUrl}/api/countries`, {
