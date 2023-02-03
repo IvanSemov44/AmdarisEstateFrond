@@ -30,7 +30,6 @@ const GiphyCatalog = () => {
         giphyService.getAll()
             .then(result => {
                 if (!ignore) {
-                    console.log(result.data);
                     setGif(result.data);
                 }
             });

@@ -28,9 +28,6 @@ const Home = () => {
         };
     }, []);
 
-    console.log(estates);
-
-
     const image = "https://wallpaperaccess.com/full/1899348.jpg"
     return (
         <Box sx={{

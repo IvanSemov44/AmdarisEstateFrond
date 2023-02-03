@@ -29,9 +29,7 @@ const UserEstates = () => {
             })
             .catch(() => setIsEmptyEstates(true))
         return () => ignore = true;
-    }, [userId,page])
-
-    console.log(estates)
+    }, [userId,page]);
 
     const show = isEmptyEstates ? "none" : "flex"
 

@@ -14,8 +14,8 @@ import {
     InputAdornment,
     DialogActions,
     FormHelperText,
-    MenuItem,
-    Select,
+    // MenuItem,
+    // Select,
 } from '@mui/material';
 
 
@@ -23,21 +23,21 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import * as AuthService from '../../Services/AuthService';
-import useGetCities from '../../CustemHooks/CustemCityHooks/useGetCities';
-import useGetCountries from '../../CustemHooks/CustemCountryHooks/useGetCountries';
+// import useGetCities from '../../CustemHooks/CustemCityHooks/useGetCities';
+// import useGetCountries from '../../CustemHooks/CustemCountryHooks/useGetCountries';
 
-const defaultValues = {
+// const defaultValues = {
    
-    userCityId: "",
-    userCountryId: "",
-};
+//     userCityId: "",
+//     userCountryId: "",
+// };
 
 const RegisterUser = ({
     setOpen,
     open
 }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const [formValues, setFormValues] = useState(defaultValues);
+    // const [formValues, setFormValues] = useState(defaultValues);
 
     const { register, formState: { errors }, handleSubmit, resetField, watch } = useForm();
 
@@ -45,11 +45,10 @@ const RegisterUser = ({
     const handleMouseDownPassword = (event) => event.preventDefault();
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    const cities = useGetCities();
-    const countries = useGetCountries();
+    // const cities = useGetCities();
+    // const countries = useGetCountries();
 
     const handlerSubmit = data => {
-        console.log(data);
         resetField("userName");
         resetField("password");
         resetField("firstName");
@@ -69,13 +68,13 @@ const RegisterUser = ({
         setOpen(false);
     }
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues({
-            ...formValues,
-            [name]: value,
-        });
-    };
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormValues({
+    //         ...formValues,
+    //         [name]: value,
+    //     });
+    // };
 
     return (
         <Dialog open={open} onClose={handleClose}  >
@@ -129,7 +128,7 @@ const RegisterUser = ({
                     helperText={errors.email && errors.email.message}
                 />
 
-                <FormControl sx={{ m: 1, width: '25ch' }} fullWidth >
+                {/* <FormControl sx={{ m: 1, width: '25ch' }} fullWidth >
                     <InputLabel>Country</InputLabel>
                     <Select
                         error={errors.userCountryId}
@@ -155,7 +154,6 @@ const RegisterUser = ({
                         : <></>
                     }
                 </FormControl>
-            {/* </Grid> */}
 
                 <FormControl sx={{ m: 1, width: '25ch' }} fullWidth>
                     <InputLabel>City</InputLabel>
@@ -182,7 +180,7 @@ const RegisterUser = ({
                         ? <FormHelperText error>{errors.userCityId.message}</FormHelperText>
                         : <></>
                     }
-                </FormControl>
+                </FormControl> */}
 
                 <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>

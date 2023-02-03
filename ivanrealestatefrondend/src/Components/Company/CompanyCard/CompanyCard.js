@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import {
     Card,
     CardMedia,
@@ -18,12 +19,10 @@ const CompanyCard = ({
     company
 }) => {
     const [companyImages, setCompanyImages] = useState("");
-    console.log(company);
+
     useEffect(() => {
         companyImageService.getAll(company.id)
             .then(result => {
-                console.log(result)
-                console.log("from result")
                 result.length === 0
                     ? setCompanyImages("https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070__480.jpg")
                     : setCompanyImages(result[0].imageUrl)

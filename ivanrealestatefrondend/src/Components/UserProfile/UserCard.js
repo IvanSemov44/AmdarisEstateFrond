@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 const UserCard = ({
     user
 }) => {
-    console.log("user", user);
-
     return (
         <Box container display="flex" sx={{ml:23}}>
             <Link to={`/userEstates/${user.id}`}>

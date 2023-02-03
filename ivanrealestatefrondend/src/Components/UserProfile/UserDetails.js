@@ -12,13 +12,10 @@ import * as userService from '../../Services/UserService';
 const UserDetails = () => {
     const { userId } = useParams();
     const [user, setUser] = useState({});
-    console.log(user);
 
     const city = useGetCityById(user.userCityId);
     const country = useGetCountryById(user.userCountryId);
-
-    console.log(city);
-
+    
     useEffect(() => {
         userService.getById(userId)
         .then(result=>setUser(result));

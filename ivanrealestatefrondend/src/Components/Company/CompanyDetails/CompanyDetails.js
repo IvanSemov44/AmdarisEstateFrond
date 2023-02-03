@@ -39,8 +39,7 @@ const CompanyDetails = () => {
     useEffect(() => {
         companyImageService.getAll(companyId)
             .then(result => setCompanyImages(result));
-    }, [companyId])
-    console.log(company);
+    }, [companyId]);
 
     useEffect(() => {
         if (company.employees !== undefined) {
@@ -56,7 +55,6 @@ const CompanyDetails = () => {
 
         };
     }, [company.employees, company, companyImages]);
-    console.log("estate", estates);
 
     const city = useGetCityById(company.companyCityId);
     const country = useGetCountryById(company.companyCountryId);
