@@ -13,7 +13,7 @@ export const getAll = async (companyId) => {
 };
 
 export const getById = async (companyId, imageId) => {
-    const res = await fetch(`${baseUrl}${companyId}/images/${imageId}`, {
+    const res = await fetch(`${baseUrl}/${companyId}/images/${imageId}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export const getById = async (companyId, imageId) => {
 
 
 export const create = async (companyId, imageData) => {
-    const res = await fetch(`${baseUrl}${companyId}/images`, {
+    const res = await fetch(`${baseUrl}/${companyId}/images`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export const create = async (companyId, imageData) => {
 };
 
 export const update = async (companyId, imageId, imageData) => {
-    const res = await fetch(`${baseUrl}${companyId}/images/${imageId}`, {
+    const res = await fetch(`${baseUrl}/${companyId}/images/${imageId}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const update = async (companyId, imageId, imageData) => {
 };
 
 export const deleteImage = async (companyId, imageId) => {
-    const res = await fetch(`${baseUrl}${companyId}/images/${imageId}`, {
+    const res = await fetch(`${baseUrl}/${companyId}/images/${imageId}`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
